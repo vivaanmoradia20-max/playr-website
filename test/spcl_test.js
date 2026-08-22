@@ -26,9 +26,9 @@ await t("Olympics fully removed", async()=>{
   if($$(".topnav .nav-links button").map(b=>b.textContent).join(",").includes("Olympics")) throw new Error("nav label");
   return "nav, view, footer clean ✓";
 });
-await t("nav = 9 items with SPCL", async()=>{
+await t("nav = 10 items with SPCL", async()=>{
   const nav=$$(".topnav .nav-links button").map(b=>b.textContent);
-  const want=["Home","Discover","Sports","SPCL","Challenges","Communities","Events","PLAYR+","Shop"];
+  const want=["Home","Discover","Sports","SPCL","Challenges","Communities","Events","PLAYR+","Shop","About"];
   if(nav.join("|")!==want.join("|")) throw new Error(nav.join("|"));
   return "SPCL in position 4 ✓";
 });
