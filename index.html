@@ -652,6 +652,351 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 .oh-rec-head{background:var(--surface-2); font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted-2);}
 
 /* ============================================================
+   HOME v2 — cinematic premium redesign
+   ============================================================ */
+
+/* ---- reveal-on-scroll ---- */
+.rv{opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.rv.in{opacity:1; transform:none;}
+
+/* ---- HERO ---- */
+.hero2{position:relative; padding:150px 0 0; overflow:hidden; background:
+  radial-gradient(1000px 500px at 85% -10%, rgba(198,255,61,.07), transparent 60%),
+  radial-gradient(800px 460px at -10% 30%, rgba(70,224,255,.05), transparent 60%);}
+.hero2::before{content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse at 60% 30%, #000 20%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse at 60% 30%, #000 20%, transparent 75%); pointer-events:none;}
+.hero2-grid{display:grid; grid-template-columns:1.02fr 1fr; gap:48px; align-items:center; position:relative;}
+.hero2-title{font-size:clamp(44px,6.2vw,86px); line-height:.94;}
+.hero2-title span{color:var(--lime);}
+.hero2-sub{color:var(--muted); font-size:16.5px; line-height:1.7; max-width:520px; margin:22px 0 30px;}
+.hero2-stats{display:flex; align-items:center; gap:18px; margin-top:34px; color:var(--muted); font-size:11px; letter-spacing:.14em;}
+.hero2-stats b{color:var(--text); font-size:20px; margin-right:7px; letter-spacing:0;}
+.hero2-stats i{width:1px; height:26px; background:var(--line);}
+.hero2-ticker{margin-top:44px; position:relative;}
+
+/* hero stage — layered social collage */
+.hero2-stage{position:relative; height:600px; min-width:0;}
+.hc-phone{position:absolute; right:24px; top:12px; width:280px; z-index:3; filter:drop-shadow(0 40px 80px rgba(0,0,0,.6));}
+.hc-card{position:absolute; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:rgba(20,21,25,.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px -18px rgba(0,0,0,.75); z-index:4;}
+.hc-athlete{left:0; top:38px; width:216px; animation:floatA 7s ease-in-out infinite;}
+.hc-athlete .hca-img{height:120px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop'), linear-gradient(135deg,#FF6A4D44,#141519);}
+.hc-athlete .hca-body{padding:12px 14px; display:flex; gap:10px; align-items:center;}
+.hc-athlete .hca-av{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--lime),var(--cyan)); flex:none; margin-top:-28px; border:3px solid #141519;}
+.hc-athlete b{font-size:12.5px; display:block;}
+.hc-athlete i{font-style:normal; font-size:10px; color:var(--muted); font-family:var(--mono);}
+.hc-athlete .hca-btn{margin-left:auto; font-size:10px; font-weight:800; color:var(--lime); border:1px solid var(--lime); border-radius:100px; padding:5px 10px; flex:none;}
+.hc-live{left:26px; bottom:118px; width:238px; animation:floatB 8s ease-in-out infinite .6s;}
+.hc-live .hcl-tag{display:flex; align-items:center; gap:7px; padding:9px 13px; font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; color:var(--coral); border-bottom:1px solid rgba(255,255,255,.08);}
+.hc-live .hcl-img{height:88px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400&h=300&fit=crop'), linear-gradient(135deg,#B98CFF44,#141519);}
+.hc-live .hcl-body{padding:11px 13px;}
+.hc-live b{font-size:12.5px; display:block; margin-bottom:4px;}
+.hc-live i{font-style:normal; font-size:10px; color:var(--muted); font-family:var(--mono);}
+.hc-chall{right:-6px; top:328px; width:222px; animation:floatC 6.5s ease-in-out infinite 1.1s; z-index:5;}
+.hc-chall .hch-body{padding:13px 14px;}
+.hc-chall .hch-head{font-family:var(--mono); font-size:9px; letter-spacing:.14em; color:var(--cyan); margin-bottom:9px;}
+.hc-chall .hch-vs{display:flex; align-items:center; gap:8px;}
+.hc-chall .hch-p{text-align:center; flex:1;}
+.hc-chall .hch-p b{display:block; font-size:11px;}
+.hc-chall .hch-p i{font-style:normal; font-family:var(--mono); font-size:13px; color:var(--text);}
+.hc-chall .hch-p.win i{color:var(--lime);}
+.hc-chall .hch-x{font-family:var(--display); font-size:15px; color:var(--coral);}
+.hc-chall .hch-bar{height:4px; border-radius:100px; background:var(--surface-3); margin-top:10px; overflow:hidden;}
+.hc-chall .hch-bar i{display:block; height:100%; width:68%; background:linear-gradient(90deg,var(--lime),var(--cyan));}
+.hc-trend{left:64px; top:236px; width:190px; padding:12px 14px; animation:floatD 7.5s ease-in-out infinite .3s; z-index:5;}
+.hc-trend .hct-head{font-family:var(--mono); font-size:9px; letter-spacing:.14em; color:var(--lime); margin-bottom:8px;}
+.hc-trend .hct-row{display:flex; justify-content:space-between; font-size:11px; padding:4.5px 0; color:var(--muted);}
+.hc-trend .hct-row b{color:var(--text); font-weight:700;}
+.hc-trend .hct-row span{font-family:var(--mono); font-size:9.5px;}
+@keyframes floatA{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-13px) rotate(-2.6deg);}}
+@keyframes floatB{0%,100%{transform:translateY(0) rotate(1.4deg);}50%{transform:translateY(11px) rotate(.8deg);}}
+@keyframes floatC{0%,100%{transform:translateY(0) rotate(2deg);}50%{transform:translateY(-10px) rotate(2.7deg);}}
+@keyframes floatD{0%,100%{transform:translateY(0);}50%{transform:translateY(9px);}}
+
+/* ---- horizontal strips ---- */
+.strip-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:30px;}
+.strip-scroll{display:flex; gap:18px; overflow-x:auto; padding:6px 32px 26px; margin:0 -32px; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--line) transparent;}
+.strip-scroll::-webkit-scrollbar{height:6px;}
+.strip-scroll::-webkit-scrollbar-thumb{background:var(--line); border-radius:100px;}
+.ss-card{position:relative; flex:0 0 264px; height:370px; border-radius:22px; overflow:hidden; scroll-snap-align:start; cursor:pointer; border:1px solid var(--line); background:var(--surface); transition:transform .25s ease, box-shadow .25s ease;}
+.ss-card:hover{transform:translateY(-6px); box-shadow:0 26px 60px -22px var(--accent, var(--lime));}
+.ss-img{position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+.ss-card:hover .ss-img{transform:scale(1.09);}
+.ss-veil{position:absolute; inset:0; background:linear-gradient(185deg, rgba(10,11,13,0) 30%, rgba(10,11,13,.94) 88%);}
+.ss-ico{position:absolute; top:16px; left:16px; width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:21px; background:rgba(10,11,13,.62); border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(8px);}
+.ss-trend{position:absolute; top:18px; right:16px; font-family:var(--mono); font-size:8.5px; letter-spacing:.1em; color:var(--coral); background:rgba(255,106,77,.13); border:1px solid rgba(255,106,77,.4); border-radius:100px; padding:5px 10px;}
+.ss-meta{position:absolute; left:0; right:0; bottom:0; padding:18px 20px;}
+.ss-meta h4{font-family:var(--display); font-size:30px; letter-spacing:.02em;}
+.ss-meta span{font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.08em;}
+.ss-enter{position:absolute; left:20px; bottom:64px; font-size:10px; font-weight:800; letter-spacing:.12em; color:var(--void); background:var(--accent, var(--lime)); padding:8px 14px; border-radius:100px; opacity:0; transform:translateY(10px); transition:all .28s ease;}
+.ss-card:hover .ss-enter{opacity:1; transform:none;}
+
+/* ---- feed v2 ---- */
+.feed2-sub{font-size:15px; color:var(--muted); margin-top:8px;}
+.feed2-grid{display:grid; grid-template-columns:1.55fr .92fr; gap:26px; align-items:start; margin-top:6px;}
+.feed2-rail{position:sticky; top:96px; display:flex; flex-direction:column; gap:16px;}
+.rail-card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:18px 20px;}
+.rail-head{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+.rail-hash{display:flex; flex-direction:column; gap:2px;}
+.rail-hash a{display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; color:var(--text); font-size:13.5px; font-weight:600; transition:background .15s ease; cursor:pointer;}
+.rail-hash a:hover{background:var(--surface-2);}
+.rail-hash i{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--muted-2); margin-left:auto;}
+.rail-hash em{font-style:normal; color:var(--lime); font-weight:800;}
+.rail-live{display:flex; flex-direction:column; gap:10px;}
+.rail-live a{display:flex; gap:12px; align-items:center; cursor:pointer;}
+.rail-live .rl-th{width:52px; height:52px; border-radius:12px; background-size:cover; background-position:center; flex:none; position:relative;}
+.rail-live .rl-th::after{content:''; position:absolute; inset:auto 6px 6px auto; width:7px; height:7px; border-radius:50%; background:var(--coral); box-shadow:0 0 0 0 rgba(255,106,77,.5); animation:pulse 1.6s infinite;}
+.rail-live b{font-size:13px; display:block;}
+.rail-live i{font-style:normal; font-size:10.5px; color:var(--muted); font-family:var(--mono);}
+.rail-ppl{display:flex; flex-direction:column; gap:12px;}
+.rail-ppl .rp-row{display:flex; align-items:center; gap:11px;}
+.rail-ppl .rp-av{width:40px; height:40px; border-radius:50%; background-size:cover; background-position:center; flex:none;}
+.rail-ppl b{font-size:13px; display:block;}
+.rail-ppl i{font-style:normal; font-size:10.5px; color:var(--muted); font-family:var(--mono);}
+.rail-ppl .btn{margin-left:auto; padding:7px 13px; font-size:10px;}
+
+/* ---- happening now ---- */
+.live-sec .strip-head .eyebrow .dot-live{margin-right:8px;}
+.lc-card{position:relative; flex:0 0 300px; height:190px; border-radius:18px; overflow:hidden; scroll-snap-align:start; cursor:pointer; border:1px solid var(--line);}
+.lc-img{position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .5s ease;}
+.lc-card:hover .lc-img{transform:scale(1.07);}
+.lc-veil{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,11,13,.15), rgba(10,11,13,.9) 92%);}
+.lc-live{position:absolute; top:14px; left:14px; display:flex; align-items:center; gap:7px; background:rgba(255,106,77,.92); color:#fff; font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.12em; padding:6px 11px; border-radius:100px;}
+.lc-live .dot-w{width:6px; height:6px; border-radius:50%; background:#fff; animation:pulse2 1.2s infinite;}
+@keyframes pulse2{0%,100%{opacity:1;}50%{opacity:.25;}}
+.lc-sport{position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:9px; letter-spacing:.1em; background:rgba(10,11,13,.7); border:1px solid rgba(255,255,255,.14); padding:5px 10px; border-radius:100px; color:var(--muted); backdrop-filter:blur(6px);}
+.lc-body{position:absolute; left:0; right:0; bottom:0; padding:14px 16px;}
+.lc-body b{font-size:14px; display:block; margin-bottom:4px;}
+.lc-body i{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.06em;}
+
+/* ---- every sport world ---- */
+.world-stage{display:flex; justify-content:center; padding:30px 0 10px;}
+.world-orbit{position:relative; width:520px; height:520px;}
+.orbit-ring{position:absolute; border-radius:50%; border:1px solid var(--line);}
+.orbit-ring.r1{inset:110px; animation:spinSlow 60s linear infinite;}
+.orbit-ring.r2{inset:40px; border-style:dashed; border-color:#1C1F24; animation:spinSlow 90s linear infinite reverse;}
+@keyframes spinSlow{to{transform:rotate(360deg);}}
+.world-core{position:absolute; left:50%; top:50%; width:216px; height:216px; margin:-108px 0 0 -108px; border-radius:50%; background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; cursor:pointer; box-shadow:0 0 0 1px rgba(255,255,255,.1), 0 0 90px -18px rgba(198,255,61,.5); transition:transform .3s ease;}
+.world-core:hover{transform:scale(1.05);}
+.world-core::before{content:''; position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 50% 40%, rgba(10,11,13,.15), rgba(10,11,13,.82) 82%);}
+.world-core span{font-size:44px; position:relative; filter:drop-shadow(0 6px 14px rgba(0,0,0,.6));}
+.world-core b{font-family:var(--display); font-size:27px; letter-spacing:.04em; position:relative; margin-top:8px;}
+.world-core i{font-style:normal; font-family:var(--mono); font-size:9.5px; color:var(--lime); letter-spacing:.1em; position:relative; margin-top:5px;}
+.orbit-chip{position:absolute; left:50%; top:50%; font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--text); background:var(--surface); border:1px solid rgba(198,255,61,.35); border-radius:100px; padding:9px 16px; cursor:pointer; z-index:3; box-shadow:0 10px 26px -10px rgba(0,0,0,.6); transition:all .2s ease;}
+.orbit-chip:hover{background:var(--lime); color:var(--void); border-color:var(--lime); transform:scale(1.08);}
+.oc1{transform:translate(-50%,-50%) translatey(-210px);}
+.oc2{transform:translate(-50%,-50%) translate(150px,-150px);}
+.oc3{transform:translate(-50%,-50%) translateX(210px);}
+.oc4{transform:translate(-50%,-50%) translate(150px,150px);}
+.oc5{transform:translate(-50%,-50%) translateY(210px);}
+.oc6{transform:translate(-50%,-50%) translate(-150px,150px);}
+.oc7{transform:translate(-50%,-50%) translateX(-210px);}
+.world-examples{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:34px;}
+.we-card{position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--line); cursor:pointer; min-height:280px; background:var(--surface);}
+.we-img{position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .55s cubic-bezier(.2,.7,.2,1);}
+.we-card:hover .we-img{transform:scale(1.06);}
+.we-veil{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,11,13,.05) 20%, rgba(10,11,13,.92) 90%);}
+.we-tag{position:absolute; top:14px; left:14px; font-family:var(--mono); font-size:8.5px; letter-spacing:.12em; padding:6px 11px; border-radius:100px; background:rgba(10,11,13,.7); border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(6px); color:var(--muted);}
+.we-tab{position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:8.5px; letter-spacing:.08em; color:var(--cyan); background:rgba(70,224,255,.1); border:1px solid rgba(70,224,255,.35); padding:6px 10px; border-radius:100px;}
+.we-body{position:absolute; left:0; right:0; bottom:0; padding:18px 20px;}
+.we-body h4{font-family:var(--display); font-size:27px; letter-spacing:.02em;}
+.we-body p{font-size:12.5px; color:var(--muted); margin:7px 0 10px; line-height:1.55; max-width:300px;}
+.we-chips{display:flex; gap:6px; flex-wrap:wrap;}
+.we-chips span{font-family:var(--mono); font-size:8.5px; letter-spacing:.08em; color:var(--muted); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); padding:4px 9px; border-radius:100px;}
+.why-bar{display:grid; grid-template-columns:1fr 1px 1.2fr; gap:26px; align-items:center; margin-top:44px; background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:26px 30px;}
+.why-bar h4{font-family:var(--display); font-size:21px; letter-spacing:.06em; margin-bottom:8px; color:var(--muted-2);}
+.why-us h4{color:var(--lime);}
+.why-bar p{font-size:13.5px; color:var(--muted); line-height:1.65;}
+.why-divider{height:100%; min-height:64px; background:linear-gradient(180deg, transparent, var(--line), transparent);}
+
+/* ---- mosaic ---- */
+.mosaic{display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:196px; gap:16px;}
+.mo-card{position:relative; border-radius:20px; overflow:hidden; cursor:pointer; border:1px solid var(--line); background:var(--surface);}
+.mo-img{position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+.mo-card:hover .mo-img{transform:scale(1.08);}
+.mo-veil{position:absolute; inset:0; background:linear-gradient(185deg, rgba(10,11,13,.06) 35%, rgba(10,11,13,.9) 95%);}
+.mo-ico{position:absolute; top:14px; left:14px; font-size:22px; filter:drop-shadow(0 4px 10px rgba(0,0,0,.5));}
+.mo-body{position:absolute; left:0; right:0; bottom:0; padding:16px 18px;}
+.mo-body h4{font-family:var(--display); font-size:24px; letter-spacing:.02em;}
+.mo-body span{font-family:var(--mono); font-size:9.5px; color:var(--muted); letter-spacing:.08em;}
+.mo-big{grid-column:span 2; grid-row:span 2;}
+.mo-tall{grid-row:span 2;}
+.mo-wide{grid-column:span 2;}
+.mo-body .mo-oly{display:inline-block; margin-top:8px;}
+
+/* ---- challenges ---- */
+.chall2-stage{display:grid; grid-template-columns:1fr 1.1fr 1fr; gap:22px; align-items:stretch; margin-top:14px;}
+.chall2-side{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:28px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; position:relative; overflow:hidden;}
+.chall2-side.win{border-color:rgba(198,255,61,.4); background:linear-gradient(180deg, rgba(198,255,61,.06), var(--surface));}
+.chall2-side.win::after{content:'WINNER'; position:absolute; top:16px; right:16px; font-family:var(--mono); font-size:8.5px; letter-spacing:.14em; color:var(--void); background:var(--lime); border-radius:100px; padding:5px 10px; font-weight:800;}
+.chall2-avatar{width:96px; height:96px; border-radius:50%; background-size:cover; background-position:center; border:3px solid var(--surface-3); box-shadow:0 16px 40px -12px rgba(0,0,0,.6);}
+.chall2-name{font-size:15px; font-weight:800; letter-spacing:.04em; margin-top:6px;}
+.chall2-sport{font-size:10px; color:var(--muted); letter-spacing:.1em;}
+.chall2-time{font-family:var(--display); font-size:54px; letter-spacing:.03em; line-height:1; margin-top:8px;}
+.chall2-progress{width:100%; height:5px; border-radius:100px; background:var(--surface-3); overflow:hidden; margin-top:10px;}
+.chall2-progress i{display:block; height:100%; background:linear-gradient(90deg,var(--cyan),#7FA8FF); border-radius:100px;}
+.chall2-mid{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;}
+.chall2-vs{font-family:var(--display); font-size:64px; color:var(--coral); line-height:.9; text-shadow:0 0 40px rgba(255,106,77,.4);}
+.chall2-accepted{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-size:10px; letter-spacing:.16em; color:var(--lime); background:rgba(198,255,61,.09); border:1px solid rgba(198,255,61,.35); padding:9px 16px; border-radius:100px;}
+.chall2-live-bar{width:100%; display:flex; flex-direction:column; gap:8px; padding:0 8px;}
+.cl-track{height:6px; border-radius:100px; background:var(--surface-3); overflow:hidden;}
+.cl-track i{display:block; height:100%; border-radius:100px; animation:fillIn 1.6s cubic-bezier(.2,.7,.2,1);}
+.cl-track .cl-a{background:linear-gradient(90deg,#7FA8FF,#46E0FF);}
+.cl-track .cl-b{background:linear-gradient(90deg,#8FCB1F,#C6FF3D);}
+@keyframes fillIn{from{width:0;}}
+.chall2-note{font-size:9px; color:var(--muted-2); letter-spacing:.14em;}
+.chall2-lb{width:100%; padding:0 6px;}
+.clb-row{display:flex; align-items:center; gap:12px; padding:9px 12px; border-radius:10px; font-size:12.5px; background:var(--surface-2); border:1px solid var(--line); margin-bottom:7px;}
+.clb-row b{font-family:var(--mono); color:var(--lime); width:18px;}
+.clb-row em{font-style:normal; margin-left:auto; font-family:var(--mono); color:var(--muted); font-size:11px;}
+.clb-row:first-child{border-color:rgba(255,224,102,.35);}
+.chall2-minis{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:22px;}
+.ch2m{position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--line); cursor:pointer; background:var(--surface); height:120px;}
+.ch2m .c2m-img{position:absolute; inset:0; background-size:cover; background-position:center; opacity:.5; transition:all .3s ease;}
+.ch2m:hover .c2m-img{opacity:.75; transform:scale(1.06);}
+.ch2m .c2m-veil{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,11,13,.2), rgba(10,11,13,.9));}
+.ch2m .c2m-body{position:absolute; left:0; right:0; bottom:0; padding:12px 14px;}
+.ch2m b{font-size:12px; display:block;}
+.ch2m i{font-style:normal; font-family:var(--mono); font-size:9px; color:var(--lime); letter-spacing:.08em;}
+
+/* ---- may like strip ---- */
+.ml-card{flex:0 0 216px; height:158px;}
+
+/* ---- this day ---- */
+.thisday-feature{display:grid; grid-template-columns:1.5fr 1fr; gap:0; border-radius:24px; overflow:hidden; border:1px solid var(--line); background:var(--surface); position:relative;}
+.td-img{position:relative; min-height:380px; background-size:cover; background-position:center;}
+.td-img::after{content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent 55%, rgba(20,21,25,1));}
+.td-body{padding:34px 34px 30px; display:flex; flex-direction:column; justify-content:center;}
+.td-year{font-family:var(--display); font-size:64px; color:var(--lime); line-height:.9;}
+.td-sport{font-family:var(--mono); font-size:10px; letter-spacing:.16em; color:var(--muted); margin:10px 0 14px;}
+.td-body h3{font-family:var(--body); font-size:23px; font-weight:800; line-height:1.25; margin-bottom:12px;}
+.td-body p{color:var(--muted); font-size:14px; line-height:1.7;}
+.td-more{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:18px;}
+.tdm{display:flex; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px 18px; cursor:pointer; transition:all .18s ease;}
+.tdm:hover{border-color:var(--lime); transform:translateY(-2px);}
+.tdm .tdm-y{font-family:var(--display); font-size:26px; color:var(--text); min-width:64px;}
+.tdm .tdm-y i{display:block; font-style:normal; font-family:var(--mono); font-size:8.5px; color:var(--lime); letter-spacing:.12em; margin-top:2px;}
+.tdm b{font-size:13px; display:block; margin-bottom:3px;}
+.tdm p{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+/* ---- network flywheel ---- */
+.fly-stage{position:relative; width:min(640px,92vw); margin:20px auto 0; aspect-ratio:1;}
+.fly-svg{position:absolute; inset:0; width:100%; height:100%;}
+.fly-lines{animation:dashMove 3.2s linear infinite;}
+@keyframes dashMove{to{stroke-dashoffset:-48;}}
+.fly-core{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:132px; height:132px; border-radius:50%; background:radial-gradient(circle at 50% 35%, #1E2410, #101208); border:1.5px solid rgba(198,255,61,.5); box-shadow:0 0 70px -12px rgba(198,255,61,.55); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; font-family:var(--display); font-size:21px; letter-spacing:.06em; z-index:2;}
+.fly-node{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--text); background:var(--surface); border:1px solid rgba(198,255,61,.45); border-radius:100px; padding:10px 16px; box-shadow:0 0 24px -8px rgba(198,255,61,.5); white-space:nowrap; animation:nodeFloat 4.4s ease-in-out infinite; z-index:2;}
+.fly-node:nth-child(odd){animation-delay:-2.2s;}
+@keyframes nodeFloat{0%,100%{transform:translate(-50%,-50%);}50%{transform:translate(-50%,calc(-50% - 8px));}}
+.fn1{margin:-236px 0 0 0;} .fn2{margin:-118px 0 0 208px;} .fn3{margin:118px 0 0 208px;}
+.fn4{margin:236px 0 0 0;} .fn5{margin:118px 0 0 -208px;} .fn6{margin:-118px 0 0 -208px;}
+.fn7{margin:-185px 0 0 118px;} .fn8{margin:185px 0 0 -118px;}
+
+/* ---- business ecosystem ---- */
+.biz-stage{position:relative; width:min(640px,92vw); margin:6px auto 0; aspect-ratio:640/520;}
+.biz-svg{position:absolute; inset:0; width:100%; height:100%;}
+.biz-svg g{animation:dashMove 3.6s linear infinite;}
+.biz-core{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:110px; height:110px; border-radius:50%; background:radial-gradient(circle at 50% 35%, #1E2410, #101208); border:1.5px solid rgba(198,255,61,.5); box-shadow:0 0 60px -14px rgba(198,255,61,.55); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:19px; letter-spacing:.06em; z-index:2;}
+.biz-node{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.1em; color:var(--text); background:var(--surface); border:1px solid rgba(70,224,255,.4); border-radius:100px; padding:10px 16px; box-shadow:0 0 24px -8px rgba(70,224,255,.4); white-space:nowrap; animation:nodeFloat 5s ease-in-out infinite; z-index:2;}
+.biz-node:nth-child(odd){animation-delay:-2.5s;}
+.bn1{margin:-190px 0 0 0;} .bn2{margin:-95px 0 0 220px;} .bn3{margin:95px 0 0 220px;}
+.bn4{margin:190px 0 0 0;} .bn5{margin:95px 0 0 -220px;}
+.biz-flows{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:36px;}
+.biz-flow{display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--lime); border-radius:14px; padding:16px 18px; transition:all .18s ease;}
+.biz-flow:hover{transform:translateX(4px); border-color:var(--lime);}
+.biz-flow b{font-family:var(--display); font-size:22px; color:var(--lime); min-width:30px;}
+.biz-flow h4{font-size:14px; font-weight:800; margin-bottom:4px;}
+.biz-flow p{font-size:12px; color:var(--muted); line-height:1.55;}
+.biz-flow span{font-family:var(--mono); font-size:8.5px; letter-spacing:.1em; color:var(--cyan); background:rgba(70,224,255,.08); border:1px solid rgba(70,224,255,.3); border-radius:100px; padding:4px 9px; white-space:nowrap; margin-left:auto; flex:none;}
+
+/* ---- globe ---- */
+.globe-sec{overflow:hidden;}
+.globe-stage{position:relative; width:min(600px,90vw); margin:24px auto 0; aspect-ratio:1;}
+.globe-svg{position:absolute; inset:0; width:100%; height:100%;}
+.globe-svg .globe-arcs{animation:dashMove 4s linear infinite;}
+.globe-svg{animation:globeSpin 80s linear infinite;}
+@keyframes globeSpin{to{transform:rotate(360deg);}}
+.globe-label{position:absolute; font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; color:var(--muted); background:rgba(20,21,25,.85); border:1px solid var(--line); border-radius:100px; padding:7px 13px; white-space:nowrap; animation:nodeFloat 5.4s ease-in-out infinite;}
+.globe-label.gl-ind{color:var(--lime); border-color:rgba(198,255,61,.55); box-shadow:0 0 26px -8px rgba(198,255,61,.6); font-size:10.5px; font-weight:700; animation-delay:-1s;}
+.globe-label.gl-ind span{display:block; font-size:7.5px; color:var(--muted); letter-spacing:.18em; margin-top:2px;}
+.gl-ind{left:6%; top:60%;} .gl-a{right:4%; top:24%;} .gl-e{left:2%; top:20%;} .gl-na{right:8%; top:6%;} .gl-sa{right:10%; bottom:8%;} .gl-af{left:14%; bottom:12%;} .gl-au{right:26%; bottom:2%;}
+.globe-rows{max-width:640px; margin:36px auto 0; display:flex; flex-direction:column; gap:12px;}
+.globe-row{display:flex; align-items:center; gap:16px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:13px 20px;}
+.globe-row i{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--muted-2);}
+.globe-row b{font-size:13.5px; min-width:130px;}
+.gr-bar{flex:1; height:5px; border-radius:100px; background:var(--surface-3); overflow:hidden;}
+.gr-bar span{display:block; height:100%; background:linear-gradient(90deg,var(--lime),var(--cyan)); border-radius:100px;}
+.globe-row em{font-style:normal; font-size:8.5px; letter-spacing:.14em; color:var(--lime);}
+
+/* ---- final CTA ---- */
+.cta2{position:relative; padding:170px 0 120px; text-align:center; overflow:hidden;}
+.cta2-collage{position:absolute; inset:-8%; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; animation:collageDrift 36s ease-in-out infinite alternate;}
+@keyframes collageDrift{from{transform:translate3d(-1.5%,-1%,0) scale(1.04);}to{transform:translate3d(1.5%,1.5%,0) scale(1.1);}}
+.cta2-collage div{background-size:cover; background-position:center; filter:saturate(.9) brightness(.8); border-radius:14px;}
+.cta2-overlay{position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(10,11,13,.78), rgba(10,11,13,.94) 78%); backdrop-filter:saturate(1.1);}
+.cta2-in{position:relative;}
+.cta2 h2{font-size:clamp(52px,9.5vw,128px); line-height:.92; text-shadow:0 20px 80px rgba(0,0,0,.6);}
+.cta2 p{color:#C9CFDC; font-size:18px; margin:26px auto 42px; max-width:480px;}
+
+/* ---- footer v2 ---- */
+.footer2{border-top:1px solid var(--line); background:linear-gradient(180deg, var(--surface), #0C0D10); padding:64px 0 30px; position:relative; overflow:hidden;}
+.footer2::before{content:''; position:absolute; inset:0; background:radial-gradient(700px 240px at 15% 0%, rgba(198,255,61,.05), transparent 60%); pointer-events:none;}
+.f2-top{display:grid; grid-template-columns:1.2fr 2fr; gap:48px; align-items:start;}
+.f2-logo{font-size:44px;}
+.f2-brand p{color:var(--muted); font-size:14px; line-height:1.7; margin:16px 0 22px; letter-spacing:.04em;}
+.f2-social{display:flex; gap:10px;}
+.f2-social a{width:40px; height:40px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--muted); transition:all .18s ease;}
+.f2-social a:hover{color:var(--void); background:var(--lime); border-color:var(--lime); transform:translateY(-2px);}
+.f2-social svg{width:17px; height:17px;}
+
+/* ---- responsive ---- */
+@media(max-width:1080px){
+  .hero2-grid{grid-template-columns:1fr; gap:10px;}
+  .hero2-stage{height:540px; max-width:560px; margin:0 auto; width:100%;}
+  .feed2-grid{grid-template-columns:1fr;}
+  .feed2-rail{position:static;}
+  .world-examples{grid-template-columns:1fr 1fr;}
+  .chall2-minis{grid-template-columns:repeat(2,1fr);}
+  .biz-flows{grid-template-columns:1fr;}
+  .thisday-feature{grid-template-columns:1fr;}
+  .td-img{min-height:240px;}
+  .td-img::after{background:linear-gradient(180deg, transparent 40%, rgba(20,21,25,1));}
+}
+@media(max-width:760px){
+  .hero2{padding-top:120px;}
+  .hero2-stage{height:480px;}
+  .hc-phone{width:224px; right:0;}
+  .hc-athlete{width:186px; top:0;}
+  .hc-live{width:206px; bottom:96px; left:0;}
+  .hc-chall{width:196px; top:300px; right:-4px;}
+  .hc-trend{display:none;}
+  .mosaic{grid-template-columns:repeat(2,1fr); grid-auto-rows:160px;}
+  .mo-big{grid-column:span 2;}
+  .world-orbit{width:340px; height:340px;}
+  .world-core{width:150px; height:150px; margin:-75px 0 0 -75px;}
+  .world-core span{font-size:30px;} .world-core b{font-size:18px;}
+  .oc1{transform:translate(-50%,-50%) translatey(-140px);} .oc2{transform:translate(-50%,-50%) translate(100px,-100px);}
+  .oc3{transform:translate(-50%,-50%) translateX(140px);} .oc4{transform:translate(-50%,-50%) translate(100px,100px);}
+  .oc5{transform:translate(-50%,-50%) translateY(140px);} .oc6{transform:translate(-50%,-50%) translate(-100px,100px);}
+  .oc7{transform:translate(-50%,-50%) translateX(-140px);}
+  .world-examples{grid-template-columns:1fr;}
+  .chall2-stage{grid-template-columns:1fr;}
+  .chall2-time{font-size:42px;}
+  .why-bar{grid-template-columns:1fr;} .why-divider{display:none;}
+  .td-more{grid-template-columns:1fr;}
+  .strip-scroll{padding-left:22px; padding-right:22px; margin:0 -22px;}
+  .f2-top{grid-template-columns:1fr; gap:34px;}
+  .fly-node{font-size:8.5px; padding:8px 11px;}
+  .fn1{margin:-170px 0 0 0;} .fn2{margin:-85px 0 0 150px;} .fn3{margin:85px 0 0 150px;}
+  .fn4{margin:170px 0 0 0;} .fn5{margin:85px 0 0 -150px;} .fn6{margin:-85px 0 0 -150px;}
+  .fn7{margin:-134px 0 0 85px;} .fn8{margin:134px 0 0 -85px;}
+  .cta2-collage{grid-template-columns:repeat(2,1fr);}
+  .globe-label{display:none;} .globe-label.gl-ind{display:block;}
+}
+@media (prefers-reduced-motion: reduce){
+  .rv{transition:none; opacity:1; transform:none;}
+  .hc-card, .orbit-ring, .fly-lines, .cta2-collage, .globe-svg{animation:none !important;}
+}
+
+/* ============================================================
    EVENTS DISCOVERY ENGINE — styles
    ============================================================ */
 
@@ -952,144 +1297,344 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <main>
 <section class="view active" id="view-home">
 
-  <div class="hero wrap">
-    <div class="hero-grid">
-      <div>
+  <!-- ============ HERO v2 — cinematic layered ============ -->
+  <div class="hero2">
+    <div class="wrap hero2-grid">
+      <div class="hero2-left">
         <div class="eyebrow">The digital home of sport</div>
-        <h1>THE WORLD OF SPORT.<br><span>ONE SOCIAL PLATFORM.</span></h1>
-        <p>Follow the sports you love. Discover new ones. Connect with fans, athletes and friends. Challenge your community. Experience sport like never before.</p>
+        <h1 class="hero2-title">THE WORLD OF SPORT.<br><span>ONE SOCIAL PLATFORM.</span></h1>
+        <p class="hero2-sub">Follow the sports you love. Discover new ones. Connect with fans, athletes and friends. Challenge your community.</p>
         <div class="hero-btns">
           <button class="btn btn-primary" onclick="showToast('Welcome to PLAYR 🎉')">Join PLAYR</button>
           <button class="btn btn-ghost" onclick="switchView('discover')">Explore Sports</button>
         </div>
-        <div class="ticker-strip">
-          <div class="ticker-track" id="heroTicker"></div>
+        <div class="hero2-stats mono-num">
+          <span><b>207</b> SPORTS</span><i></i>
+          <span><b>78</b> EVENTS</span><i></i>
+          <span><b>∞</b> COMMUNITIES</span>
         </div>
       </div>
-      <div class="phone-stage">
-        <div class="phone">
-          <div class="phone-notch"></div>
-          <div class="phone-feed" id="phoneFeed"></div>
-        </div>
-        <div class="float-label fl1">LIVE</div>
-        <div class="float-label fl2">TRENDING</div>
-        <div class="float-label fl3">CHALLENGE</div>
-        <div class="float-label fl4">DISCOVER</div>
-        <div class="float-label fl5">NEW</div>
-      </div>
+      <div class="hero2-stage" id="heroStage"></div>
+    </div>
+    <div class="ticker-strip hero2-ticker">
+      <div class="ticker-track" id="heroTicker"></div>
     </div>
   </div>
 
-  <!-- FEED TEASER -->
+  <!-- ============ SPORTS UNIVERSE STRIP ============ -->
+  <div class="section sport-strip-sec">
+    <div class="wrap strip-head">
+      <div>
+        <div class="eyebrow">The sports universe</div>
+        <h2 class="section-title">EXPLORE THE WORLD OF SPORT.</h2>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="switchView('discover')">All 207 sports →</button>
+    </div>
+    <div class="strip-scroll" id="sportStrip"></div>
+  </div>
+
+  <!-- ============ YOUR FEED — real social product ============ -->
   <div class="section section-alt">
     <div class="wrap">
       <div class="section-head">
         <div>
           <div class="eyebrow">Your feed</div>
           <h2 class="section-title">FOR YOU.</h2>
+          <p class="feed2-sub">Your sports. Your people. Your world.</p>
         </div>
         <div class="section-sub">A personalized stream built from every sport you follow — athletes, creators, teams and friends, all in one scroll.</div>
       </div>
-      <div class="feed-tabs">
-        <div class="feed-tab active" data-tab="foryou" onclick="setFeedTab('foryou')">For You</div>
-        <div class="feed-tab" data-tab="following" onclick="setFeedTab('following')">Following</div>
-        <div class="feed-tab" data-tab="trending" onclick="setFeedTab('trending')">Trending</div>
+      <div class="feed2-grid">
+        <div>
+          <div class="feed-tabs">
+            <div class="feed-tab active" data-tab="foryou" onclick="setFeedTab('foryou')">For You</div>
+            <div class="feed-tab" data-tab="following" onclick="setFeedTab('following')">Following</div>
+            <div class="feed-tab" data-tab="trending" onclick="setFeedTab('trending')">Trending</div>
+          </div>
+          <div class="feed-col" id="homeFeed"></div>
+        </div>
+        <aside class="feed2-rail" id="homeRail"></aside>
       </div>
-      <div class="feed-col" id="homeFeed"></div>
-      <div style="text-align:center; margin-top:10px;">
+      <div style="text-align:center; margin-top:26px;">
         <button class="btn btn-ghost btn-sm" onclick="switchView('discover')">See full feed in Discover</button>
       </div>
     </div>
   </div>
 
-  <!-- HAPPENING NEAR YOU (Events) -->
-  <div class="section section-alt" id="homeNearYou"></div>
-
-  <!-- NETWORK EFFECT -->
-  <div class="section">
-    <div class="wrap" style="text-align:center;">
-      <div class="eyebrow" style="justify-content:center;">Why PLAYR compounds</div>
-      <h2 class="section-title">THE MORE PEOPLE PLAY,<br>THE STRONGER PLAYR BECOMES.</h2>
-      <div class="flywheel">
-        <div class="fw-node card"><div class="fw-i">01</div><h4>More Sports</h4></div>
-        <div class="fw-arrow">→</div>
-        <div class="fw-node card"><div class="fw-i">02</div><h4>More Content</h4></div>
-        <div class="fw-node card"><div class="fw-i">03</div><h4>More Users</h4></div>
-        <div class="fw-arrow">→</div>
-        <div class="fw-node card"><div class="fw-i">04</div><h4>More Creators</h4></div>
-        <div class="fw-node card"><div class="fw-i">05</div><h4>More Communities</h4></div>
-        <div class="fw-arrow">→</div>
-        <div class="fw-node card"><div class="fw-i">06</div><h4>More Challenges</h4></div>
-        <div class="fw-node card"><div class="fw-i">07</div><h4>More Brands</h4></div>
-        <div class="fw-arrow">→</div>
-        <div class="fw-node card" style="background:rgba(198,255,61,.08); border-color:var(--lime);"><div class="fw-i" style="color:var(--lime);">08</div><h4>More Revenue</h4></div>
+  <!-- ============ HAPPENING NOW — live strip ============ -->
+  <div class="section live-sec">
+    <div class="wrap strip-head">
+      <div>
+        <div class="eyebrow"><span class="dot-live"></span> Live from PLAYR</div>
+        <h2 class="section-title">HAPPENING NOW.</h2>
       </div>
+      <button class="btn btn-ghost btn-sm" onclick="switchView('events')">All events →</button>
     </div>
+    <div class="strip-scroll" id="liveStrip"></div>
   </div>
 
-  <!-- WHY PLAYR -->
-  <div class="section section-alt">
+  <!-- ============ EVERY SPORT HAS ITS OWN WORLD ============ -->
+  <div class="section section-alt world-sec">
     <div class="wrap">
-      <div class="section-head">
-        <div><div class="eyebrow">Why PLAYR</div><h2 class="section-title">NOT JUST SPORTS CONTENT.<br>A WORLD BUILT AROUND SPORT.</h2></div>
+      <div class="section-head" style="text-align:center;">
+        <div class="eyebrow" style="justify-content:center;">The Sport Universe</div>
+        <h2 class="section-title">EVERY SPORT HAS<br>ITS OWN WORLD.</h2>
+        <p class="section-sub" style="margin:14px auto 0;">One app contains an entire world for every sport. Tap any planet — each one has its own feed, history, athletes, communities, challenges, events and stats.</p>
       </div>
-      <div class="compare-grid">
-        <div class="compare-col card">
-          <h3 style="color:var(--muted-2);">Traditional Social Media</h3>
-          <div class="compare-item">— General content, sport is one feed among many</div>
-          <div class="compare-item">— Fans scattered across apps and pages</div>
-          <div class="compare-item">— Generic, one-size-fits-all communities</div>
-          <div class="compare-item">— No real sports identity or belonging</div>
-          <div class="compare-item">— Sports info fragmented across sources</div>
-        </div>
-        <div class="compare-col card playr">
-          <h3 style="color:var(--lime);">PLAYR</h3>
-          <div class="compare-item">Sports-first, from cricket to chess to esports</div>
-          <div class="compare-item">Every sport has its own home and universe</div>
-          <div class="compare-item">A personalized sports universe, built by you</div>
-          <div class="compare-item">Real communities, challenges and belonging</div>
-          <div class="compare-item">History, stats, events and commerce — unified</div>
+      <div class="world-stage rv">
+        <div class="world-orbit">
+          <div class="world-core" onclick="openSport('cricket')" style="background-image:url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500&h=500&fit=crop'), linear-gradient(135deg,#C6FF3D33,#0A0B0D);">
+            <span>🏏</span><b>CRICKET</b><i>8.2M followers</i>
+          </div>
+          <div class="orbit-ring r1"></div>
+          <div class="orbit-ring r2"></div>
+          <div class="orbit-chip oc1" onclick="openSport('cricket')">Feed</div>
+          <div class="orbit-chip oc2" onclick="openSport('cricket')">History</div>
+          <div class="orbit-chip oc3" onclick="openSport('cricket')">Athletes</div>
+          <div class="orbit-chip oc4" onclick="openSport('cricket')">Community</div>
+          <div class="orbit-chip oc5" onclick="openSport('cricket')">Challenges</div>
+          <div class="orbit-chip oc6" onclick="openSport('cricket')">Events</div>
+          <div class="orbit-chip oc7" onclick="openSport('cricket')">Stats</div>
         </div>
       </div>
+      <div class="world-examples" id="worldExamples"></div>
+      <div class="why-bar rv">
+        <div class="why-playr">
+          <h4>EVERYTHING ELSE</h4>
+          <p>Sport is one feed among many. Fans scattered. Generic communities. No history, no stats, no belonging.</p>
+        </div>
+        <div class="why-divider"></div>
+        <div class="why-us">
+          <h4>PLAYR</h4>
+          <p>Sports-first — from cricket to chess to esports. Every sport has its own universe. History, stats, events and commerce — unified. One passion. One community.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- FUTURE VISION -->
-  <div class="section">
+  <!-- ============ DISCOVER SOMETHING NEW — mosaic ============ -->
+  <div class="section mosaic-sec">
     <div class="wrap">
       <div class="section-head">
-        <div><div class="eyebrow">Future vision</div><h2 class="section-title">WE'RE BUILDING THE<br>DIGITAL HOME OF SPORT.</h2></div>
-        <div class="section-sub">From India to the world — connecting sports communities across every continent.</div>
+        <div>
+          <div class="eyebrow">World of sport</div>
+          <h2 class="section-title">DISCOVER SOMETHING NEW.</h2>
+        </div>
+        <div class="section-sub">207 worlds. Zero algorithms standing still — tap anything that looks like yours.</div>
       </div>
-      <div class="globe-region"><div class="gr-index">01</div><div class="gr-name">India</div><div class="gr-bar"><div class="gr-bar-in" style="width:92%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">02</div><div class="gr-name">Asia</div><div class="gr-bar"><div class="gr-bar-in" style="width:64%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">03</div><div class="gr-name">Europe</div><div class="gr-bar"><div class="gr-bar-in" style="width:48%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">04</div><div class="gr-name">North America</div><div class="gr-bar"><div class="gr-bar-in" style="width:41%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">05</div><div class="gr-name">South America</div><div class="gr-bar"><div class="gr-bar-in" style="width:29%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">06</div><div class="gr-name">Africa</div><div class="gr-bar"><div class="gr-bar-in" style="width:22%;"></div></div></div>
-      <div class="globe-region"><div class="gr-index">07</div><div class="gr-name">Australia</div><div class="gr-bar"><div class="gr-bar-in" style="width:18%;"></div></div></div>
+      <div class="mosaic rv" id="mosaicGrid"></div>
+      <div style="text-align:center;margin-top:30px;"><button class="btn btn-primary" onclick="switchView('discover')">Open the full catalogue</button></div>
     </div>
   </div>
 
-  <!-- BUSINESS MODEL -->
-  <div class="section section-alt">
+  <!-- ============ CHALLENGES ============ -->
+  <div class="section section-alt chall2-sec">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Business model</div><h2 class="section-title">BUILT TO SCALE.</h2></div></div>
-      <div class="revenue-grid">
-        <div class="revenue-card card"><div class="rn">01</div><h4>Advertising</h4><p>Native brand placements across sport-specific feeds.</p></div>
-        <div class="revenue-card card"><div class="rn">02</div><h4>PLAYR+ Subscriptions</h4><p>Premium stats, history and personalization for ₹365/yr.</p></div>
-        <div class="revenue-card card"><div class="rn">03</div><h4>Sponsored Challenges</h4><p>Brands power recreational challenges across sports.</p></div>
-        <div class="revenue-card card"><div class="rn">04</div><h4>Commerce Commissions</h4><p>A cut of every gear and merchandise sale in-app.</p></div>
-        <div class="revenue-card card"><div class="rn">05</div><h4>Official Partnerships</h4><p>Clubs, leagues and academies run their hub on PLAYR.</p></div>
-        <div class="revenue-card card"><div class="rn">06</div><h4>Event & Platform Fees</h4><p>Tournaments and competitions hosted on PLAYR infrastructure.</p></div>
-        <div class="revenue-card card"><div class="rn">07</div><h4>Merchandise</h4><p>PLAYR-branded drops and limited collaborations.</p></div>
-        <div class="revenue-card card"><div class="rn">08</div><h4>Creator Monetization</h4><p>Tipping, subscriptions and brand deals for sports creators.</p></div>
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Recreational challenges</div>
+          <h2 class="section-title">DON'T JUST WATCH.<br>CHALLENGE.</h2>
+        </div>
+        <div class="section-sub">Fun · social · unofficial — settle it on the field, not in the group chat.</div>
+      </div>
+      <div class="chall2-stage rv">
+        <div class="chall2-side">
+          <div class="chall2-avatar" style="background-image:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=300&fit=crop'), linear-gradient(135deg,#7FA8FF33,#141519);"></div>
+          <div class="chall2-name">VIVAAN MORADIA</div>
+          <div class="chall2-sport mono-num">RUNNING · 10 KM</div>
+          <div class="chall2-time">60:00</div>
+          <div class="chall2-progress"><i style="width:72%;"></i></div>
+        </div>
+        <div class="chall2-mid">
+          <div class="chall2-vs">VS</div>
+          <div class="chall2-accepted"><span class="dot-live"></span> CHALLENGE ACCEPTED</div>
+          <div class="chall2-live-bar">
+            <div class="cl-track"><i class="cl-a" style="width:72%;"></i></div>
+            <div class="cl-track"><i class="cl-b" style="width:78%;"></i></div>
+          </div>
+          <div class="chall2-note mono-num">COMMUNITY LEADERBOARD · THIS WEEK</div>
+          <div class="chall2-lb">
+            <div class="clb-row"><b>1</b><span>Rhea K.</span><em>55:03</em></div>
+            <div class="clb-row"><b>2</b><span>Farhan A.</span><em>57:42</em></div>
+            <div class="clb-row"><b>3</b><span>You?</span><em>—:—</em></div>
+          </div>
+        </div>
+        <div class="chall2-side win">
+          <div class="chall2-avatar" style="background-image:url('https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=300&fit=crop'), linear-gradient(135deg,#C6FF3D33,#141519);"></div>
+          <div class="chall2-name">RHEA KAPOOR</div>
+          <div class="chall2-sport mono-num">RUNNING · 10 KM</div>
+          <div class="chall2-time" style="color:var(--lime);">57:42</div>
+          <div class="chall2-progress"><i style="width:78%; background:var(--lime);"></i></div>
+        </div>
+      </div>
+      <div class="chall2-minis" id="chall2Minis"></div>
+      <div style="text-align:center;margin-top:26px;"><button class="btn btn-primary" onclick="switchView('challenges')">Start a challenge</button></div>
+    </div>
+  </div>
+
+  <!-- ============ YOU MAY ALSO LIKE ============ -->
+  <div class="section maylike-sec">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">For you</div>
+          <h2 class="section-title">YOU MAY ALSO LIKE.</h2>
+        </div>
+        <div class="section-sub" id="mayLikeSub">Based on the sports you follow.</div>
+      </div>
+      <div class="strip-scroll" id="mayLikeStrip"></div>
+    </div>
+  </div>
+
+  <!-- ============ THIS DAY IN SPORT ============ -->
+  <div class="section section-alt thisday-sec">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">PLAYR History</div>
+          <h2 class="section-title">THIS DAY IN SPORT.</h2>
+        </div>
+        <div class="section-sub">PLAYR isn't just social — it's where the memory of sport lives.</div>
+      </div>
+      <div class="thisday-feature rv" id="thisDayFeature"></div>
+      <div class="thisday-more" id="thisDayMore"></div>
+      <div style="margin-top:26px;"><button class="btn btn-ghost btn-sm" onclick="openSport('athletics')">Explore history →</button></div>
+    </div>
+  </div>
+
+  <!-- ============ NETWORK FLYWHEEL ============ -->
+  <div class="section net-sec">
+    <div class="wrap">
+      <div class="section-head" style="text-align:center;">
+        <div class="eyebrow" style="justify-content:center;">Why PLAYR compounds</div>
+        <h2 class="section-title">THE MORE PEOPLE PLAY,<br>THE STRONGER PLAYR BECOMES.</h2>
+      </div>
+      <div class="fly-stage rv">
+        <svg viewBox="0 0 640 640" class="fly-svg" aria-hidden="true">
+          <g class="fly-lines" fill="none" stroke="#C6FF3D" stroke-width="1.2" stroke-dasharray="5 7">
+            <line x1="320" y1="320" x2="320" y2="84"/><line x1="320" y1="320" x2="528" y2="202"/><line x1="320" y1="320" x2="528" y2="438"/>
+            <line x1="320" y1="320" x2="320" y2="556"/><line x1="320" y1="320" x2="112" y2="438"/><line x1="320" y1="320" x2="112" y2="202"/>
+            <line x1="320" y1="320" x2="464" y2="110"/><line x1="320" y1="320" x2="464" y2="530"/><line x1="320" y1="320" x2="176" y2="530"/><line x1="320" y1="320" x2="176" y2="110"/>
+            <circle cx="320" cy="84" r="4" fill="#C6FF3D"/><circle cx="528" cy="202" r="4" fill="#C6FF3D"/><circle cx="528" cy="438" r="4" fill="#C6FF3D"/>
+            <circle cx="320" cy="556" r="4" fill="#C6FF3D"/><circle cx="112" cy="438" r="4" fill="#C6FF3D"/><circle cx="112" cy="202" r="4" fill="#C6FF3D"/>
+          </g>
+          <circle cx="320" cy="320" r="196" fill="none" stroke="#2A2D34" stroke-width="1"/>
+          <circle cx="320" cy="320" r="268" fill="none" stroke="#1C1F24" stroke-width="1"/>
+        </svg>
+        <div class="fly-core"><span class="logo-mark"></span>PLAYR</div>
+        <div class="fly-node fn1">MORE SPORTS</div>
+        <div class="fly-node fn2">MORE CONTENT</div>
+        <div class="fly-node fn3">MORE USERS</div>
+        <div class="fly-node fn4">MORE CREATORS</div>
+        <div class="fly-node fn5">MORE COMMUNITIES</div>
+        <div class="fly-node fn6">MORE CHALLENGES</div>
+        <div class="fly-node fn7">MORE BRANDS</div>
+        <div class="fly-node fn8">MORE REVENUE</div>
       </div>
     </div>
   </div>
 
-  <div class="final-cta">
+  <!-- ============ BUSINESS ECOSYSTEM ============ -->
+  <div class="section section-alt biz-sec">
     <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Business model</div>
+          <h2 class="section-title">BUILT TO SCALE.</h2>
+        </div>
+        <div class="section-sub">Not eight boxes — one ecosystem. Value flows between everyone who plays.</div>
+      </div>
+      <div class="biz-stage rv">
+        <svg viewBox="0 0 640 520" class="biz-svg" aria-hidden="true">
+          <g fill="none" stroke="#C6FF3D" stroke-width="1.1" stroke-dasharray="4 8" opacity=".7">
+            <line x1="320" y1="260" x2="320" y2="70"/><line x1="320" y1="260" x2="540" y2="165"/><line x1="320" y1="260" x2="540" y2="355"/>
+            <line x1="320" y1="260" x2="320" y2="450"/><line x1="320" y1="260" x2="100" y2="355"/><line x1="320" y1="260" x2="100" y2="165"/>
+          </g>
+          <circle cx="320" cy="260" r="150" fill="none" stroke="#2A2D34"/>
+        </svg>
+        <div class="biz-core">PLAYR</div>
+        <div class="biz-node bn1">👥 USERS</div>
+        <div class="biz-node bn2">🏏 SPORTS</div>
+        <div class="biz-node bn3">🎬 CREATORS</div>
+        <div class="biz-node bn4">🏢 BRANDS</div>
+        <div class="biz-node bn5">🏟️ EVENTS</div>
+      </div>
+      <div class="biz-flows rv">
+        <div class="biz-flow"><b>01</b><div><h4>Advertising</h4><p>Native brand placements across sport-specific feeds.</p></div><span>BRANDS → PLAYR</span></div>
+        <div class="biz-flow"><b>02</b><div><h4>PLAYR+ Subscriptions</h4><p>Premium stats, history and personalization for ₹365/yr.</p></div><span>USERS → PLAYR</span></div>
+        <div class="biz-flow"><b>03</b><div><h4>Sponsored Challenges</h4><p>Brands power recreational challenges across sports.</p></div><span>BRANDS → USERS</span></div>
+        <div class="biz-flow"><b>04</b><div><h4>Commerce Commissions</h4><p>A cut of every gear and merchandise sale in-app.</p></div><span>COMMERCE → PLAYR</span></div>
+        <div class="biz-flow"><b>05</b><div><h4>Official Partnerships</h4><p>Clubs, leagues and academies run their hub on PLAYR.</p></div><span>SPORTS → PLAYR</span></div>
+        <div class="biz-flow"><b>06</b><div><h4>Event & Platform Fees</h4><p>Tournaments hosted on PLAYR infrastructure.</p></div><span>EVENTS → PLAYR</span></div>
+        <div class="biz-flow"><b>07</b><div><h4>Merchandise</h4><p>PLAYR-branded drops and limited collaborations.</p></div><span>PLAYR → FANS</span></div>
+        <div class="biz-flow"><b>08</b><div><h4>Creator Monetization</h4><p>Tipping, subscriptions and brand deals for creators.</p></div><span>FANS → CREATORS</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HAPPENING NEAR YOU (Events engine) -->
+  <div class="section" id="homeNearYou"></div>
+
+  <!-- ============ FUTURE VISION — globe ============ -->
+  <div class="section section-alt globe-sec">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Future vision</div>
+          <h2 class="section-title">FROM INDIA<br>TO THE WORLD.</h2>
+          <p class="section-sub" style="margin-top:14px;">Building the digital home of sport for every community, everywhere.</p>
+        </div>
+      </div>
+      <div class="globe-stage rv">
+        <svg viewBox="0 0 620 620" class="globe-svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="glowInd" cx="50%" cy="50%"><stop offset="0%" stop-color="#C6FF3D" stop-opacity=".9"/><stop offset="100%" stop-color="#C6FF3D" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle cx="310" cy="310" r="250" fill="#0D0E11" stroke="#2A2D34"/>
+          <g fill="none" stroke="#1C1F24">
+            <ellipse cx="310" cy="310" rx="250" ry="94"/><ellipse cx="310" cy="310" rx="250" ry="170"/><ellipse cx="310" cy="310" rx="94" ry="250"/><ellipse cx="310" cy="310" rx="170" ry="250"/>
+            <line x1="60" y1="310" x2="560" y2="310"/>
+          </g>
+          <g class="globe-arcs" fill="none" stroke="#C6FF3D" stroke-width="1.3" stroke-dasharray="4 8" opacity=".8">
+            <path d="M310 340 Q 420 240 470 180"/>
+            <path d="M310 340 Q 240 200 180 150"/>
+            <path d="M310 340 Q 430 400 480 430"/>
+            <path d="M310 340 Q 200 420 150 450"/>
+            <path d="M310 340 Q 340 180 350 120"/>
+            <path d="M310 340 Q 280 470 260 500"/>
+          </g>
+          <circle cx="310" cy="340" r="46" fill="url(#glowInd)"/>
+          <circle cx="310" cy="340" r="7" fill="#C6FF3D"/>
+          <g fill="#9096A3">
+            <circle cx="470" cy="180" r="5"/><circle cx="180" cy="150" r="4.5"/><circle cx="480" cy="430" r="4.5"/><circle cx="150" cy="450" r="4"/><circle cx="350" cy="120" r="4"/><circle cx="260" cy="500" r="4"/>
+          </g>
+        </svg>
+        <div class="globe-label gl-ind">🇮🇳 INDIA<span>WHERE IT STARTS</span></div>
+        <div class="globe-label gl-a">ASIA</div>
+        <div class="globe-label gl-e">EUROPE</div>
+        <div class="globe-label gl-na">NORTH AMERICA</div>
+        <div class="globe-label gl-sa">SOUTH AMERICA</div>
+        <div class="globe-label gl-af">AFRICA</div>
+        <div class="globe-label gl-au">AUSTRALIA</div>
+      </div>
+      <div class="globe-rows">
+        <div class="globe-row rv"><i>01</i><b>India</b><div class="gr-bar"><span style="width:92%;"></span></div><em class="mono-num">LIVE</em></div>
+        <div class="globe-row rv"><i>02</i><b>Asia</b><div class="gr-bar"><span style="width:64%;"></span></div><em class="mono-num">GROWING</em></div>
+        <div class="globe-row rv"><i>03</i><b>Europe</b><div class="gr-bar"><span style="width:48%;"></span></div><em class="mono-num">GROWING</em></div>
+        <div class="globe-row rv"><i>04</i><b>North America</b><div class="gr-bar"><span style="width:41%;"></span></div><em class="mono-num">EMERGING</em></div>
+        <div class="globe-row rv"><i>05</i><b>South America</b><div class="gr-bar"><span style="width:29%;"></span></div><em class="mono-num">EMERGING</em></div>
+        <div class="globe-row rv"><i>06</i><b>Africa</b><div class="gr-bar"><span style="width:22%;"></span></div><em class="mono-num">EMERGING</em></div>
+        <div class="globe-row rv"><i>07</i><b>Australia</b><div class="gr-bar"><span style="width:18%;"></span></div><em class="mono-num">EMERGING</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FINAL CTA — cinematic ============ -->
+  <div class="cta2">
+    <div class="cta2-collage" id="ctaCollage"></div>
+    <div class="cta2-overlay"></div>
+    <div class="wrap cta2-in">
+      <div class="eyebrow" style="justify-content:center;">Join the platform</div>
       <h2>ONE PASSION.<br>ONE COMMUNITY.</h2>
       <p>Join the world where every sport has a place.</p>
       <div class="final-btns">
@@ -1099,12 +1644,19 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     </div>
   </div>
 
-  <footer>
+  <!-- ============ FOOTER v2 ============ -->
+  <footer class="footer2">
     <div class="wrap">
-      <div class="footer-grid">
-        <div style="max-width:260px;">
-          <div class="logo" style="margin-bottom:14px;"><span class="logo-mark"></span>PLAYR</div>
-          <p style="color:var(--muted); font-size:14px; line-height:1.6;">One Passion. One Community.</p>
+      <div class="f2-top">
+        <div class="f2-brand">
+          <div class="logo f2-logo"><span class="logo-mark"></span>PLAYR</div>
+          <p>ONE PASSION.<br>ONE COMMUNITY.</p>
+          <div class="f2-social">
+            <a href="#" aria-label="Instagram" onclick="showToast('PLAYR socials — coming soon');return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="X" onclick="showToast('PLAYR socials — coming soon');return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.3l-4.9-6.4L5 21H1.9l7.3-8.3L2.2 3h6.4l4.4 5.9L17.5 3zm-1.1 16.1h1.7L7.7 4.8H5.9l10.5 14.3z"/></svg></a>
+            <a href="#" aria-label="YouTube" onclick="showToast('PLAYR socials — coming soon');return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.5 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="WhatsApp" onclick="showToast('PLAYR socials — coming soon');return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M8.8 8.6c.3 2.8 3.8 6.3 6.6 6.6l.9-1.8-2.1-1-1 .9c-.9-.4-2-1.5-2.4-2.4l.9-1-1-2.1-1.9.8z" fill="currentColor" stroke="none"/></svg></a>
+          </div>
         </div>
         <div class="footer-links">
           <div class="footer-col"><h5>Platform</h5>
@@ -1114,7 +1666,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
             <a href="#">About</a><a onclick="switchView('plus')">PLAYR+</a><a onclick="switchView('shop')">Shop</a><a href="#">Partnerships</a><a href="#">Contact</a>
           </div>
           <div class="footer-col"><h5>Legal</h5>
-            <a href="#">Privacy</a><a href="#">Terms</a>
+            <a href="#">Privacy</a><a href="#">Terms</a><a href="#" onclick="showToast('Made for every sport, everywhere');return false;">Community</a>
           </div>
         </div>
       </div>
@@ -1686,7 +2238,208 @@ function showToast(msg){
   toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
 }
 
+
+/* ============================================================
+   HOME v2 — cinematic home build
+   ============================================================ */
+const H2_IMGS = {
+  cricket:'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=900&h=700&fit=crop',
+  football:'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=900&h=700&fit=crop',
+  running:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&h=700&fit=crop',
+  mountaineering:'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=900&h=700&fit=crop',
+  basketball:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=900&h=700&fit=crop',
+  motorsport:'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=900&h=700&fit=crop',
+  tennis:'https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?w=900&h=700&fit=crop',
+  swimming:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&h=700&fit=crop',
+  cycling:'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&h=700&fit=crop',
+  chess:'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=900&h=700&fit=crop',
+  surfing:'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=900&h=700&fit=crop',
+  athletics:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&h=700&fit=crop',
+  boxing:'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=900&h=700&fit=crop',
+  gymnastics:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&h=700&fit=crop',
+  badminton:'https://images.unsplash.com/photo-1613918431703-aa50609a1b78?w=900&h=700&fit=crop',
+  skiing:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&h=700&fit=crop',
+  volleyball:'https://images.unsplash.com/photo-1592656094267-764a451c8b76?w=900&h=700&fit=crop',
+  'formula-1':'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=900&h=700&fit=crop',
+  aquatics:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&h=700&fit=crop'
+};
+function h2bg(id){ const s=window.getSport&&getSport(id); return "background-image:url('"+(H2_IMGS[id]||IMG.running)+"'), linear-gradient(135deg,#1C1F24,#0A0B0D)"; }
+
+function buildHomeV2(){
+  /* ---- 1. Hero stage collage ---- */
+  const stage=document.getElementById('heroStage');
+  if(stage){
+    stage.innerHTML = `
+      <div class="phone hc-phone"><div class="phone-notch"></div><div class="phone-feed" id="phoneFeed"></div></div>
+      <div class="hc-card hc-athlete">
+        <div class="hca-img"></div>
+        <div class="hca-body"><div class="hca-av"></div><div><b>Dev Solanki</b><i>CRICKET · ALL-ROUNDER</i></div><span class="hca-btn">+ FOLLOW</span></div>
+      </div>
+      <div class="hc-card hc-trend">
+        <div class="hct-head">TRENDING NOW</div>
+        <div class="hct-row"><b>🏏 Cricket</b><span>8.2M</span></div>
+        <div class="hct-row"><b>🏃 Running</b><span>5.4M</span></div>
+        <div class="hct-row"><b>🏎 Formula 1</b><span>5.8M</span></div>
+      </div>
+      <div class="hc-card hc-live" onclick="switchView('events')">
+        <div class="hcl-tag"><span class="dot-live"></span>LIVE · MOUNTAINEERING</div>
+        <div class="hcl-img"></div>
+        <div class="hcl-body"><b>Summit push underway</b><i>Annapurna · team of 6 · started 04:15</i></div>
+      </div>
+      <div class="hc-card hc-chall" onclick="switchView('challenges')">
+        <div class="hch-body">
+          <div class="hch-head">CHALLENGE · RUNNING · 10KM</div>
+          <div class="hch-vs">
+            <div class="hch-p"><b>Vivaan</b><i>60:00</i></div>
+            <div class="hch-x">VS</div>
+            <div class="hch-p win"><b>Rhea</b><i>57:42</i></div>
+          </div>
+          <div class="hch-bar"><i></i></div>
+        </div>
+      </div>`;
+  }
+
+  /* ---- 2. Sports universe strip ---- */
+  const strip=document.getElementById('sportStrip');
+  if(strip){
+    const ids=['cricket','football','running','mountaineering','basketball','formula-1','tennis','aquatics'];
+    strip.innerHTML=ids.map(id=>{
+      const s=getSport(id); if(!s) return '';
+      const f=window.PS_fmtFol?PS_fmtFol(s.followers):s.followers;
+      return `<div class="ss-card" style="--accent:${window.PS_catOf?PS_catOf(s).accent:'#C6FF3D'}" onclick="openSport('${id}')">
+        <div class="ss-img" style="${h2bg(id)}"></div><div class="ss-veil"></div>
+        <div class="ss-ico">${s.icon}</div>
+        ${s.trend?'<div class="ss-trend">▲ TRENDING</div>':''}
+        <span class="ss-enter">ENTER SPORT →</span>
+        <div class="ss-meta"><h4>${s.name.toUpperCase()}</h4><span>${f} FOLLOWERS · ${window.PS_related?PS_related(id,2).map(x=>x.name).join(' · '):''}</span></div>
+      </div>`;}).join('');
+  }
+
+  /* ---- 3. Feed rail ---- */
+  const rail=document.getElementById('homeRail');
+  if(rail){
+    const people = window.PS_gen ? [...PS_gen.athletes(getSport('cricket'),1), ...PS_gen.athletes(getSport('running'),1), ...PS_gen.athletes(getSport('mountaineering'),1)] : [];
+    rail.innerHTML=`
+      <div class="rail-card"><div class="rail-head">🔥 Trending now</div><div class="rail-hash">
+        <a onclick="openSport('cricket')"><em>#</em>Cricket<i>48K posts</i></a>
+        <a onclick="openSport('running')"><em>#</em>Running<i>31K posts</i></a>
+        <a onclick="openSport('formula-1')"><em>#</em>Formula1<i>27K posts</i></a>
+        <a onclick="openSport('mountaineering')"><em>#</em>Mountaineering<i>19K posts</i></a>
+        <a onclick="openSport('football')"><em>#</em>Football<i>44K posts</i></a>
+      </div></div>
+      <div class="rail-card"><div class="rail-head"><span class="dot-live"></span> Live now</div><div class="rail-live">
+        <a onclick="openSport('mountaineering')"><div class="rl-th" style="background-image:url('${H2_IMGS.mountaineering}')"></div><div><b>Summit push — Annapurna</b><i>TEAM EVEREST IN · 214 watching</i></div></a>
+        <a onclick="openSport('cricket')"><div class="rl-th" style="background-image:url('${H2_IMGS.cricket}')"></div><div><b>2nd innings · 42nd over</b><i>MUMBAI T20 LEAGUE · 12K watching</i></div></a>
+        <a onclick="openSport('formula-1')"><div class="rl-th" style="background-image:url('${H2_IMGS.motorsport}')"></div><div><b>Q3 — 4 minutes left</b><i>TRACK DAY · 3.4K watching</i></div></a>
+      </div></div>
+      <div class="rail-card"><div class="rail-head">✨ People to follow</div><div class="rail-ppl">
+        ${people.map((p,i)=>`<div class="rp-row"><div class="rp-av" style="background-image:url('${[H2_IMGS.cricket,H2_IMGS.running,H2_IMGS.mountaineering][i%3]}')"></div><div><b>${p.n}</b><i>${p.role.toUpperCase()}</i></div><button class="btn btn-ghost btn-sm" onclick="showToast('Following ${p.n}')">+ Follow</button></div>`).join('')}
+      </div></div>
+      <div class="rail-card" style="background:linear-gradient(160deg, rgba(198,255,61,.1), var(--surface));border-color:rgba(198,255,61,.35);">
+        <div class="rail-head" style="color:var(--lime);">⚡ PLAYR+</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Deep stats, history & premium challenges — ₹1 a day.</p>
+        <button class="btn btn-primary btn-sm" style="width:100%;" onclick="switchView('plus')">Try PLAYR+</button>
+      </div>`;
+  }
+
+  /* ---- 4. Happening now ---- */
+  const live=document.getElementById('liveStrip');
+  if(live){
+    const items=[
+      {img:H2_IMGS.mountaineering, sport:'MOUNTAINEERING', t:'Summit push underway', d:'LIVE · TEAM EVEREST IN · BADALGARH ROUTE'},
+      {img:H2_IMGS.cricket, sport:'CRICKET', t:'Inter-college final — 42nd over', d:'LIVE · SHIVAJI PARK · NEED 24 OFF 18'},
+      {img:H2_IMGS.motorsport, sport:'MOTORSPORT', t:'Qualifying underway', d:'LIVE · BIC TRACK DAY · Q3'},
+      {img:H2_IMGS.running, sport:'RUNNING', t:'City 10K — wave 3 out', d:'LIVE · MARINE DRIVE · 2,140 RUNNERS'}
+    ];
+    live.innerHTML=items.map(x=>`<div class="lc-card" onclick="openSport('${x.sport==='MOTORSPORT'?'formula-1':x.sport.toLowerCase()}')">
+      <div class="lc-img" style="background-image:url('${x.img}')"></div><div class="lc-veil"></div>
+      <div class="lc-live"><span class="dot-w"></span>LIVE</div><div class="lc-sport">${x.sport}</div>
+      <div class="lc-body"><b>${x.t}</b><i>${x.d}</i></div></div>`).join('');
+  }
+
+  /* ---- 5. World examples ---- */
+  const we=document.getElementById('worldExamples');
+  if(we){
+    const ex=[
+      {id:'cricket', tag:'PLANET 01', tab:'MATCHES · PLAYERS · RECORDS', p:'Live scores, player universes and every record since 1877 — cricket gets a whole world.', chips:['Matches','Records','Teams','Community']},
+      {id:'mountaineering', tag:'PLANET 02', tab:'SUMMITS · EXPEDITIONS', p:'Follow real expeditions, summit logs and route stories from the community.', chips:['Summits','Expeditions','Safety','Community']},
+      {id:'running', tag:'PLANET 03', tab:'TRAINING · RACES · STATS', p:'Training plans, city races and your splits — the runner\'s entire life in one place.', chips:['Training','Races','Challenges','Stats']}
+    ];
+    we.innerHTML=ex.map(x=>`<div class="we-card" onclick="openSport('${x.id}')">
+      <div class="we-img" style="${h2bg(x.id)}"></div><div class="we-veil"></div>
+      <div class="we-tag">${x.tag}</div><div class="we-tab">${x.tab}</div>
+      <div class="we-body"><h4>${getSport(x.id).name.toUpperCase()}</h4><p>${x.p}</p>
+      <div class="we-chips">${x.chips.map(c=>`<span>${c}</span>`).join('')}</div></div></div>`).join('');
+  }
+
+  /* ---- 6. Mosaic ---- */
+  const mo=document.getElementById('mosaicGrid');
+  if(mo){
+    const items=[['football','mo-big'],['mountaineering','mo-tall'],['chess',''],['cricket','mo-wide'],['surfing',''],['athletics','mo-tall'],['basketball',''],['formula-1','']];
+    mo.innerHTML=items.map(([id,cls])=>{
+      const s=getSport(id); if(!s) return '';
+      return `<div class="mo-card ${cls}" style="--accent:${PS_catOf(s).accent}" onclick="openSport('${id}')">
+        <div class="mo-img" style="${h2bg(id)}"></div><div class="mo-veil"></div>
+        <div class="mo-ico">${s.icon}</div>
+        <div class="mo-body"><h4>${s.name.toUpperCase()}</h4><span>${PS_fmtFol(s.followers)} FOLLOWERS · ${PS_catOf(s).short.toUpperCase()}</span>
+        ${s.isOlympic&&s.olyBadge!=='past'?PS_badgeHTML(s):''}</div></div>`;}).join('');
+  }
+
+  /* ---- 7. Challenge minis ---- */
+  const cm=document.getElementById('chall2Minis');
+  if(cm){
+    const ch=[['cycling','25KM RIDE CHALLENGE'],['basketball','50 FREE THROWS'],['football','KEEPY-UPPY STREAK'],['chess','5-MIN BLITZ STREAK']];
+    cm.innerHTML=ch.map(([id,t])=>`<div class="ch2m" onclick="switchView('challenges')">
+      <div class="c2m-img" style="background-image:url('${H2_IMGS[id]||IMG.running}')"></div><div class="c2m-veil"></div>
+      <div class="c2m-body"><b>${t}</b><i>${getSport(id)?getSport(id).name.toUpperCase():''} · OPEN</i></div></div>`).join('');
+  }
+
+  /* ---- 8. You may also like ---- */
+  const ml=document.getElementById('mayLikeStrip');
+  if(ml){
+    const fol=window.PS_follows?PS_follows():[];
+    const base=fol.length?fol.slice(0,2):['running','cricket'];
+    const seen=new Set(base); const recs=[];
+    base.forEach(f=>(window.PS_related?PS_related(f,5):[]).forEach(r=>{ if(!seen.has(r.id)&&recs.length<8){seen.add(r.id);recs.push(r);} }));
+    const sub=document.getElementById('mayLikeSub');
+    if(sub) sub.textContent = fol.length? `Because you follow ${base.map(f=>getSport(f)?getSport(f).name:f).join(' and ')}.` : 'Popular with runners — follow a sport to personalize this.';
+    ml.innerHTML=recs.map(s=>`<div class="ss-card ml-card" style="--accent:${PS_catOf(s).accent};flex-basis:236px;height:170px;" onclick="openSport('${s.id}')">
+      <div class="ss-img" style="${h2bg(s.id in H2_IMGS?s.id:'athletics')}"></div><div class="ss-veil"></div>
+      <div class="ss-ico" style="width:36px;height:36px;font-size:17px;border-radius:11px;">${s.icon}</div>
+      <div class="ss-meta" style="padding:14px 16px;"><h4 style="font-size:21px;">${s.name.toUpperCase()}</h4><span>${PS_fmtFol(s.followers)} FOLLOWERS</span></div></div>`).join('');
+  }
+
+  /* ---- 9. This day in sport ---- */
+  const td=document.getElementById('thisDayFeature');
+  if(td){
+    td.innerHTML=`<div class="td-img" style="background-image:url('${H2_IMGS.athletics}')"></div>
+      <div class="td-body">
+        <div class="td-year">2008</div>
+        <div class="td-sport">ATHLETICS · 22 AUGUST · BEIJING</div>
+        <h3>Bolt's Beijing trilogy completes — 4×100m world record, 37.10</h3>
+        <p>On 22 August 2008, Usain Bolt anchored Jamaica to 4×100m gold in a world record 37.10s — his third gold and third world record of the Beijing Games, weeks before his 22nd birthday. The sprint era had a new king.</p>
+      </div>`;
+  }
+  const tdm=document.getElementById('thisDayMore');
+  if(tdm){
+    const rows=[['1954','ATHLETICS','Bannister breaks the four-minute mile'],['1953','MOUNTAINEERING','Hillary & Norgay stand on Everest'],['1983','CRICKET','Kapil Dev lifts the World Cup at Lord\'s']];
+    tdm.innerHTML=rows.map(r=>`<div class="tdm" onclick="openSport('${r[1].toLowerCase()==='cricket'?'cricket':r[1].toLowerCase()==='athletics'?'athletics':'mountaineering'}')">
+      <div class="tdm-y">${r[0]}<i>${r[1]}</i></div><div><b>${r[2]}</b><p>From the PLAYR history archive — every sport's memory, one home.</p></div></div>`).join('');
+  }
+
+  /* ---- 10. CTA collage ---- */
+  const cc=document.getElementById('ctaCollage');
+  if(cc){ cc.innerHTML=['cricket','football','running','mountaineering','basketball','motorsport','tennis','swimming'].map(id=>`<div style="background-image:url('${H2_IMGS[id]}')"></div>`).join(''); }
+
+  /* ---- scroll reveal ---- */
+  try{
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.12});
+    document.querySelectorAll('#view-home .rv').forEach(el=>io.observe(el));
+  }catch(e){ document.querySelectorAll('#view-home .rv').forEach(el=>el.classList.add('in')); }
+}
+
 /* ---------- init ---------- */
+buildHomeV2();
 buildTicker();
 buildPhoneFeed();
 renderHomeFeed();
