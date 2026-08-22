@@ -115,7 +115,7 @@ function panelFor(s,t){
     }
     case "History":{
       const H=(window.SPORT_HISTORY||{})[s.id];
-      if(!H) return `<div class="empty-state card"><h4>${s.name}'s history is waiting to be written.</h4><p>PLAYR doesn't invent facts. This timeline fills with verified milestones and community stories — fans and historians can contribute first.</p><button class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="showToast('Thanks — history contributions open soon')">Contribute history</button></div>`;
+      if(!H) return `<div class="empty-state card"><h4>${s.name}'s history is waiting to be written.</h4><p>PLAYR doesn't invent facts. This timeline fills with verified milestones and community stories — fans and historians can contribute first.</p><button class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="requireAuth(()=>showToast('Thanks — history contributions open soon'))">Contribute history</button></div>`;
       return `<div style="margin-bottom:18px;" class="eyebrow">Milestones in ${s.name}</div>`+H.map(h=>`<div class="timeline-card"><div class="tl-year">${h.y}</div><div class="tl-body"><h4>${h.e}</h4><p>${h.d}</p></div></div>`).join("");
     }
     case "Athletes": case "Players": case "Drivers": return athleteGrid(s);

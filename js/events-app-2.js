@@ -148,14 +148,14 @@ function panelFor(ev,tab,org){
         ${[["Rhea K.","2h","Is the 21K wave starting from the same gate as last year?"],["Karan M.","5h","Anyone want to carpool from Powai? 3 seats 🚗"],["Mumbai Runners","1d","Training thread pinned — 6 weeks to go, last long run this Sunday 🏃"],["Ananya I.","2d","First timer here — any pacing advice for the 10K?"]].map(p=>`
         <div class="card" style="padding:18px 20px;margin-bottom:12px;"><div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;"><div class="evd-com-av" style="--accent:${ev.accent}">${p[0][0]}</div><b style="font-size:13.5px;">${p[0]}</b><span class="mono-num" style="color:var(--muted-2);font-size:11px;margin-left:auto;">${p[1]}</span></div>
         <p style="color:var(--muted);font-size:13.5px;">${p[2]}</p></div>`).join("")}
-        <button class="btn btn-ghost btn-sm" onclick="showToast('Post to the event community — coming to your account soon')">+ Post to community</button>
+        <button class="btn btn-ghost btn-sm" onclick="requireAuth(()=>showToast('Post to the event community — coming soon'))">+ Post to community</button>
         </div><div class="card" style="padding:22px;height:fit-content;">
         <div class="eyebrow">Community</div>
         <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px;"><b class="mono-num" style="font-size:26px;color:var(--lime);">${ev.fol}</b><span style="color:var(--muted);font-size:12.5px;">followers</span></div>
         <p style="color:var(--muted);font-size:12.5px;line-height:1.6;margin-bottom:14px;">Race discussion, training tips, photos and results — the event's home between editions.</p>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <button class="btn btn-ghost btn-sm" onclick="PLAYR_EV.toggleFollow('${ev.id}')">${E.isFollowing(ev.id)?"★ Following":"☆ Follow event"}</button>
-          ${ev.sport==="trekking"||ev.sport==="mountaineering"||["boxing","judo","mma","taekwondo","wrestling"].includes(ev.sport)?"" :`<button class="btn btn-ghost btn-sm" onclick="showToast('Challenge sent to your friends 🏆')">Challenge friends</button>`}
+          ${ev.sport==="trekking"||ev.sport==="mountaineering"||["boxing","judo","mma","taekwondo","wrestling"].includes(ev.sport)?"" :`<button class="btn btn-ghost btn-sm" onclick="requireAuth(()=>showToast('Challenge sent to your friends 🏆'))">Challenge friends</button>`}
           <button class="btn btn-ghost btn-sm" onclick="PLAYR_EV.share('${ev.id}')">Share</button>
         </div></div></div>`;
   }
