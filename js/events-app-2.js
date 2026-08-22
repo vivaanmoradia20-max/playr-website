@@ -310,8 +310,8 @@ window.renderHomeNearYou = function(){
   const picks=E.EVENTS.filter(e=>e.status!=="COMPLETED").sort((a,b)=>a.start-b.start)
     .filter(e=>e.dist==null||e.dist<50).slice(0,6);
   root.innerHTML=`<div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Happening near you · ${E.USER.label}</div><h2 class="section-title" style="font-size:clamp(34px,4.6vw,56px);">WHAT'S ON<br>THIS WEEK.</h2></div>
-    <button class="btn btn-primary" onclick="switchView('events')">Explore All Events</button></div>
+    <div class="section-head"><div><div class="eyebrow">Events near you · ${E.USER.label}</div><h2 class="section-title" style="font-size:clamp(34px,4.6vw,56px);">HAPPENING NEAR YOU.</h2></div>
+    <button class="btn btn-primary" onclick="switchView('events')">EXPLORE ALL EVENTS</button></div>
     <div class="grid grid-3">${picks.map(e=>E.card(e)).join("")}</div>
   </div>`;
 };

@@ -27,12 +27,37 @@ setTimeout(()=>{
   t("hero lime highlight intact", ()=>!!$(".hero2-title span"));
   // FUNCTIONALITY
   t("home v2 renders", ()=>$("#eventsRoot")&&$("#heroStage .hc-card")?"ok":"fail");
-  t("sports strip 8", ()=>$$("#sportStrip .ss-card").length);
+  t("live/trending strip (LIVE default + chips)", ()=>{
+    const live=w.document.querySelectorAll("#sportStrip .ss-live").length;
+    const chips=w.document.querySelectorAll("#ltChips .lt-chip").length;
+    w.HOME_LT.set("new"); const newN=w.document.querySelectorAll("#sportStrip .ss-new").length;
+    w.HOME_LT.set("challenge"); const chal=w.document.querySelectorAll("#sportStrip .ss-chal").length;
+    w.HOME_LT.set("live");
+    if(chips!==4||live<3||newN<3||chal<3) throw new Error(`live:${live} new:${newN} chal:${chal} chips:${chips}`);
+    return "4 chips × live/new/challenge filters ✓";
+  });
+  t("communities section (YOUR PEOPLE)", ()=>{
+    const el=w.document.getElementById("homeCommunitiesSec");
+    if(!el||!el.innerHTML.includes("YOUR PEOPLE")) throw new Error("missing");
+    const n=el.querySelectorAll(".hc-com").length; if(n<4) throw new Error(n+" communities");
+    return n+" community previews ✓";
+  });
+  t("PLAYR+ compact teaser", ()=>{
+    const el=w.document.getElementById("plusTeaserSec");
+    if(!el||!el.innerHTML.includes("TAKE YOUR SPORTS WORLD FURTHER")||!el.innerHTML.includes("₹365")) throw new Error("content");
+    if(!el.innerHTML.includes("EXPLORE PLAYR+")) throw new Error("cta");
+    return "₹365/year + features + CTA ✓";
+  });
+  t("events = HAPPENING NEAR YOU", ()=>{
+    if(w.renderHomeNearYou) w.renderHomeNearYou();
+    const el=w.document.getElementById("homeNearYou");
+    return el&&el.innerHTML.includes("HAPPENING NEAR YOU")?"retitled ✓":"fail";
+  });
   t("feed + rail", ()=>$$("#homeFeed .post").length+" posts, "+$$("#homeRail .rail-card").length+" rail cards");
   t("happening now", ()=>$$("#liveStrip .lc-card").length);
   t("mosaic", ()=>$$("#mosaicGrid .mo-card").length);
-  t("flywheel nodes", ()=>$$("#view-home .fly-node").length);
-  t("globe", ()=>!!$(".globe-svg"));
+  t("flywheel REMOVED", ()=>!$$("#view-home .fly-node").length?"removed ✓":"still there");
+  t("globe REMOVED + biz REMOVED", ()=>!$$("#view-home .globe-svg").length&&!$$("#view-home .biz-node").length?"removed ✓":"still there");
   t("cta collage", ()=>$$("#ctaCollage div").length);
   t("nav items (9)", ()=>$$(".nav-links button").length);
   t("switchView all", ()=>{ ["discover","sports","spcl","challenges","communities","events","plus","shop","profile","home"].forEach(v=>w.switchView(v)); return $("#view-home").classList.contains("active")?"all 10 views ok":"fail"; });

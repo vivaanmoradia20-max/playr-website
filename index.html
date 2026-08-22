@@ -1007,6 +1007,40 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 }
 
 /* ============================================================
+   HOME v3 — consumer cleanup (live/trending strip, communities,
+   PLAYR+ teaser)
+   ============================================================ */
+.lt-chips{display:flex; gap:8px; flex-wrap:wrap;}
+.lt-chip{font-family:var(--display); font-stretch:112%; font-size:11px; font-weight:900; letter-spacing:.06em; padding:10px 18px; border-radius:100px; border:1.5px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; transition:all .18s ease;}
+.lt-chip:hover{color:var(--text); border-color:var(--muted);}
+.lt-chip.on{background:var(--lime); border-color:var(--lime); color:var(--void); box-shadow:0 8px 26px -10px rgba(224,248,8,.6);}
+.ss-live{position:absolute; top:14px; right:14px; display:flex; align-items:center; gap:6px; background:rgba(255,106,77,.94); color:#fff; font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.12em; padding:6px 11px; border-radius:100px;}
+.ss-live .dot-w{width:6px; height:6px; border-radius:50%; background:#fff; animation:pulse2 1.2s infinite;}
+.ss-new{position:absolute; top:14px; right:14px; background:rgba(224,248,8,.92); color:var(--void); font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.12em; padding:6px 11px; border-radius:100px;}
+.ss-chal{position:absolute; top:14px; right:14px; background:rgba(77,166,255,.92); color:#fff; font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.12em; padding:6px 11px; border-radius:100px;}
+/* communities */
+.hc-com{overflow:hidden; cursor:pointer; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;}
+.hc-com:hover{transform:translateY(-4px); border-color:var(--lime); box-shadow:0 16px 38px -18px var(--lime);}
+.hcc-img{height:120px; background-size:cover; background-position:center; position:relative;}
+.hcc-img::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(10,11,13,.85));}
+.hcc-body{padding:16px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+.hcc-body b{font-size:14.5px; flex:1; min-width:120px;}
+.hcc-body .mono-num{font-size:11px; color:var(--lime);}
+/* PLAYR+ teaser */
+.plus-teaser{position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; gap:26px; padding:36px 40px; border:1px solid rgba(224,248,8,.35); flex-wrap:wrap;}
+.pt-glow{position:absolute; inset:0; background:radial-gradient(560px 200px at 12% 0%, rgba(224,248,8,.12), transparent 60%); pointer-events:none;}
+.pt-in{position:relative;}
+.pt-badge{display:inline-block; font-family:var(--display); font-style:italic; font-stretch:120%; font-weight:900; font-size:15px; color:var(--lime); border:1px solid rgba(224,248,8,.45); border-radius:100px; padding:7px 16px; margin-bottom:14px; letter-spacing:.04em;}
+.pt-in h3{font-family:var(--display); font-style:italic; font-stretch:122%; font-weight:900; font-size:clamp(22px,3.2vw,34px); line-height:1.05; margin-bottom:16px;}
+.pt-feats{display:flex; gap:8px; flex-wrap:wrap;}
+.pt-feats span{font-size:9.5px; letter-spacing:.12em; color:var(--muted); background:var(--surface-2); border:1px solid var(--line); border-radius:100px; padding:8px 14px;}
+.pt-feats span:first-child{color:var(--lime); border-color:rgba(224,248,8,.35); background:rgba(224,248,8,.07);}
+@media(max-width:760px){
+  .lt-chips{width:100%;} .lt-chip{flex:1; text-align:center; padding:9px 8px; font-size:10px;}
+  .plus-teaser{padding:26px 22px;}
+}
+
+/* ============================================================
    ABOUT US — premium editorial page
    ============================================================ */
 #view-about{background:var(--void);}
@@ -1731,10 +1765,15 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   <div class="section sport-strip-sec">
     <div class="wrap strip-head">
       <div>
-        <div class="eyebrow">The sports universe</div>
-        <h2 class="section-title">EXPLORE THE WORLD OF SPORT.</h2>
+        <div class="eyebrow"><span class="dot-live"></span> Live &amp; trending</div>
+        <h2 class="section-title">WHAT'S MOVING IN SPORT.</h2>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="switchView('discover')">All 207 sports →</button>
+      <div class="lt-chips" id="ltChips">
+        <button class="lt-chip on" onclick="HOME_LT.set('live')">LIVE NOW</button>
+        <button class="lt-chip" onclick="HOME_LT.set('trending')">TRENDING</button>
+        <button class="lt-chip" onclick="HOME_LT.set('new')">NEW</button>
+        <button class="lt-chip" onclick="HOME_LT.set('challenge')">CHALLENGE</button>
+      </div>
     </div>
     <div class="strip-scroll" id="sportStrip"></div>
   </div>
@@ -1779,60 +1818,18 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <div class="strip-scroll" id="liveStrip"></div>
   </div>
 
-  <!-- ============ EVERY SPORT HAS ITS OWN WORLD ============ -->
-  <div class="section section-alt world-sec">
-    <div class="wrap">
-      <div class="section-head" style="text-align:center;">
-        <div class="eyebrow" style="justify-content:center;">The Sport Universe</div>
-        <h2 class="section-title">EVERY SPORT HAS<br>ITS OWN WORLD.</h2>
-        <p class="section-sub" style="margin:14px auto 0;">One app contains an entire world for every sport. Tap any planet — each one has its own feed, history, athletes, communities, challenges, events and stats.</p>
-      </div>
-      <div class="world-stage rv">
-        <div class="world-orbit">
-          <div class="world-core" onclick="openSport('cricket')" style="background-image:url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500&h=500&fit=crop'), linear-gradient(135deg,#E0F80833,#0A0B0D);">
-            <span>🏏</span><b>CRICKET</b><i>8.2M followers</i>
-          </div>
-          <div class="orbit-ring r1"></div>
-          <div class="orbit-ring r2"></div>
-          <div class="orbit-chip oc1" onclick="openSport('cricket')">Feed</div>
-          <div class="orbit-chip oc2" onclick="openSport('cricket')">History</div>
-          <div class="orbit-chip oc3" onclick="openSport('cricket')">Athletes</div>
-          <div class="orbit-chip oc4" onclick="openSport('cricket')">Community</div>
-          <div class="orbit-chip oc5" onclick="openSport('cricket')">Challenges</div>
-          <div class="orbit-chip oc6" onclick="openSport('cricket')">Events</div>
-          <div class="orbit-chip oc7" onclick="openSport('cricket')">Stats</div>
-        </div>
-      </div>
-      <div class="world-examples" id="worldExamples"></div>
-      <div class="why-bar rv">
-        <div class="why-playr">
-          <h4>EVERYTHING ELSE</h4>
-          <p>Sport is one feed among many. Fans scattered. Generic communities. No history, no stats, no belonging.</p>
-        </div>
-        <div class="why-divider"></div>
-        <div class="why-us">
-          <h4>PLAYR</h4>
-          <p>Sports-first — from cricket to chess to esports. Every sport has its own universe. History, stats, events and commerce — unified. One passion. One community.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ SPCL — Para sport ecosystem ============ -->
-  <div class="section section-alt" id="spclHomeSec"></div>
-
   <!-- ============ DISCOVER SOMETHING NEW — mosaic ============ -->
   <div class="section mosaic-sec">
     <div class="wrap">
       <div class="section-head">
         <div>
           <div class="eyebrow">World of sport</div>
-          <h2 class="section-title">DISCOVER SOMETHING NEW.</h2>
+          <h2 class="section-title">DISCOVER YOUR NEXT SPORT.</h2>
         </div>
         <div class="section-sub">207 worlds. Zero algorithms standing still — tap anything that looks like yours.</div>
       </div>
       <div class="mosaic rv" id="mosaicGrid"></div>
-      <div style="text-align:center;margin-top:30px;"><button class="btn btn-primary" onclick="switchView('discover')">Open the full catalogue</button></div>
+      <div style="text-align:center;margin-top:30px;"><button class="btn btn-primary" onclick="switchView('discover')">EXPLORE ALL SPORTS</button></div>
     </div>
   </div>
 
@@ -1877,23 +1874,15 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         </div>
       </div>
       <div class="chall2-minis" id="chall2Minis"></div>
-      <div style="text-align:center;margin-top:26px;"><button class="btn btn-primary" onclick="switchView('challenges')">Start a challenge</button></div>
+      <div style="text-align:center;margin-top:26px;"><button class="btn btn-primary" onclick="switchView('challenges')">CREATE A CHALLENGE</button></div>
     </div>
   </div>
 
-  <!-- ============ YOU MAY ALSO LIKE ============ -->
-  <div class="section maylike-sec">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">For you</div>
-          <h2 class="section-title">YOU MAY ALSO LIKE.</h2>
-        </div>
-        <div class="section-sub" id="mayLikeSub">Based on the sports you follow.</div>
-      </div>
-      <div class="strip-scroll" id="mayLikeStrip"></div>
-    </div>
-  </div>
+  <!-- ============ SPCL — Para sport ecosystem ============ -->
+  <div class="section section-alt" id="spclHomeSec"></div>
+
+  <!-- HAPPENING NEAR YOU (Events engine) -->
+  <div class="section" id="homeNearYou"></div>
 
   <!-- ============ THIS DAY IN SPORT ============ -->
   <div class="section section-alt thisday-sec">
@@ -1907,136 +1896,15 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       </div>
       <div class="thisday-feature rv" id="thisDayFeature"></div>
       <div class="thisday-more" id="thisDayMore"></div>
-      <div style="margin-top:26px;"><button class="btn btn-ghost btn-sm" onclick="openSport('athletics')">Explore history →</button></div>
+      <div style="margin-top:26px;"><button class="btn btn-ghost btn-sm" onclick="openSport('athletics')">EXPLORE SPORTS HISTORY</button></div>
     </div>
   </div>
 
-  <!-- ============ NETWORK FLYWHEEL ============ -->
-  <div class="section net-sec">
-    <div class="wrap">
-      <div class="section-head" style="text-align:center;">
-        <div class="eyebrow" style="justify-content:center;">Why PLAYR compounds</div>
-        <h2 class="section-title">THE MORE PEOPLE PLAY,<br>THE STRONGER PLAYR BECOMES.</h2>
-      </div>
-      <div class="fly-stage rv">
-        <svg viewBox="0 0 640 640" class="fly-svg" aria-hidden="true">
-          <g class="fly-lines" fill="none" stroke="#E0F808" stroke-width="1.2" stroke-dasharray="5 7">
-            <line x1="320" y1="320" x2="320" y2="84"/><line x1="320" y1="320" x2="528" y2="202"/><line x1="320" y1="320" x2="528" y2="438"/>
-            <line x1="320" y1="320" x2="320" y2="556"/><line x1="320" y1="320" x2="112" y2="438"/><line x1="320" y1="320" x2="112" y2="202"/>
-            <line x1="320" y1="320" x2="464" y2="110"/><line x1="320" y1="320" x2="464" y2="530"/><line x1="320" y1="320" x2="176" y2="530"/><line x1="320" y1="320" x2="176" y2="110"/>
-            <circle cx="320" cy="84" r="4" fill="#E0F808"/><circle cx="528" cy="202" r="4" fill="#E0F808"/><circle cx="528" cy="438" r="4" fill="#E0F808"/>
-            <circle cx="320" cy="556" r="4" fill="#E0F808"/><circle cx="112" cy="438" r="4" fill="#E0F808"/><circle cx="112" cy="202" r="4" fill="#E0F808"/>
-          </g>
-          <circle cx="320" cy="320" r="196" fill="none" stroke="#2A2D34" stroke-width="1"/>
-          <circle cx="320" cy="320" r="268" fill="none" stroke="#1C1F24" stroke-width="1"/>
-        </svg>
-        <div class="fly-core"><img src="assets/brand/playr-mark.png" alt="PLAYR" style="width:54px; border-radius:12px; filter:drop-shadow(0 0 16px rgba(224,248,8,.45));"></div>
-        <div class="fly-node fn1">MORE SPORTS</div>
-        <div class="fly-node fn2">MORE CONTENT</div>
-        <div class="fly-node fn3">MORE USERS</div>
-        <div class="fly-node fn4">MORE CREATORS</div>
-        <div class="fly-node fn5">MORE COMMUNITIES</div>
-        <div class="fly-node fn6">MORE CHALLENGES</div>
-        <div class="fly-node fn7">MORE BRANDS</div>
-        <div class="fly-node fn8">MORE REVENUE</div>
-      </div>
-    </div>
-  </div>
+  <!-- ============ COMMUNITIES ============ -->
+  <div class="section section-alt" id="homeCommunitiesSec"></div>
 
-  <!-- ============ BUSINESS ECOSYSTEM ============ -->
-  <div class="section section-alt biz-sec">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">Business model</div>
-          <h2 class="section-title">BUILT TO SCALE.</h2>
-        </div>
-        <div class="section-sub">Not eight boxes — one ecosystem. Value flows between everyone who plays.</div>
-      </div>
-      <div class="biz-stage rv">
-        <svg viewBox="0 0 640 520" class="biz-svg" aria-hidden="true">
-          <g fill="none" stroke="#E0F808" stroke-width="1.1" stroke-dasharray="4 8" opacity=".7">
-            <line x1="320" y1="260" x2="320" y2="70"/><line x1="320" y1="260" x2="540" y2="165"/><line x1="320" y1="260" x2="540" y2="355"/>
-            <line x1="320" y1="260" x2="320" y2="450"/><line x1="320" y1="260" x2="100" y2="355"/><line x1="320" y1="260" x2="100" y2="165"/>
-          </g>
-          <circle cx="320" cy="260" r="150" fill="none" stroke="#2A2D34"/>
-        </svg>
-        <div class="biz-core">PLAYR</div>
-        <div class="biz-node bn1">👥 USERS</div>
-        <div class="biz-node bn2">🏏 SPORTS</div>
-        <div class="biz-node bn3">🎬 CREATORS</div>
-        <div class="biz-node bn4">🏢 BRANDS</div>
-        <div class="biz-node bn5">🏟️ EVENTS</div>
-      </div>
-      <div class="biz-flows rv">
-        <div class="biz-flow"><b>01</b><div><h4>Advertising</h4><p>Native brand placements across sport-specific feeds.</p></div><span>BRANDS → PLAYR</span></div>
-        <div class="biz-flow"><b>02</b><div><h4>PLAYR+ Subscriptions</h4><p>Premium stats, history and personalization for ₹365/yr.</p></div><span>USERS → PLAYR</span></div>
-        <div class="biz-flow"><b>03</b><div><h4>Sponsored Challenges</h4><p>Brands power recreational challenges across sports.</p></div><span>BRANDS → USERS</span></div>
-        <div class="biz-flow"><b>04</b><div><h4>Commerce Commissions</h4><p>A cut of every gear and merchandise sale in-app.</p></div><span>COMMERCE → PLAYR</span></div>
-        <div class="biz-flow"><b>05</b><div><h4>Official Partnerships</h4><p>Clubs, leagues and academies run their hub on PLAYR.</p></div><span>SPORTS → PLAYR</span></div>
-        <div class="biz-flow"><b>06</b><div><h4>Event & Platform Fees</h4><p>Tournaments hosted on PLAYR infrastructure.</p></div><span>EVENTS → PLAYR</span></div>
-        <div class="biz-flow"><b>07</b><div><h4>Merchandise</h4><p>PLAYR-branded drops and limited collaborations.</p></div><span>PLAYR → FANS</span></div>
-        <div class="biz-flow"><b>08</b><div><h4>Creator Monetization</h4><p>Tipping, subscriptions and brand deals for creators.</p></div><span>FANS → CREATORS</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HAPPENING NEAR YOU (Events engine) -->
-  <div class="section" id="homeNearYou"></div>
-
-  <!-- ============ FUTURE VISION — globe ============ -->
-  <div class="section section-alt globe-sec">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">Future vision</div>
-          <h2 class="section-title">FROM INDIA<br>TO THE WORLD.</h2>
-          <p class="section-sub" style="margin-top:14px;">Building the digital home of sport for every community, everywhere.</p>
-        </div>
-      </div>
-      <div class="globe-stage rv">
-        <svg viewBox="0 0 620 620" class="globe-svg" aria-hidden="true">
-          <defs>
-            <radialGradient id="glowInd" cx="50%" cy="50%"><stop offset="0%" stop-color="#E0F808" stop-opacity=".9"/><stop offset="100%" stop-color="#E0F808" stop-opacity="0"/></radialGradient>
-          </defs>
-          <circle cx="310" cy="310" r="250" fill="#0D0E11" stroke="#2A2D34"/>
-          <g fill="none" stroke="#1C1F24">
-            <ellipse cx="310" cy="310" rx="250" ry="94"/><ellipse cx="310" cy="310" rx="250" ry="170"/><ellipse cx="310" cy="310" rx="94" ry="250"/><ellipse cx="310" cy="310" rx="170" ry="250"/>
-            <line x1="60" y1="310" x2="560" y2="310"/>
-          </g>
-          <g class="globe-arcs" fill="none" stroke="#E0F808" stroke-width="1.3" stroke-dasharray="4 8" opacity=".8">
-            <path d="M310 340 Q 420 240 470 180"/>
-            <path d="M310 340 Q 240 200 180 150"/>
-            <path d="M310 340 Q 430 400 480 430"/>
-            <path d="M310 340 Q 200 420 150 450"/>
-            <path d="M310 340 Q 340 180 350 120"/>
-            <path d="M310 340 Q 280 470 260 500"/>
-          </g>
-          <circle cx="310" cy="340" r="46" fill="url(#glowInd)"/>
-          <circle cx="310" cy="340" r="7" fill="#E0F808"/>
-          <g fill="#9096A3">
-            <circle cx="470" cy="180" r="5"/><circle cx="180" cy="150" r="4.5"/><circle cx="480" cy="430" r="4.5"/><circle cx="150" cy="450" r="4"/><circle cx="350" cy="120" r="4"/><circle cx="260" cy="500" r="4"/>
-          </g>
-        </svg>
-        <div class="globe-label gl-ind">🇮🇳 INDIA<span>WHERE IT STARTS</span></div>
-        <div class="globe-label gl-a">ASIA</div>
-        <div class="globe-label gl-e">EUROPE</div>
-        <div class="globe-label gl-na">NORTH AMERICA</div>
-        <div class="globe-label gl-sa">SOUTH AMERICA</div>
-        <div class="globe-label gl-af">AFRICA</div>
-        <div class="globe-label gl-au">AUSTRALIA</div>
-      </div>
-      <div class="globe-rows">
-        <div class="globe-row rv"><i>01</i><b>India</b><div class="gr-bar"><span style="width:92%;"></span></div><em class="mono-num">LIVE</em></div>
-        <div class="globe-row rv"><i>02</i><b>Asia</b><div class="gr-bar"><span style="width:64%;"></span></div><em class="mono-num">GROWING</em></div>
-        <div class="globe-row rv"><i>03</i><b>Europe</b><div class="gr-bar"><span style="width:48%;"></span></div><em class="mono-num">GROWING</em></div>
-        <div class="globe-row rv"><i>04</i><b>North America</b><div class="gr-bar"><span style="width:41%;"></span></div><em class="mono-num">EMERGING</em></div>
-        <div class="globe-row rv"><i>05</i><b>South America</b><div class="gr-bar"><span style="width:29%;"></span></div><em class="mono-num">EMERGING</em></div>
-        <div class="globe-row rv"><i>06</i><b>Africa</b><div class="gr-bar"><span style="width:22%;"></span></div><em class="mono-num">EMERGING</em></div>
-        <div class="globe-row rv"><i>07</i><b>Australia</b><div class="gr-bar"><span style="width:18%;"></span></div><em class="mono-num">EMERGING</em></div>
-      </div>
-    </div>
-  </div>
+  <!-- ============ PLAYR+ TEASER ============ -->
+  <div class="section" id="plusTeaserSec"></div>
 
   <!-- ============ FINAL CTA — cinematic ============ -->
   <div class="cta2">
@@ -2722,20 +2590,34 @@ function buildHomeV2(){
       </div>`;
   }
 
-  /* ---- 2. Sports universe strip ---- */
+  /* ---- 2. LIVE / TRENDING sports strip ---- */
   const strip=document.getElementById('sportStrip');
   if(strip){
-    const ids=['cricket','football','running','mountaineering','basketball','formula-1','tennis','aquatics'];
-    strip.innerHTML=ids.map(id=>{
-      const s=getSport(id); if(!s) return '';
-      const f=window.PS_fmtFol?PS_fmtFol(s.followers):s.followers;
-      return `<div class="ss-card" style="--accent:${window.PS_catOf?PS_catOf(s).accent:'#E0F808'}" onclick="openSport('${id}')">
-        <div class="ss-img" style="${h2bg(id)}"></div><div class="ss-veil"></div>
-        <div class="ss-ico">${s.icon}</div>
-        ${s.trend?'<div class="ss-trend">▲ TRENDING</div>':''}
+    const live=new Set(['cricket','mountaineering','formula-1','running']);
+    const challengey=new Set(['running','cycling','basketball','chess','football','aquatics','badminton']);
+    const ids=['cricket','mountaineering','formula-1','running','football','basketball','tennis','cycling','esports','badminton','aquatics','chess'];
+    const card=(id,tag)=>{
+      const sp=getSport(id); if(!sp) return '';
+      const f=window.PS_fmtFol?PS_fmtFol(sp.followers):sp.followers;
+      const badge=tag==='live'?'<div class="ss-live"><span class="dot-w"></span>LIVE</div>':tag==='trending'?'<div class="ss-trend">▲ TRENDING</div>':tag==='new'?'<div class="ss-new">NEW</div>':'<div class="ss-chal">CHALLENGE</div>';
+      return `<div class="ss-card" data-tag="${tag}" style="--accent:${window.PS_catOf?PS_catOf(sp).accent:'#C6FF3D'}" onclick="openSport('${id}')">
+        <div class="ss-img" style="${h2bg(id in H2_IMGS?id:'athletics')}"></div><div class="ss-veil"></div>
+        <div class="ss-ico">${sp.icon}</div>
+        ${badge}
         <span class="ss-enter">ENTER SPORT →</span>
-        <div class="ss-meta"><h4>${s.name.toUpperCase()}</h4><span>${f} FOLLOWERS · ${window.PS_related?PS_related(id,2).map(x=>x.name).join(' · '):''}</span></div>
-      </div>`;}).join('');
+        <div class="ss-meta"><h4>${sp.name.toUpperCase()}</h4><span>${f} FOLLOWERS · ${PS_catOf(sp).short.toUpperCase()}</span></div>
+      </div>`;};
+    const build=(mode)=>{
+      let cards=[];
+      if(mode==='live') ids.filter(id=>live.has(id)).forEach(id=>cards.push(card(id,'live')));
+      else if(mode==='trending') ids.filter(id=>{const sp=getSport(id); return sp&&sp.trend;}).slice(0,8).forEach(id=>cards.push(card(id,'trending')));
+      else if(mode==='new') (window.PLAYR_SPORTS.filter(x=>x.fresh).slice(0,8)).forEach(x=>cards.push(card(x.id,'new')));
+      else ids.filter(id=>challengey.has(id)).slice(0,8).forEach(id=>cards.push(card(id,'challenge')));
+      if(!cards.length) ids.slice(0,8).forEach(id=>cards.push(card(id,'trending')));
+      strip.innerHTML=cards.join('');
+    };
+    window.HOME_LT={ set(m){ build(m); document.querySelectorAll('#ltChips .lt-chip').forEach(c=>c.classList.toggle('on', c.getAttribute('onclick').includes("'"+m+"'"))); } };
+    build('live');
   }
 
   /* ---- 3. Feed rail ---- */
@@ -2817,21 +2699,6 @@ function buildHomeV2(){
       <div class="c2m-body"><b>${t}</b><i>${getSport(id)?getSport(id).name.toUpperCase():''} · OPEN</i></div></div>`).join('');
   }
 
-  /* ---- 8. You may also like ---- */
-  const ml=document.getElementById('mayLikeStrip');
-  if(ml){
-    const fol=window.PS_follows?PS_follows():[];
-    const base=fol.length?fol.slice(0,2):['running','cricket'];
-    const seen=new Set(base); const recs=[];
-    base.forEach(f=>(window.PS_related?PS_related(f,5):[]).forEach(r=>{ if(!seen.has(r.id)&&recs.length<8){seen.add(r.id);recs.push(r);} }));
-    const sub=document.getElementById('mayLikeSub');
-    if(sub) sub.textContent = fol.length? `Because you follow ${base.map(f=>getSport(f)?getSport(f).name:f).join(' and ')}.` : 'Popular with runners — follow a sport to personalize this.';
-    ml.innerHTML=recs.map(s=>`<div class="ss-card ml-card" style="--accent:${PS_catOf(s).accent};flex-basis:236px;height:170px;" onclick="openSport('${s.id}')">
-      <div class="ss-img" style="${h2bg(s.id in H2_IMGS?s.id:'athletics')}"></div><div class="ss-veil"></div>
-      <div class="ss-ico" style="width:36px;height:36px;font-size:17px;border-radius:11px;">${s.icon}</div>
-      <div class="ss-meta" style="padding:14px 16px;"><h4 style="font-size:21px;">${s.name.toUpperCase()}</h4><span>${PS_fmtFol(s.followers)} FOLLOWERS</span></div></div>`).join('');
-  }
-
   /* ---- 9. This day in sport ---- */
   const td=document.getElementById('thisDayFeature');
   if(td){
@@ -2853,6 +2720,37 @@ function buildHomeV2(){
   /* ---- 10. CTA collage ---- */
   const cc=document.getElementById('ctaCollage');
   if(cc){ cc.innerHTML=['cricket','football','running','mountaineering','basketball','motorsport','tennis','swimming'].map(id=>`<div style="background-image:url('${H2_IMGS[id]}')"></div>`).join(''); }
+
+  /* ---- COMMUNITIES ---- */
+  const hc=document.getElementById('homeCommunitiesSec');
+  if(hc){
+    hc.innerHTML=`<div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Communities</div><h2 class="section-title">YOUR PEOPLE.<br>YOUR SPORTS.</h2></div>
+      <button class="btn btn-primary" onclick="switchView('communities')">EXPLORE COMMUNITIES</button></div>
+      <div class="grid grid-3">${COMMUNITIES.slice(0,6).map(c=>`
+        <div class="hc-com card" onclick="switchView('communities')">
+          <div class="hcc-img" style="background-image:url('${c.img}')"></div>
+          <div class="hcc-body"><b>${c.n}</b><span class="mono-num">${c.members}</span>
+          <button class="join-btn" onclick="event.stopPropagation(); toggleJoin(this,'${c.n}')">Join</button></div>
+        </div>`).join("")}</div></div>`;
+  }
+
+  /* ---- PLAYR+ teaser ---- */
+  const pt=document.getElementById('plusTeaserSec');
+  if(pt){
+    pt.innerHTML=`<div class="wrap">
+      <div class="plus-teaser card">
+        <div class="pt-glow"></div>
+        <div class="pt-in">
+          <div class="pt-badge">PLAYR+</div>
+          <h3>TAKE YOUR SPORTS WORLD FURTHER.</h3>
+          <div class="pt-feats mono-num">
+            <span>₹365/YEAR</span><span>AD-FREE</span><span>ADVANCED STATS</span><span>DEEP HISTORY</span><span>PREMIUM FEATURES</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="switchView('plus')">EXPLORE PLAYR+</button>
+      </div></div>`;
+  }
 
   /* ---- scroll reveal ---- */
   try{
