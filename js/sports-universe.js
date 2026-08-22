@@ -158,7 +158,7 @@ function panelFor(s,t){
     }
     case "Teams":{
       const T=["Mumbai XI","Delhi Dashers","Bengaluru Blasters","Chennai Chargers","Kolkata Kings","Pune Prowlers","Jaipur Jaguars","Hyderabad Hawks"];
-      return `<div class="grid grid-4">${T.map(t=>`<div class="card" style="padding:20px;text-align:center;font-weight:700;font-size:14px;border-top:3px solid var(--accent,#C6FF3D);">${s.icon} ${t}</div>`).join("")}</div>`;
+      return `<div class="grid grid-4">${T.map(t=>`<div class="card" style="padding:20px;text-align:center;font-weight:700;font-size:14px;border-top:3px solid var(--accent,#E0F808);">${s.icon} ${t}</div>`).join("")}</div>`;
     }
     case "Summits":{
       return `<div class="card">${PEAKS.slice(0,8).map(p=>`<div class="fixture-row"><div class="fixture-team left">${p[0]}</div><div></div><div class="fixture-score">${p[1]}m</div><div></div><div class="fixture-team">8,000m crown</div></div>`).join("")}</div>

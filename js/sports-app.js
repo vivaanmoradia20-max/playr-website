@@ -366,7 +366,7 @@ window.PS_openOnboarding = function(force){
     const div=document.getElementById("onboardingModal"); if(div) div.remove();
     const el=document.createElement("div"); el.id="onboardingModal"; el.className="ob-overlay";
     el.innerHTML=`<div class="ob-modal card">
-      <div class="ob-head"><div><div class="eyebrow">Welcome to PLAYR</div><h3>CHOOSE YOUR SPORTS.</h3><p>Pick as many as you like — this tunes your feed, challenges, communities and events. You can change it anytime.</p></div>
+      <div class="ob-head"><div><img src="assets/brand/playr-wordmark.png" alt="PLAYR" style="height:22px; display:block; margin-bottom:14px; filter:drop-shadow(0 0 14px rgba(224,248,8,.25));"><div class="eyebrow">Welcome to PLAYR — One Passion. One Community.</div><h3>CHOOSE YOUR SPORTS.</h3><p>Pick as many as you like — this tunes your feed, challenges, communities and events. You can change it anytime.</p></div>
       <button class="ob-close" aria-label="Close">✕</button></div>
       <div class="ob-quick"><span class="ob-label">Popular picks:</span>${quickSports.map(s=>`<button class="chip ob-q ${picked.has(s.id)?"active":""}" data-sport="${s.id}">${s.icon} ${s.name}</button>`).join("")}</div>
       <input class="ob-search" placeholder="Search 200+ sports…" value="${q.replace(/"/g,"&quot;")}">

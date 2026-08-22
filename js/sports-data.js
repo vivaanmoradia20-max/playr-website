@@ -27,7 +27,7 @@ window.SPORT_CATEGORIES = [
   {id:"water",          name:"Water Sports",           short:"Water",         icon:"🌊", accent:"#2FD3C5", blurb:"Everything that happens on, in and under water."},
   {id:"combat",         name:"Combat Sports",          short:"Combat",        icon:"🥊", accent:"#FF6A4D", blurb:"Striking, grappling and martial arts disciplines."},
   {id:"motor",          name:"Motorsport",             short:"Motorsport",    icon:"🏁", accent:"#FFB13D", blurb:"From karting to Formula 1 — machines and riders at the limit."},
-  {id:"action",         name:"Action / Urban Sports",  short:"Action",        icon:"🛹", accent:"#C6FF3D", blurb:"Street, park and freestyle culture."},
+  {id:"action",         name:"Action / Urban Sports",  short:"Action",        icon:"🛹", accent:"#E0F808", blurb:"Street, park and freestyle culture."},
   {id:"endurance",      name:"Endurance & Fitness",    short:"Endurance",     icon:"🔥", accent:"#6BE8B8", blurb:"Running, strength and functional fitness communities."},
   {id:"mind",           name:"Mind Sports",            short:"Mind",          icon:"♟",  accent:"#FF8CD8", blurb:"Where the brain does the competing."},
   {id:"team",           name:"Team Sports",            short:"Team",          icon:"🤝", accent:"#7FA8FF", blurb:"Ball and invasion games played as a squad."},
