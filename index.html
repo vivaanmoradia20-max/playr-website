@@ -474,6 +474,20 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   opacity:0; pointer-events:none; transition:all .3s ease; white-space:nowrap;
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* ============ MODAL (added for real forms: auth, post, community, challenge, cart, profile) ============ */
+.modal-overlay{position:fixed; inset:0; background:rgba(10,11,13,.72); backdrop-filter:blur(6px); z-index:1200; display:none; align-items:center; justify-content:center; padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{width:100%; max-width:440px; max-height:86vh; overflow-y:auto; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:28px; position:relative;}
+.modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:20px; line-height:1;}
+.modal-close:hover{background:var(--surface-2); color:var(--text);}
+.modal-title{font-family:var(--display); font-size:26px; text-transform:uppercase; margin-bottom:20px; padding-right:30px;}
+.form-field{margin-bottom:14px;}
+.form-label{display:block; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+.form-input{width:100%; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:11px 14px; color:var(--text); font-size:14px; font-family:var(--body);}
+.form-input:focus{outline:none; border-color:var(--lime);}
+.form-textarea{min-height:80px; resize:vertical;}
+.cart-badge{position:absolute; top:2px; right:2px; min-width:16px; height:16px; padding:0 4px; border-radius:100px; background:var(--coral); color:var(--void); font-size:10px; font-weight:800; display:none; align-items:center; justify-content:center; font-family:var(--mono);}
 </style>
 </head>
 <body>
@@ -500,31 +514,31 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <div style="position:relative;">
       <button class="icon-btn" aria-label="Notifications" onclick="toggleDropdown('notif')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-        <span class="badge-dot"></span>
+        <span class="badge-dot" id="notifBadge" style="display:none;"></span>
       </button>
       <div class="dropdown glass" id="dd-notif">
         <div class="dropdown-head">Notifications</div>
-        <div class="dropdown-item"><div class="dd-avatar"></div><div><div class="dd-title">Vivaan challenged you</div><div class="dd-sub">Beat 60:00 on the 10K route · 2m</div></div></div>
-        <div class="dropdown-item"><div class="dd-avatar"></div><div><div class="dd-title">Mumbai Runners</div><div class="dd-sub">New post in your community · 18m</div></div></div>
-        <div class="dropdown-item"><div class="dd-avatar"></div><div><div class="dd-title">Mountaineering</div><div class="dd-sub">Live: Summit push begins · 1h</div></div></div>
-        <div class="dropdown-item"><div class="dd-avatar"></div><div><div class="dd-title">PLAYR+</div><div class="dd-sub">Early access to City Marathon drop · 3h</div></div></div>
+        <div id="dd-notif-body">
+          <div class="dropdown-item"><div><div class="dd-title">Log in to see notifications</div></div></div>
+        </div>
       </div>
+    </div>
+    <div style="position:relative;">
+      <button class="icon-btn" aria-label="Cart" onclick="openCartModal(); event.stopPropagation();">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
     </div>
     <div style="position:relative;">
       <button class="icon-btn" aria-label="Profile" onclick="toggleDropdown('profile'); event.stopPropagation();">
         <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--cyan));"></div>
       </button>
       <div class="dropdown glass" id="dd-profile">
-        <div class="dropdown-item" onclick="switchView('profile')" style="cursor:pointer;">
-          <div class="dd-avatar" style="background:linear-gradient(135deg,var(--lime),var(--cyan));"></div>
-          <div><div class="dd-title">Vivaan Moradia</div><div class="dd-sub">View your profile</div></div>
-        </div>
-        <div class="dropdown-item" style="cursor:pointer;"><div><div class="dd-title">Saved posts</div></div></div>
-        <div class="dropdown-item" style="cursor:pointer;"><div><div class="dd-title">Settings</div></div></div>
-        <div class="dropdown-item" style="cursor:pointer;" onclick="switchView('plus')"><div><div class="dd-title">Upgrade to PLAYR+</div></div></div>
+        <div class="dropdown-item" style="cursor:pointer;" onclick="openAuthModal('login')"><div><div class="dd-title">Log in</div></div></div>
+        <div class="dropdown-item" style="cursor:pointer;" onclick="openAuthModal('signup')"><div><div class="dd-title">Create account</div></div></div>
       </div>
     </div>
-    <button class="btn btn-primary btn-sm join-btn-desktop" onclick="showToast('Welcome to PLAYR 🎉')">Join PLAYR</button>
+    <button class="btn btn-primary btn-sm join-btn-desktop" id="joinBtn" onclick="openAuthModal('signup')">Join PLAYR</button>
     <button class="hamburger" onclick="toggleMobileMenu(true)" aria-label="Open menu">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -590,6 +604,9 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         <div class="feed-tab active" data-tab="foryou" onclick="setFeedTab('foryou')">For You</div>
         <div class="feed-tab" data-tab="following" onclick="setFeedTab('following')">Following</div>
         <div class="feed-tab" data-tab="trending" onclick="setFeedTab('trending')">Trending</div>
+      </div>
+      <div style="text-align:center; margin-bottom:20px;">
+        <button class="btn btn-primary btn-sm" onclick="openCreatePostModal()">+ Create Post</button>
       </div>
       <div class="feed-col" id="homeFeed"></div>
       <div style="text-align:center; margin-top:10px;">
@@ -731,6 +748,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <div class="chip-row" id="sportFilters"></div>
     <div class="grid grid-4" id="sportGrid"></div>
     <p id="noSportsMsg" style="display:none; color:var(--muted); margin-top:30px;">No sports found. Try another search or filter.</p>
+    <div id="searchResultsWrap" style="display:none;"></div>
   </div>
 </section>
 
@@ -745,6 +763,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       <div class="su-header-in">
         <div class="pill pill-lime" id="suFollowers" style="margin-bottom:14px;"></div>
         <h1 class="su-title" id="suTitle"></h1>
+        <button class="follow-btn" id="suFollowBtn" style="margin-top:16px;" onclick="toggleSportFollow(currentSport, this)">+ Follow</button>
       </div>
     </div>
     <div class="su-tabs" id="suTabs"></div>
@@ -802,7 +821,10 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <h2 class="section-title">YOUR PEOPLE.<br>YOUR SPORTS.</h2>
     <div class="grid" style="grid-template-columns:1.6fr 1fr; gap:26px; margin-top:44px; align-items:start;">
       <div>
-        <h3 style="font-family:var(--body); font-weight:800; font-size:16px; margin-bottom:18px;">Sports Communities</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+          <h3 style="font-family:var(--body); font-weight:800; font-size:16px;">Sports Communities</h3>
+          <button class="btn btn-ghost btn-sm" onclick="openCreateCommunityModal()">+ Create</button>
+        </div>
         <div class="card" id="communityList"></div>
       </div>
       <div class="card" style="padding:22px;">
@@ -872,7 +894,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         <div class="plan-feat yes"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Advanced personalization</div>
         <div class="plan-feat yes"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Premium challenges & exclusive content</div>
         <div class="plan-feat yes"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Early access to events & merch drops</div>
-        <button class="btn btn-primary" style="width:100%; margin-top:24px;" onclick="showToast('Welcome to PLAYR+ ⚡')">Upgrade to PLAYR+</button>
+        <button class="btn btn-primary" style="width:100%; margin-top:24px;" onclick="activatePlayrPlus()">Upgrade to PLAYR+</button>
       </div>
     </div>
   </div>
@@ -996,578 +1018,23 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 
 <div class="toast" id="toast"></div>
 
-<script>
-/* ============================================================
-   PLAYR — PROTOTYPE DATA + INTERACTIVITY
-   ============================================================ */
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box glass" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <div id="modalContent"></div>
+  </div>
+</div>
 
-const IMG = {
-  cricket:'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800&h=900&fit=crop',
-  football:'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=800&h=900&fit=crop',
-  running:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=900&fit=crop',
-  basketball:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=900&fit=crop',
-  mountaineering:'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&h=900&fit=crop',
-  tennis:'https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?w=800&h=900&fit=crop',
-  swimming:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&h=900&fit=crop',
-  cycling:'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&h=900&fit=crop',
-  motorsport:'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=900&fit=crop',
-  athletics:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=900&fit=crop',
-  boxing:'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&h=900&fit=crop',
-  golf:'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&h=900&fit=crop',
-  badminton:'https://images.unsplash.com/photo-1613918431703-aa50609a1b78?w=800&h=900&fit=crop',
-  chess:'https://images.unsplash.com/photo-1528819622765-d6bcf132ac11?w=800&h=900&fit=crop',
-  esports:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=900&fit=crop',
-  volleyball:'https://images.unsplash.com/photo-1592656094267-764a45160876?w=800&h=900&fit=crop',
-  hockey:'https://images.unsplash.com/photo-1580891721764-2d3fb2ce7233?w=800&h=900&fit=crop',
-  tabletennis:'https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&h=900&fit=crop',
-  gymnastics:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&h=900&fit=crop',
-  surfing:'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=800&h=900&fit=crop',
-  skiing:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=900&fit=crop',
-};
+<!-- ============ SUPABASE ============ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/app.js"></script>
 
-const SPORTS = [
-  {id:'cricket', name:'Cricket', followers:'8.2M', cat:['Team Sports'], img:IMG.cricket},
-  {id:'football', name:'Football', followers:'11.6M', cat:['Team Sports'], img:IMG.football},
-  {id:'running', name:'Running', followers:'5.4M', cat:['Individual'], img:IMG.running},
-  {id:'basketball', name:'Basketball', followers:'6.7M', cat:['Team Sports'], img:IMG.basketball},
-  {id:'mountaineering', name:'Mountaineering', followers:'2.4M', cat:['Adventure'], img:IMG.mountaineering},
-  {id:'tennis', name:'Tennis', followers:'4.1M', cat:['Individual'], img:IMG.tennis},
-  {id:'swimming', name:'Swimming', followers:'3.3M', cat:['Water','Individual'], img:IMG.swimming},
-  {id:'cycling', name:'Cycling', followers:'2.9M', cat:['Individual','Adventure'], img:IMG.cycling},
-  {id:'motorsport', name:'Motorsport', followers:'5.8M', cat:['Motorsport'], img:IMG.motorsport},
-  {id:'athletics', name:'Athletics', followers:'3.6M', cat:['Individual'], img:IMG.athletics},
-  {id:'boxing', name:'Boxing', followers:'2.7M', cat:['Combat'], img:IMG.boxing},
-  {id:'golf', name:'Golf', followers:'1.9M', cat:['Individual'], img:IMG.golf},
-  {id:'badminton', name:'Badminton', followers:'2.2M', cat:['Individual'], img:IMG.badminton},
-  {id:'chess', name:'Chess', followers:'3.0M', cat:['Mind Sports'], img:IMG.chess},
-  {id:'esports', name:'Esports', followers:'9.1M', cat:['Esports'], img:IMG.esports},
-  {id:'volleyball', name:'Volleyball', followers:'1.6M', cat:['Team Sports'], img:IMG.volleyball},
-  {id:'hockey', name:'Hockey', followers:'2.1M', cat:['Team Sports'], img:IMG.hockey},
-  {id:'tabletennis', name:'Table Tennis', followers:'1.4M', cat:['Individual'], img:IMG.tabletennis},
-  {id:'gymnastics', name:'Gymnastics', followers:'1.2M', cat:['Individual'], img:IMG.gymnastics},
-  {id:'surfing', name:'Surfing', followers:'980K', cat:['Water','Adventure'], img:IMG.surfing},
-  {id:'skiing', name:'Skiing', followers:'870K', cat:['Winter','Adventure'], img:IMG.skiing},
-];
-const FILTERS = ['All','Team Sports','Individual','Adventure','Motorsport','Combat','Water','Winter','Mind Sports','Esports'];
-let activeFilter = 'All';
-const followState = {};
-
-function renderSports(){
-  const q = document.getElementById('sportSearch').value.toLowerCase();
-  const grid = document.getElementById('sportGrid');
-  const filtered = SPORTS.filter(s=>{
-    const matchQ = s.name.toLowerCase().includes(q);
-    const matchF = activeFilter==='All' || s.cat.includes(activeFilter);
-    return matchQ && matchF;
-  });
-  document.getElementById('noSportsMsg').style.display = filtered.length ? 'none' : 'block';
-  grid.innerHTML = filtered.map(s=>`
-    <div class="sport-card" style="background-image:url('${s.img}')" onclick="openSport('${s.id}')">
-      <div class="sport-cat pill pill-lime">${s.cat[0]}</div>
-      <div class="sport-card-body">
-        <div class="sport-name">${s.name}</div>
-        <div class="sport-followers mono-num">${s.followers} followers</div>
-        <button class="follow-btn ${followState[s.id]?'following':''}" onclick="event.stopPropagation(); toggleFollow('${s.id}', this)">${followState[s.id]?'Following':'+ Follow'}</button>
-      </div>
-    </div>`).join('');
-}
-function toggleFollow(id, el){
-  followState[id] = !followState[id];
-  el.classList.toggle('following');
-  el.textContent = followState[id] ? 'Following' : '+ Follow';
-  showToast(followState[id] ? `Following ${cap(id)}` : `Unfollowed ${cap(id)}`);
-}
-function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-function renderFilters(){
-  document.getElementById('sportFilters').innerHTML = FILTERS.map(f=>
-    `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f}')">${f}</button>`).join('');
-}
-function setFilter(f){ activeFilter = f; renderFilters(); renderSports(); }
-
-function openSport(id){ switchView('sports'); setSportUniverse(id); }
-
-/* ---------- Hero ticker + phone feed ---------- */
-const TICKER = [
-  {sport:'CRICKET', text:'IND 287/4 — 42 overs'},
-  {sport:'FOOTBALL', text:'Mumbai City FC 2 - 1 Bengaluru FC'},
-  {sport:'RUNNING', text:'Rhea logged a 5K PB — 22:14'},
-  {sport:'MOTORSPORT', text:'Verstappen sets fastest lap — Q3'},
-  {sport:'MOUNTAINEERING', text:'Summit push begins on Annapurna'},
-  {sport:'BASKETBALL', text:'Overtime thriller in Bengaluru'},
-  {sport:'CHESS', text:'Grandmaster clash live now'},
-  {sport:'ESPORTS', text:'Finals underway — Game 3'},
-];
-function buildTicker(){
-  const html = TICKER.concat(TICKER).map(t=>`<div class="ticker-item"><span class="dot-live"></span><span class="tsport">${t.sport}</span><b>${t.text}</b></div>`).join('');
-  document.getElementById('heroTicker').innerHTML = html;
-}
-
-const PHONE_POSTS = [
-  {name:'Rhea Kapoor', sport:'Running', img:IMG.running},
-  {name:'Karan Mehta', sport:'Cricket', img:IMG.cricket},
-  {name:'Ava Chen', sport:'Swimming', img:IMG.swimming},
-  {name:'Team Everest IN', sport:'Mountaineering', img:IMG.mountaineering},
-  {name:'Neel Shah', sport:'Motorsport', img:IMG.motorsport},
-];
-function buildPhoneFeed(){
-  document.getElementById('phoneFeed').innerHTML = PHONE_POSTS.map(p=>`
-    <div class="feed-post-mini">
-      <div class="fp-head">
-        <div class="fp-avatar" style="background:url('${p.img}') center/cover;"></div>
-        <div><div class="fp-name">${p.name}</div><div class="fp-meta">${p.sport.toUpperCase()} · 2H</div></div>
-      </div>
-      <div class="fp-media" style="background-image:url('${p.img}')"></div>
-      <div class="fp-actions">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
-      </div>
-    </div>`).join('');
-}
-
-/* ---------- Home feed (For You / Following / Trending) ---------- */
-const FEED_SETS = {
-  foryou:[
-    {name:'Karan Mehta', sport:'Cricket', time:'2h', img:IMG.cricket, text:'That last-over six to seal the chase 🔥 Best finish of the season so far.', likes:1842, comments:96, avatar:IMG.cricket, challenge:false},
-    {name:'Ava Chen', sport:'Swimming', time:'4h', img:IMG.swimming, text:'New personal best in the 200m freestyle this morning. Grind never stops.', likes:3021, comments:212, avatar:IMG.swimming, challenge:false},
-    {name:'Rhea Kapoor', sport:'Running', time:'6h', img:IMG.running, text:'Logged my 10K in 57:42 — chasing sub-55 next month. Who wants in?', likes:964, comments:58, avatar:IMG.running, challenge:true},
-    {name:'Team Everest IN', sport:'Mountaineering', time:'8h', img:IMG.mountaineering, text:'Basecamp cleared. Summit push begins tomorrow at 4AM local time.', likes:2210, comments:140, avatar:IMG.mountaineering, challenge:false},
-    {name:'PLAYR History', sport:'On This Day', time:'10h', img:IMG.football, text:'On this day in 1986, Diego Maradona scored the "Goal of the Century" against England.', likes:5602, comments:301, avatar:IMG.football, challenge:false},
-    {name:'Mumbai Runners', sport:'Community', time:'12h', img:IMG.running, text:'42 of us hit the Marine Drive loop this morning. Who\'s joining Sunday\'s long run?', likes:412, comments:64, avatar:IMG.running, challenge:false},
-    {name:'Neel Shah', sport:'Motorsport', time:'14h', img:IMG.motorsport, text:'Achievement unlocked: completed my first full track day at the BIC. Podium next.', likes:1338, comments:77, avatar:IMG.motorsport, challenge:false},
-  ],
-  following:[
-    {name:'Karan Mehta', sport:'Cricket', time:'2h', img:IMG.cricket, text:'That last-over six to seal the chase 🔥 Best finish of the season so far.', likes:1842, comments:96, avatar:IMG.cricket, challenge:false},
-    {name:'Rhea Kapoor', sport:'Running', time:'6h', img:IMG.running, text:'Logged my 10K in 57:42 — chasing sub-55 next month. Who wants in?', likes:964, comments:58, avatar:IMG.running, challenge:true},
-  ],
-  trending:[
-    {name:'PLAYR History', sport:'On This Day', time:'10h', img:IMG.football, text:'On this day in 1986, Diego Maradona scored the "Goal of the Century" against England.', likes:5602, comments:301, avatar:IMG.football, challenge:false},
-    {name:'Ava Chen', sport:'Swimming', time:'4h', img:IMG.swimming, text:'New personal best in the 200m freestyle this morning. Grind never stops.', likes:3021, comments:212, avatar:IMG.swimming, challenge:false},
-    {name:'Team Everest IN', sport:'Mountaineering', time:'8h', img:IMG.mountaineering, text:'Basecamp cleared. Summit push begins tomorrow at 4AM local time.', likes:2210, comments:140, avatar:IMG.mountaineering, challenge:false},
-  ]
-};
-function postHTML(p, idx){
-  return `<div class="post">
-    <div class="post-head">
-      <div class="avatar" style="background-image:url('${p.avatar}')"></div>
-      <div><div class="post-user">${p.name} <span class="pill pill-muted">${p.sport}</span></div><div class="post-meta">${p.time} ago</div></div>
-      <button class="follow-btn post-follow" style="padding:7px 14px; font-size:11px;" onclick="toggleFollow('u${idx}', this)">${followState['u'+idx]?'Following':'+ Follow'}</button>
-    </div>
-    <div class="post-body">${p.text}</div>
-    <div class="post-media" style="background-image:url('${p.img}')"></div>
-    <div class="post-actions">
-      <button class="pa-btn" onclick="toggleLike(this,${p.likes})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="likecount">${p.likes.toLocaleString()}</span></button>
-      <button class="pa-btn" onclick="showToast('Comments coming soon')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>${p.comments}</button>
-      <button class="pa-btn" onclick="showToast('Shared to your story')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
-      <button class="pa-btn pa-spacer" onclick="toggleSave(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-    ${p.challenge?`<div class="challenge-cta"><span style="font-size:13px; font-weight:600;">Think you can beat 57:42?</span><button class="btn btn-primary btn-sm" onclick="switchView('challenges')">Challenge</button></div>`:''}
-  </div>`;
-}
-let currentFeedTab='foryou';
-function renderHomeFeed(){
-  document.getElementById('homeFeed').innerHTML = FEED_SETS[currentFeedTab].map((p,i)=>postHTML(p,i)).join('');
-}
-function setFeedTab(tab){
-  currentFeedTab=tab;
-  document.querySelectorAll('.feed-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
-  renderHomeFeed();
-}
-function toggleLike(btn, base){
-  const liked = btn.classList.toggle('liked');
-  const el = btn.querySelector('.likecount');
-  let n = parseInt(el.textContent.replace(/,/g,''));
-  el.textContent = (liked ? n+1 : n-1).toLocaleString();
-}
-function toggleSave(btn){
-  const saved = btn.classList.toggle('saved');
-  showToast(saved ? 'Saved to your collection' : 'Removed from saved');
-}
-
-/* ---------- Sport Universe ---------- */
-const UNIVERSE = {
-  mountaineering:{
-    followers:'2.4M Followers', img:IMG.mountaineering,
-    latest:[
-      {t:'Climber completes major summit expedition', d:'A four-person team from Team Everest IN reached the summit of Annapurna at dawn, marking the first Indian ascent this season.'},
-      {t:'New basecamp route opens for the winter season', d:'Sherpa guides confirm a safer route around the icefall following recent surveys.'},
-      {t:'Community expedition planned for December', d:'Mountaineering India is organizing a beginner-friendly trek up Stok Kangri.'}
-    ],
-    history:[
-      {y:'1953', e:'First ascent of Everest', d:'Edmund Hillary and Tenzing Norgay become the first climbers confirmed to reach the summit of Mount Everest.'},
-      {y:'1978', e:'Everest without supplemental oxygen', d:'Reinhold Messner and Peter Habeler complete the first oxygen-free ascent of Everest.'},
-      {y:'1984', e:'Bachendri Pal summits Everest', d:'She becomes the first Indian woman to reach the top of the world.'}
-    ],
-    athletes:[
-      {n:'Arjun Rawat', s:'High-Altitude Climber', img:IMG.mountaineering},
-      {n:'Priya Menon', s:'Expedition Leader', img:IMG.athletics},
-      {n:'Tashi Sherpa', s:'Route Guide', img:IMG.skiing},
-    ],
-    community:[
-      {n:'Mountaineering India', t:'Anyone attempting Stok Kangri this December? Looking to form a group.'},
-      {n:'Basecamp Diaries', t:'Weather window looks good for a summit push next week. Stay tuned.'}
-    ],
-    challenges:[{t:'Complete a 20KM Hiking Challenge', d:'Log any 20km hike on trail or elevation gain — recreational, no equipment required beyond basics.'}],
-    events:[{t:'Stok Kangri Community Trek', d:'6–12 Dec 2026 · Ladakh · Open to PLAYR members'}],
-    stats:[{l:'Highest Peak Logged', v:'8,091M'},{l:'Active Expeditions', v:'14'},{l:'Community Treks / Year', v:'62'}]
-  },
-  cricket:{
-    followers:'8.2M Followers', img:IMG.cricket,
-    latest:[
-      {t:'India seals series with dominant chase', d:'A composed 94* guided the chase home with four overs to spare in the series decider.'},
-      {t:'Domestic season kicks off next week', d:'32 teams gear up for the new Ranji season starting Monday.'},
-      {t:'Rising star signs first franchise deal', d:'19-year-old all-rounder Dev Solanki inks his maiden T20 franchise contract.'}
-    ],
-    history:[
-      {y:'1983', e:'India wins the World Cup', d:'Kapil Dev lifts the Prudential World Cup at Lord\'s, changing Indian cricket forever.'},
-      {y:'2011', e:'India wins the ODI World Cup at home', d:'MS Dhoni\'s six seals the title in Mumbai after a 28-year wait.'},
-      {y:'2007', e:'First T20 World Cup title', d:'India beats Pakistan in a thrilling final in Johannesburg.'}
-    ],
-    athletes:[
-      {n:'Dev Solanki', s:'All-Rounder', img:IMG.cricket},
-      {n:'Meera Iyer', s:'Opening Batter', img:IMG.athletics},
-      {n:'Rohan Naik', s:'Fast Bowler', img:IMG.boxing},
-    ],
-    community:[
-      {n:'Indian Cricket Fans', t:'That death-over spell was unreal. Best bowling performance this season?'},
-      {n:'College Cricket India', t:'Trials for the inter-college XI open this weekend, sign up on the community page.'}
-    ],
-    challenges:[{t:'Backyard Bowling Accuracy Challenge', d:'Hit the target stump 5 times in a row — log your attempt and tag a friend.'}],
-    events:[{t:'Mumbai Inter-College T20 Cup', d:'2–9 Oct 2026 · Wankhede Practice Grounds'}],
-    stats:[{l:'Matches Tracked', v:'1,204'},{l:'Live Viewers Today', v:'340K'},{l:'Active Communities', v:'218'}]
-  },
-  running:{
-    followers:'5.4M Followers', img:IMG.running,
-    latest:[
-      {t:'Local runner breaks community 10K record', d:'Rhea Kapoor clocks 34:12, the fastest verified time logged by the Mumbai Runners community.'},
-      {t:'City Marathon registrations open', d:'This year\'s route adds a new stretch along the coastal road.'},
-      {t:'Sunrise run series returns', d:'Weekly community runs restart this Saturday at Marine Drive.'}
-    ],
-    history:[
-      {y:'1954', e:'The four-minute mile', d:'Roger Bannister becomes the first person to run a mile in under four minutes.'},
-      {y:'1960', e:'Barefoot marathon gold', d:'Abebe Bikila wins Olympic marathon gold running barefoot through Rome.'},
-      {y:'2019', e:'Sub two-hour marathon', d:'Eliud Kipchoge runs a marathon distance in under two hours in an unofficial event.'}
-    ],
-    athletes:[
-      {n:'Rhea Kapoor', s:'10K Specialist', img:IMG.running},
-      {n:'Farhan Ali', s:'Marathoner', img:IMG.cycling},
-      {n:'Simran Gill', s:'Trail Runner', img:IMG.skiing},
-    ],
-    community:[
-      {n:'Mumbai Runners', t:'42 of us hit the Marine Drive loop this morning — Sunday long run at 5:30AM.'},
-      {n:'Weekend Warriors', t:'Anyone up for a relay challenge next month?'}
-    ],
-    challenges:[{t:'10KM Time Challenge', d:'Log your fastest 10km and see how you rank on the community leaderboard.'}],
-    events:[{t:'PLAYR City Marathon', d:'15 Nov 2026 · Mumbai Coastal Road'}],
-    stats:[{l:'KM Logged This Month', v:'1.2M'},{l:'Active Runners', v:'184K'},{l:'Community Records', v:'96'}]
-  }
-};
-let currentSport = 'mountaineering';
-let currentSuTab = 'latest';
-function setSportUniverse(id){
-  currentSport = id;
-  const d = UNIVERSE[id];
-  document.getElementById('suHeader').style.backgroundImage = `url('${d.img}')`;
-  document.getElementById('suFollowers').textContent = d.followers;
-  document.getElementById('suTitle').textContent = id.charAt(0).toUpperCase()+id.slice(1);
-  document.querySelectorAll('#suSwitch button').forEach(b=>b.classList.toggle('active', b.dataset.sport===id));
-  setSuTab(currentSuTab);
-}
-function renderSuSwitch(){
-  document.getElementById('suSwitch').innerHTML = Object.keys(UNIVERSE).map(id=>
-    `<button data-sport="${id}" onclick="setSportUniverse('${id}')">${id}</button>`).join('');
-}
-const SU_TABS = ['feed','latest','history','athletes','community','challenges','events','stats'];
-function renderSuTabs(){
-  document.getElementById('suTabs').innerHTML = SU_TABS.map(t=>
-    `<div class="su-tab ${t===currentSuTab?'active':''}" data-sutab="${t}" onclick="setSuTab('${t}')">${t}</div>`).join('');
-}
-function setSuTab(tab){
-  currentSuTab = tab;
-  document.querySelectorAll('#suTabs .su-tab').forEach(t=>t.classList.toggle('active', t.dataset.sutab===tab));
-  const d = UNIVERSE[currentSport];
-  const wrap = document.getElementById('suPanels');
-  if(tab==='feed'){
-    wrap.innerHTML = `<div class="feed-col" style="margin:0;">${FEED_SETS.foryou.filter(p=>p.sport.toLowerCase()===currentSport || currentSport==='mountaineering'&&p.sport==='Mountaineering' || currentSport==='cricket'&&p.sport==='Cricket' || currentSport==='running'&&p.sport==='Running').map((p,i)=>postHTML(p,'su'+i)).join('') || `<p style="color:var(--muted);">No posts yet in this sport's feed — be the first to post.</p>`}</div>`;
-  } else if(tab==='latest'){
-    wrap.innerHTML = `<div class="grid grid-3">${d.latest.map(x=>`<div class="card" style="padding:22px;"><div class="pill pill-cyan" style="margin-bottom:12px;">Latest</div><h4 style="font-size:16px; font-weight:800; margin-bottom:8px; line-height:1.35;">${x.t}</h4><p style="color:var(--muted); font-size:13px; line-height:1.5;">${x.d}</p></div>`).join('')}</div>`;
-  } else if(tab==='history'){
-    wrap.innerHTML = `<div style="margin-bottom:18px;" class="eyebrow">On this day in ${cap(currentSport)} history</div>` + d.history.map(h=>`<div class="timeline-card"><div class="tl-year">${h.y}</div><div class="tl-body"><h4>${h.e}</h4><p>${h.d}</p></div></div>`).join('');
-  } else if(tab==='athletes'){
-    wrap.innerHTML = `<div class="grid grid-4">${d.athletes.map(a=>`<div class="card athlete-card"><div class="athlete-photo" style="background-image:url('${a.img}')"></div><div class="athlete-name">${a.n}</div><div class="athlete-sub">${a.s}</div><button class="follow-btn following" style="background:transparent;" onclick="showToast('Following ${a.n}')">+ Follow</button></div>`).join('')}</div>`;
-  } else if(tab==='community'){
-    wrap.innerHTML = d.community.map(c=>`<div class="card" style="padding:20px 22px; margin-bottom:14px;"><div style="font-weight:800; margin-bottom:6px;">${c.n}</div><p style="color:var(--muted); font-size:14px;">${c.t}</p></div>`).join('');
-  } else if(tab==='challenges'){
-    wrap.innerHTML = d.challenges.map(c=>`<div class="card" style="padding:26px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;"><div><h4 style="font-size:17px; font-weight:800; margin-bottom:6px;">${c.t}</h4><p style="color:var(--muted); font-size:14px;">${c.d}</p></div><button class="btn btn-primary btn-sm" onclick="switchView('challenges')">Join Challenge</button></div>`).join('');
-  } else if(tab==='events'){
-    wrap.innerHTML = d.events.map(e=>`<div class="card" style="padding:26px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;"><div><h4 style="font-size:17px; font-weight:800; margin-bottom:6px;">${e.t}</h4><p style="color:var(--muted); font-size:14px; font-family:var(--mono);">${e.d}</p></div><button class="btn btn-ghost btn-sm" onclick="switchView('events')">View Event</button></div>`).join('');
-  } else if(tab==='stats'){
-    wrap.innerHTML = `<div class="stat-row">${d.stats.map(s=>`<div class="stat-block"><div class="flap">${s.v}</div><div class="stat-label">${s.l}</div></div>`).join('')}</div>`;
-  }
-}
-
-/* ---------- Challenges ---------- */
-let beaten = false;
-function beatChallenge(){
-  if(beaten) return;
-  beaten = true;
-  document.getElementById('vsTimeB').textContent = '55:03';
-  document.getElementById('vsTimeB').style.color = 'var(--lime)';
-  showToast('New time logged — 55:03 🎉');
-  renderLeaderboard();
-}
-function createChallenge(){ showToast('Challenge created — invite sent to friends'); }
-const LEADERBOARD = [
-  {n:'Rhea Kapoor', t:'57:42', img:IMG.running},
-  {n:'Vivaan Moradia', t:'60:00', img:IMG.cricket},
-  {n:'Farhan Ali', t:'61:18', img:IMG.cycling},
-  {n:'Simran Gill', t:'63:02', img:IMG.skiing},
-];
-function renderLeaderboard(){
-  let list = [...LEADERBOARD];
-  if(beaten) list.push({n:'You', t:'55:03', img:IMG.athletics});
-  list.sort((a,b)=> toSec(a.t)-toSec(b.t));
-  document.getElementById('leaderboardList').innerHTML = list.map((r,i)=>`
-    <div class="leaderboard-row">
-      <div class="lb-rank ${i===0?'gold':''}">${i+1}</div>
-      <div class="lb-avatar" style="background-image:url('${r.img}')"></div>
-      <div class="lb-name">${r.n}</div>
-      <div class="lb-time">${r.t}</div>
-    </div>`).join('');
-}
-function toSec(t){ const [m,s]=t.split(':').map(Number); return m*60+s; }
-
-const CHALLENGES = [
-  {sport:'Cycling', t:'25KM Ride Challenge', img:IMG.cycling},
-  {sport:'Basketball', t:'50 Free Throws', img:IMG.basketball},
-  {sport:'Football', t:'Keepy-Uppy Streak', img:IMG.football},
-  {sport:'Swimming', t:'500M Freestyle Time', img:IMG.swimming},
-  {sport:'Cricket', t:'Yorker Accuracy Drill', img:IMG.cricket},
-  {sport:'Chess', t:'5-Minute Blitz Streak', img:IMG.chess},
-  {sport:'Badminton', t:'Rally Length Challenge', img:IMG.badminton},
-  {sport:'Boxing', t:'3-Round Combo Speed', img:IMG.boxing},
-];
-function renderChallengeGrid(){
-  document.getElementById('challengeGrid').innerHTML = CHALLENGES.map(c=>`
-    <div class="card" style="overflow:hidden;">
-      <div style="height:130px; background-size:cover; background-position:center; background-image:url('${c.img}')"></div>
-      <div style="padding:16px 18px;">
-        <div class="pill pill-muted" style="margin-bottom:10px;">${c.sport}</div>
-        <div style="font-weight:800; font-size:14px; margin-bottom:14px;">${c.t}</div>
-        <button class="btn btn-ghost btn-sm" style="width:100%;" onclick="showToast('Challenge sent to your friends')">Challenge Friend</button>
-      </div>
-    </div>`).join('');
-}
-
-/* ---------- Communities ---------- */
-const COMMUNITIES = [
-  {n:'Mumbai Runners', members:'34.2K members', img:IMG.running},
-  {n:'Indian Cricket Fans', members:'1.1M members', img:IMG.cricket},
-  {n:'College Football India', members:'88K members', img:IMG.football},
-  {n:'Weekend Cyclists', members:'21.5K members', img:IMG.cycling},
-  {n:'Mountaineering India', members:'62K members', img:IMG.mountaineering},
-  {n:'Basketball India', members:'145K members', img:IMG.basketball},
-];
-function renderCommunities(){
-  document.getElementById('communityList').innerHTML = COMMUNITIES.map((c,i)=>`
-    <div class="community-row" style="${i<COMMUNITIES.length-1?'border-bottom:1px solid var(--line);':''}">
-      <div class="community-icon" style="background-image:url('${c.img}')"></div>
-      <div><div class="community-name">${c.n}</div><div class="community-meta">${c.members}</div></div>
-      <button class="join-btn" onclick="toggleJoin(this,'${c.n}')">Join</button>
-    </div>`).join('');
-}
-function toggleJoin(btn, name){
-  const joined = btn.classList.toggle('joined');
-  btn.textContent = joined ? 'Joined' : 'Join';
-  showToast(joined ? `Joined ${name}` : `Left ${name}`);
-}
-const ACTIVITY = [
-  {n:'Rhea Kapoor', a:'logged a new 10K time', t:'55:03', when:'2m'},
-  {n:'Karan Mehta', a:'joined', t:'Indian Cricket Fans', when:'40m'},
-  {n:'Farhan Ali', a:'challenged you to', t:'a 5KM run', when:'1h'},
-  {n:'Simran Gill', a:'posted in', t:'Mountaineering India', when:'3h'},
-];
-function renderActivity(){
-  document.getElementById('activityList').innerHTML = ACTIVITY.map(a=>`
-    <div class="activity-item"><div class="avatar" style="width:34px;height:34px;background-image:url('${IMG.running}')"></div>
-    <div><p><b>${a.n}</b> ${a.a} <b>${a.t}</b></p><div class="activity-time">${a.when} ago</div></div></div>`).join('');
-}
-
-/* ---------- Events ---------- */
-const EVENTS = [
-  {sport:'Basketball', n:'Mumbai Inter-College Basketball Championship', date:'18–24 Sept 2026', loc:'NSCI Dome, Mumbai', img:IMG.basketball, detail:true},
-  {sport:'Running', n:'PLAYR City Marathon', date:'15 Nov 2026', loc:'Coastal Road, Mumbai', img:IMG.running},
-  {sport:'Cricket', n:'Mumbai Inter-College T20 Cup', date:'2–9 Oct 2026', loc:'Wankhede Practice Grounds', img:IMG.cricket},
-  {sport:'Motorsport', n:'BIC Amateur Track Day', date:'12 Oct 2026', loc:'Buddh International Circuit', img:IMG.motorsport},
-  {sport:'Chess', n:'PLAYR Blitz Open', date:'5 Oct 2026', loc:'Online', img:IMG.chess},
-  {sport:'Cycling', n:'Weekend Warriors Century Ride', date:'25 Oct 2026', loc:'Lonavala Ghats', img:IMG.cycling},
-];
-function renderEvents(){
-  document.getElementById('eventsGrid').innerHTML = EVENTS.map(e=>`
-    <div class="card event-card">
-      <div class="event-media" style="background-image:url('${e.img}')"></div>
-      <div class="event-body">
-        <div class="pill pill-cyan" style="margin-bottom:10px;">${e.sport}</div>
-        <div class="event-name">${e.n}</div>
-        <div class="event-meta-row"><span>📅 ${e.date}</span><span>📍 ${e.loc}</span></div>
-        <div class="event-actions">
-          <button class="btn btn-primary btn-sm" onclick="${e.detail?"showEventDetail()":"showToast('Registered — see you there!')"}">${e.detail?'View Hub':'Register'}</button>
-          <button class="btn btn-ghost btn-sm" onclick="showToast('Following this event')">Follow</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-function showEventDetail(){
-  document.getElementById('eventsListWrap').style.display='none';
-  document.getElementById('eventDetailWrap').style.display='block';
-  setEventTab('fixtures');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-function showEventsList(){
-  document.getElementById('eventsListWrap').style.display='block';
-  document.getElementById('eventDetailWrap').style.display='none';
-}
-const FIXTURES = [
-  {a:'Xavier\'s College', b:'St. Andrews', score:'—', time:'Sat, 5:00 PM'},
-  {a:'Podar College', b:'Sydenham', score:'—', time:'Sat, 7:00 PM'},
-  {a:'HR College', b:'Jai Hind', score:'—', time:'Sun, 5:00 PM'},
-];
-const RESULTS = [
-  {a:'KC College', b:'Wilson College', score:'68 – 61'},
-  {a:'Mithibai', b:'NM College', score:'54 – 71'},
-];
-const TEAMS = ['Xavier\'s College','St. Andrews','Podar College','Sydenham','HR College','Jai Hind','KC College','Wilson College'];
-function setEventTab(tab){
-  document.querySelectorAll('#eventTabs .su-tab').forEach(t=>t.classList.toggle('active', t.dataset.etab===tab));
-  const wrap = document.getElementById('eventPanels');
-  if(tab==='fixtures'){
-    wrap.innerHTML = `<div class="card">${FIXTURES.map(f=>`<div class="fixture-row"><div class="fixture-team left">${f.a}</div><div></div><div class="fixture-score">${f.score}<div style="font-family:var(--mono); font-size:10px; color:var(--muted-2); margin-top:4px;">${f.time}</div></div><div></div><div class="fixture-team">${f.b}</div></div>`).join('')}</div>`;
-  } else if(tab==='results'){
-    wrap.innerHTML = `<div class="card">${RESULTS.map(f=>`<div class="fixture-row"><div class="fixture-team left">${f.a}</div><div></div><div class="fixture-score">${f.score}</div><div></div><div class="fixture-team">${f.b}</div></div>`).join('')}</div>`;
-  } else if(tab==='teams'){
-    wrap.innerHTML = `<div class="grid grid-4">${TEAMS.map(t=>`<div class="card" style="padding:20px; text-align:center; font-weight:700; font-size:14px;">${t}</div>`).join('')}</div>`;
-  } else if(tab==='highlights'){
-    wrap.innerHTML = `<div class="grid grid-3">${[IMG.basketball,IMG.basketball,IMG.basketball].map((im,i)=>`<div class="card" style="overflow:hidden;"><div style="height:160px; background-image:url('${im}'); background-size:cover; background-position:center;"></div><div style="padding:14px;"><div style="font-weight:700; font-size:13px;">Highlight Reel — Day ${i+1}</div></div></div>`).join('')}</div>`;
-  } else if(tab==='community'){
-    wrap.innerHTML = `<div class="card" style="padding:20px 22px;"><p style="color:var(--muted); font-size:14px;">"Xavier's defense has been elite all tournament — can anyone stop their press?" — <b>Fan Discussion</b></p></div>`;
-  } else if(tab==='merch'){
-    wrap.innerHTML = `<div class="grid grid-4">${[1,2,3,4].map(i=>`<div class="card product-card"><div class="product-media" style="background-image:url('${IMG.basketball}')"></div><div class="product-body"><div class="product-cat">Official Merch</div><div class="product-name">Championship Tee ${i}</div><div class="product-row"><span class="product-price">₹899</span><button class="btn btn-ghost btn-sm" onclick="showToast('Added to cart')">Shop</button></div></div></div>`).join('')}</div>`;
-  }
-}
-
-/* ---------- Shop ---------- */
-const SHOP_CATS = ['All','Running','Cricket','Football','Basketball','Fitness','Outdoor','Motorsport'];
-let shopFilter='All';
-const PRODUCTS = [
-  {n:'AeroStride Running Shoes', cat:'Running', price:'₹4,299', rating:4.7, img:IMG.running},
-  {n:'Pro Willow Cricket Bat', cat:'Cricket', price:'₹6,499', rating:4.8, img:IMG.cricket},
-  {n:'Match-Ready Football Jersey', cat:'Football', price:'₹1,899', rating:4.5, img:IMG.football},
-  {n:'Court Grip Basketball', cat:'Basketball', price:'₹1,299', rating:4.6, img:IMG.basketball},
-  {n:'Trail Hydration Pack', cat:'Outdoor', price:'₹2,199', rating:4.4, img:IMG.mountaineering},
-  {n:'Insulated Water Bottle', cat:'Fitness', price:'₹799', rating:4.7, img:IMG.running},
-  {n:'Aero Cycling Helmet', cat:'Outdoor', price:'₹3,499', rating:4.6, img:IMG.cycling},
-  {n:'Racing Gloves', cat:'Motorsport', price:'₹2,899', rating:4.5, img:IMG.motorsport},
-];
-function renderShopFilters(){
-  document.getElementById('shopFilters').innerHTML = SHOP_CATS.map(c=>`<button class="chip ${c===shopFilter?'active':''}" onclick="setShopFilter('${c}')">${c}</button>`).join('');
-}
-function setShopFilter(c){ shopFilter=c; renderShopFilters(); renderShop(); }
-function renderShop(){
-  const list = PRODUCTS.filter(p=>shopFilter==='All'||p.cat===shopFilter);
-  document.getElementById('shopGrid').innerHTML = list.map(p=>`
-    <div class="card product-card">
-      <div class="product-media" style="background-image:url('${p.img}')"></div>
-      <div class="product-body">
-        <div class="product-cat">${p.cat}</div>
-        <div class="product-name">${p.n}</div>
-        <div class="rating" style="margin-bottom:10px;">${'★'.repeat(Math.round(p.rating))}<span style="color:var(--muted-2); margin-left:4px;">${p.rating}</span></div>
-        <div class="product-row"><span class="product-price">${p.price}</span><button class="btn btn-primary btn-sm" onclick="showToast('Added to cart')">Shop Now</button></div>
-      </div>
-    </div>`).join('');
-}
-const MERCH = [
-  {n:'PLAYR Logo Tee', price:'₹899', img:IMG.esports},
-  {n:'PLAYR Hoodie', price:'₹2,199', img:IMG.chess},
-  {n:'PLAYR Cap', price:'₹699', img:IMG.golf},
-  {n:'PLAYR Sports Bag', price:'₹1,599', img:IMG.badminton},
-];
-function renderMerch(){
-  document.getElementById('merchGrid').innerHTML = MERCH.map(p=>`
-    <div class="card product-card">
-      <div class="product-media" style="background-image:url('${p.img}')"></div>
-      <div class="product-body">
-        <div class="product-cat">PLAYR Merch</div>
-        <div class="product-name">${p.n}</div>
-        <div class="product-row"><span class="product-price">${p.price}</span><button class="btn btn-ghost btn-sm" onclick="showToast('Added to cart')">Shop</button></div>
-      </div>
-    </div>`).join('');
-}
-let dropClaimed = 5;
-function claimDrop(){
-  dropClaimed++;
-  document.getElementById('dropClaimed').textContent = String(dropClaimed).padStart(2,'0');
-  showToast('Drop claimed — check your cart 🏃');
-}
-
-/* ---------- Profile tabs ---------- */
-function setProfileTab(tab){
-  document.querySelectorAll('[data-ptab]').forEach(b=>b.classList.toggle('active', b.dataset.ptab===tab));
-  document.getElementById('profile-athlete').style.display = tab==='athlete' ? 'block':'none';
-  document.getElementById('profile-creator').style.display = tab==='creator' ? 'block':'none';
-}
-
-/* ---------- Nav / view switching ---------- */
-function switchView(view){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+view).classList.add('active');
-  document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
-  toggleMobileMenu(false);
-  closeDropdowns();
-  window.scrollTo({top:0, behavior:'instant' in window ? 'instant':'auto'});
-}
-function toggleMobileMenu(open){
-  document.getElementById('mobileMenu').classList.toggle('open', open);
-}
-function toggleDropdown(name){
-  const el = document.getElementById('dd-'+name);
-  const isOpen = el.classList.contains('open');
-  closeDropdowns();
-  if(!isOpen) el.classList.add('open');
-}
-function closeDropdowns(){
-  document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open'));
-}
-document.addEventListener('click', (e)=>{
-  if(!e.target.closest('.nav-right')) closeDropdowns();
-});
-
-let toastTimer;
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
-}
-
-/* ---------- init ---------- */
-buildTicker();
-buildPhoneFeed();
-renderFilters();
-renderSports();
-renderHomeFeed();
-renderSuSwitch();
-renderSuTabs();
-setSportUniverse('mountaineering');
-renderLeaderboard();
-renderChallengeGrid();
-renderCommunities();
-renderActivity();
-renderEvents();
-renderShopFilters();
-renderShop();
-renderMerch();
+<script id="legacy-removed" type="application/json">
+/* The original prototype's inline demo-data script has been replaced by
+   js/supabase-client.js (API layer) + js/app.js (UI wiring). See SETUP.md. */
 </script>
 </body>
 </html>
