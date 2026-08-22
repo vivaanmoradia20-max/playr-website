@@ -1,7 +1,7 @@
 const { JSDOM, VirtualConsole } = require("/home/user/node_modules/jsdom");
 const fs = require("fs");
 let html = fs.readFileSync("index.html","utf8");
-const inlined = ["js/config.js","js/auth.js","js/auth-ui.js","js/sports-data.js","js/sports-data-2.js","js/olympic-data.js","js/sports-app.js","js/sports-universe.js","js/events-data.js","js/events-app.js","js/events-app-2.js"]
+const inlined = ["js/config.js","js/auth.js","js/auth-ui.js","js/sports-data.js","js/sports-data-2.js","js/spcl-data.js","js/sports-app.js","js/sports-universe.js","js/events-data.js","js/spcl.js","js/events-app.js","js/events-app-2.js"]
   .map(f=>"<script>\n"+fs.readFileSync(f,"utf8")+"\n</script>").join("\n");
 html = html.replace(/<script src="js\/[^"]+"><\/script>\n?/g,"");
 html = html.replace("<script>\n/* ============================================================\n   PLAYR — PROTOTYPE DATA + INTERACTIVITY", inlined+"<script>\n/* ============================================================\n   PLAYR — PROTOTYPE DATA + INTERACTIVITY");
@@ -15,7 +15,7 @@ setTimeout(()=>{
   const $=s=>w.document.querySelector(s), $$=s=>[...w.document.querySelectorAll(s)];
   console.log("Load errors:", errors.length?errors:"none");
   // BRAND
-  t("nav logo = official image", ()=>$($(".topnav .logo .logo-img")?"ok":"fail","x").endsWith("x")&&!!$(".topnav .logo-img")?"ok":"fail");
+  t("nav logo = official image", ()=>!!$(".topnav .logo-img")?"ok":"fail");
   t("nav logo src", ()=>$(".topnav .logo-img").getAttribute("src"));
   t("mobile menu logo", ()=>!!$("#mobileMenu .mm-brand img"));
   t("footer official lockup", ()=>!!($(".footer2 .f2-logo-img")?.getAttribute("src").includes("lockup")));
@@ -35,10 +35,10 @@ setTimeout(()=>{
   t("globe", ()=>!!$(".globe-svg"));
   t("cta collage", ()=>$$("#ctaCollage div").length);
   t("nav items (9)", ()=>$$(".nav-links button").length);
-  t("switchView all", ()=>{ ["discover","sports","olympic","challenges","communities","events","plus","shop","profile","home"].forEach(v=>w.switchView(v)); return $("#view-home").classList.contains("active")?"all 10 views ok":"fail"; });
+  t("switchView all", ()=>{ ["discover","sports","spcl","challenges","communities","events","plus","shop","profile","home"].forEach(v=>w.switchView(v)); return $("#view-home").classList.contains("active")?"all 10 views ok":"fail"; });
   t("discover renders", ()=>$("#discoverRoot").innerHTML.includes("DISCOVER YOUR SPORT")?"ok":"fail");
   t("universe opens", ()=>{ w.openSport("cricket"); const ok=$("#universeRoot").innerHTML.includes("CRICKET"); w.switchView("home"); return ok?"ok":"fail"; });
-  t("olympic hub", ()=>{ w.switchView("olympic"); const ok=$("#olympicRoot").innerHTML.includes("ROAD TO LA28"); w.switchView("home"); return ok?"ok":"fail"; });
+  t("spcl view", ()=>{ w.switchView("spcl"); const ok=$("#spclRoot").innerHTML.includes("SPORT WITHOUT"); w.switchView("home"); return ok?"ok":"fail"; });
   t("events page", ()=>{ w.switchView("events"); const ok=$("#eventsRoot").innerHTML.includes("DISCOVER SPORTS EVENTS"); w.switchView("home"); return ok?"ok":"fail"; });
   t("event detail + registration", ()=>{ w.openEventDetail("bkc-padel-open-demo"); w.openEventRegistration("bkc-padel-open-demo"); $("#regCat").value="Mixed Doubles"; w.PLAYR_EV.confirmReg("bkc-padel-open-demo"); return w.PLAYR_EV.isRegistered("bkc-padel-open-demo")?"ok":"fail"; });
   t("mobile menu opens", ()=>{ w.toggleMobileMenu(true); const ok=$("#mobileMenu").classList.contains("open"); w.toggleMobileMenu(false); return ok?"ok":"fail"; });

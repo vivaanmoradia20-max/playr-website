@@ -79,6 +79,7 @@ window.EV_ORGANIZERS = {
   "aiff":{n:"AIFF",type:"Federation",v:"verified",d:"The All India Football Federation — national governing body for football in India.",sports:["Football"],fol:"2.1M"},
   "iaf-afwa":{n:"Indian Air Force (Western Zone)",type:"Federation",v:"verified",d:"Services organisers of the Indian Air Force Half Marathon series.",sports:["Running"],fol:"168K"},
   "indiarunning":{n:"India Running (event listing)",type:"Listing Platform",v:"organizer",d:"India running event discovery platform — listings carry registration windows and prices from the organizer.",sports:["Running"],fol:"210K"},
+  "paralympic-org":{n:"paralympic.org (official listing)",type:"Listing Platform",v:"verified",d:"The International Paralympic Committee's official platform — source for Paralympic Games and Para-sport competition information.",sports:["Multi-sport"],fol:"3.4M"},
   /* Demo organizers for clearly-labelled demo events. */
   "playr-events":{n:"PLAYR Community Events",type:"Community Organizer",v:"community",demo:1,d:"PLAYR's own community events arm — demo events created for this prototype.",sports:["Multi-sport"],fol:"412K"},
   "bkc-padel":{n:"BKC Padel Collective",type:"Sports Club",v:"organizer",demo:1,d:"Padel club and ladder based around Bandra-Kurla Complex.",sports:["Padel"],fol:"9.4K"},
@@ -626,3 +627,51 @@ EV({id:"ncr-box-cup-past",name:"NCR Boxing Quarterlies (Demo)",sport:"boxing",le
  desc:"Last month's demo sanctioned card in the capital — 28 bouts, zero stoppages, one hospital-corner masterclass.",
  results:{w:[["Best bout","Rathore vs D'Souza (67kg)"],["Best boxer","Vikram Rathore"]],h:"Highlights reel and scorecards archived for the community.",photos:118},
  tags:["boxing","delhi","completed"]});
+
+/* ============================================================
+   SPCL — PARA-SPORT EVENTS
+   Real events carry sources; demo events are badged DEMO.
+   ============================================================ */
+EV({id:"asian-para-games-2026",name:"Aichi-Nagoya 2026 Asian Para Games",sport:"para-athletics",sportLabel:"Multi-sport · 18 Para sports",level:"INTERNATIONAL",venue:null,loc:{city:"Nagoya",area:"Aichi",zone:"Japan"},
+ org:"paralympic-org",
+ date:"2026-10-18T19:00:00+09:00",dateEnd:"2026-10-24T21:00:00+09:00",len:999,para:1,
+ price:null,reg:null,verify:"verified",fol:"96K",type:"tournament",
+ cats:["18 Para sports","Around 3,000 athletes","45 National Paralympic Committees"],age:"All ages",gender:"Open",team:true,
+ desc:"Asia's premier Para-sport event: 18–24 October 2026 in Nagoya, Japan — around 3,000 athletes from 45 NPCs across 18 Para sports.",
+ sched:null,src:"Source: paralympic.org / Asian Paralympic Committee",updated:"Aug 2026",tags:["para","spcl","asian para games","paralympic"]});
+
+EV({id:"la28-paralympics",name:"LA28 Paralympic Games",sport:"para-athletics",sportLabel:"Multi-sport · Paralympic Games",level:"WORLD",venue:null,loc:{city:"Los Angeles",area:"California",zone:"USA"},
+ org:"paralympic-org",
+ date:"2028-08-15T00:00:00+05:30",dateEnd:"2028-08-27T23:59:00+05:30",len:999,para:1,
+ price:null,reg:null,regUrl:"https://www.paralympic.org",verify:"verified",fol:"1.1M",type:"tournament",
+ cats:["22+ Para sports on the programme"],age:"All ages",gender:"Open",team:true,
+ desc:"The Paralympic Games come to Los Angeles — 15–27 August 2028, the city's first Paralympic Games since 1984.",
+ sched:null,src:"Source: paralympic.org",updated:"Aug 2026",tags:["para","spcl","paralympics","la28"]});
+
+EV({id:"nsci-para-athletics-demo",name:"NSCI Para Athletics Meet (Demo)",sport:"para-athletics",level:"STATE",venue:"nsci",org:"playr-events",
+ rel:{d:9,h:8,len:8},para:1,price:null,reg:"open",regDays:5,verify:"demo",fol:"6.8K",type:"race",
+ cats:["Track 100m–1500m","Club throw","Long jump","Javelin — sport classes per entry"],age:"Open sport classes",gender:"Open",team:false,
+ desc:"A demo state-level Para athletics meet — electronic timing, classifiers on site, open entries through PLAYR communities.",
+ sched:[["08:00","Check-in & classification review window"],["09:00","Track events begin"],["12:00","Field events"],["16:00","Medals & community meet"]],
+ tags:["para","spcl","athletics","mumbai","worli","free"]});
+
+EV({id:"mumbai-wb-league-demo",name:"Mumbai Wheelchair Basketball League — Finals (Demo)",sport:"wheelchair-basketball",level:"CITY",venue:"nsci",org:"playr-events",
+ rel:{d:13,h:16,len:5},para:1,price:null,reg:"open",regDays:8,verify:"demo",fol:"11.2K",type:"tournament",
+ cats:["Open division (6 teams)","Women's exhibition match"],age:"Open",gender:"Open & Women's",team:true,
+ desc:"Demo finals night for the city's wheelchair basketball community — full-court, full-noise.",
+ sched:[["16:00","Doors & warm-ups"],["17:00","Semifinal 1"],["18:15","Semifinal 2"],["19:30","Final"],["20:45","Awards"]],
+ tags:["para","spcl","wheelchair basketball","mumbai","worli","free"]});
+
+EV({id:"boccia-mumbai-cup-demo",name:"Boccia Mumbai Cup (Demo)",sport:"boccia",level:"COMMUNITY",venue:"nehru-centre",org:"playr-events",
+ rel:{d:18,h:10,len:7},para:1,price:null,reg:"open",regDays:12,verify:"demo",fol:"3.4K",type:"tournament",
+ cats:["BC1–BC4 divisions","Pairs"],age:"Open sport classes",gender:"Open",team:true,
+ desc:"A demo community boccia cup — ramps, precision and the tightest margins in the hall.",
+ sched:[["10:00","Check-in & ramp checks"],["11:00","Group stage"],["14:30","Knockouts"],["17:00","Finals"],["18:00","Community awards"]],
+ tags:["para","spcl","boccia","mumbai","worli","free"]});
+
+EV({id:"blind-football-delhi-demo",name:"Delhi Blind Football Invitational (Demo)",sport:"blind-football",level:"CITY",venue:"jlnc-delhi",org:"playr-events",
+ rel:{d:24,h:15,len:6},para:1,price:null,reg:"open",regDays:16,verify:"demo",fol:"5.1K",type:"tournament",
+ cats:["4-team invitational","Guides & sighted GKs per rules"],age:"Open",gender:"Open",team:true,
+ desc:"A demo blind football invitational — audible ball, silent stands during play, deafening after goals.",
+ sched:[["15:00","Team check-in & eyeshade checks"],["16:00","Round robin"],["18:30","Final"],["19:30","Awards"]],
+ tags:["para","spcl","blind football","delhi","free"]});

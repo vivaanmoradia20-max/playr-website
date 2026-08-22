@@ -49,7 +49,7 @@ window.PLAYR_SPORTS = RAW.map((o,i)=>{
     team: tags.includes("team"), individual: !tags.includes("team"),
     indoor: tags.includes("indoor"), outdoor: tags.includes("outdoor"),
     water: tags.includes("water"), adventure: cat.id==="adventure"||tags.includes("adventure"),
-    combat: cat.id==="combat"||tags.includes("combat"), mind: cat.id==="mind"||tags.includes("mind")
+    combat: cat.id==="combat"||tags.includes("combat"), mind: cat.id==="mind"||tags.includes("mind"), para: cat.id==="spcl"||tags.includes("para")
   };
   return s;
 });
@@ -75,7 +75,8 @@ function badgeHTML(s){
   else if(s.isOlympic) h+=`<span class="badge b-oly" title="On the programme for ${editionLabel(s.olympicEdition)}">${RINGS}OLYMPIC SPORT</span>`;
   if(s.trend) h+=`<span class="badge b-trend">TRENDING</span>`;
   if(s.fresh) h+=`<span class="badge b-new">NEW</span>`;
-  if(s.risk==="high") h+=`<span class="badge b-risk">COMMUNITY &amp; INFO</span>`;
+  if(s.category==="spcl") h+=`<span class="badge b-spcl" title="PLAYR Para-sport ecosystem">SPCL</span>`;
+if(s.risk==="high") h+=`<span class="badge b-risk">COMMUNITY &amp; INFO</span>`;
   return h;
 }
 window.PS_badgeHTML = badgeHTML;
@@ -213,6 +214,7 @@ window.PS_card = cardHTML;
 /* ---------- 8. DISCOVER VIEW ---------- */
 const COLLECTIONS=[
   {id:"all",label:"ALL SPORTS"},
+  {id:"spcl",label:"SPCL"},
   {id:"foryou",label:"FOR YOU"},
   {id:"featured",label:"FEATURED"},
   {id:"trending",label:"TRENDING"},
@@ -222,7 +224,7 @@ const COLLECTIONS=[
   {id:"new",label:"NEW"}
 ];
 const ATTRS=[
-  {id:"olympic",label:"Olympic"},{id:"nonolympic",label:"Non-Olympic"},{id:"summer",label:"Summer"},{id:"winter",label:"Winter"},
+  {id:"olympic",label:"Olympic"},{id:"nonolympic",label:"Non-Olympic"},{id:"para",label:"Para Sport"},{id:"summer",label:"Summer"},{id:"winter",label:"Winter"},
   {id:"team",label:"Team"},{id:"individual",label:"Individual"},{id:"indoor",label:"Indoor"},{id:"outdoor",label:"Outdoor"},
   {id:"water",label:"Water"},{id:"adventure",label:"Adventure"},{id:"combat",label:"Combat"},{id:"mind",label:"Mind Sport"}
 ];
@@ -238,6 +240,7 @@ function inCollection(s,cid){
     case "popular": return s.popularity>=70;
     case "niche": return s.niche||s.popularity<=20;
     case "new": return s.fresh;
+    case "spcl": return s.category==="spcl";
     default: return true;
   }
 }

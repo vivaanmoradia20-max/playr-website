@@ -208,7 +208,7 @@ function searchEvents(q){
 }
 
 /* ---------- filter state ---------- */
-const F={q:"",loc:"near",date:"any",sport:null,level:null,type:null,age:null,price:null,inout:null,status:null,sort:"soonest"};
+const F={q:"",loc:"near",date:"any",sport:null,level:null,type:null,age:null,price:null,inout:null,status:null,para:false,sort:"soonest"};
 const LOC_OPTS=[["near","Near Me"],["Mumbai","Mumbai"],["Navi Mumbai","Navi Mumbai"],["Thane","Thane"],["Maharashtra","Maharashtra"],["India","India"],["International","International"]];
 const MUMBAI_AREAS=["South Mumbai","Central Mumbai","Western Suburbs","Eastern Suburbs","Navi Mumbai","Thane","Colaba","Fort","Marine Drive","Worli","Lower Parel","Bandra","Khar","Andheri","Juhu","Vile Parle","Santacruz","Powai","BKC","Borivali","Malad","Goregaon","Mulund","Dadar","Chembur","Vashi","Nerul","Kharghar"];
 const DATE_OPTS=[["any","Any date"],["today","Today"],["tomorrow","Tomorrow"],["weekend","This weekend"],["week","This week"],["month","This month"]];
@@ -220,9 +220,9 @@ function applyFilters(list){
   let out=list.filter(e=>{
     if(F.loc==="near"){ if(e.dist==null||e.dist>60) return false; }
     else if(F.loc==="Maharashtra"){ if(!["Mumbai","Navi Mumbai","Thane","Pune","Kolhapur","Lonavala","Nashik","Baramati"].includes(e.city)) return false; }
-    else if(F.loc==="India"){ const mhSet=["Mumbai","Navi Mumbai","Thane","Pune","Kolhapur","Lonavala","Nashik","Baramati"];
+    else if(F.loc==="India"){ const inSet=["Mumbai","Navi Mumbai","Thane","Pune","Kolhapur","Lonavala","Nashik","Baramati","New Delhi","Bengaluru","Hyderabad","Chennai","Kolkata","Ahmedabad","Goa","Jaipur","Lucknow","Chandigarh","Gurugram","Guwahati","Bhubaneswar","Greater Noida"];
       const national=["NATIONAL","INTERNATIONAL","WORLD"].includes(e.level);
-      if(!mhSet.includes(e.city) && !national) return false; }
+      if(!inSet.includes(e.city) && !national) return false; }
     else if(F.loc==="International"){ if(e.level!=="INTERNATIONAL"&&e.level!=="WORLD") return false; }
     else if(F.loc.startsWith("area:")){ const a=F.loc.slice(5).toLowerCase(); if(!((e.area+" "+e.venueName+" "+e.zone).toLowerCase().includes(a))) return false; }
     else { if(e.city!==F.loc && e.zone!==F.loc) return false; }
@@ -241,7 +241,8 @@ function applyFilters(list){
     if(F.inout==="outdoor"&&e.venueReal&&window.EV_VENUES[e.venue].indoor) return false;
     if(F.status&&e.status!==F.status) return false;
     if(F.age==="kids"&&!/U-1[0-9]|School|school|junior|Junior|All ages|12\+|14\+|10\+/.test(e.age||"")) return false;
-    if(F.q.trim()){ return searchEvents(F.q).includes(e); }
+    if(F.para && !e.para) return false;
+if(F.q.trim()){ return searchEvents(F.q).includes(e); }
     return true;
   });
   const s=F.sort;
@@ -344,6 +345,7 @@ function renderEventsPage(){
       <div class="ev-f-group"><label>Event type</label><div class="ev-f-chips"><button class="attr-pill ${!F.type?"on":""}" onclick="PLAYR_EV.setType(null)">All</button>${TYPE_OPTS.map(o=>`<button class="attr-pill ${F.type===o[0]?"on":""}" onclick="PLAYR_EV.setType('${o[0]}')">${o[1]}</button>`).join("")}</div></div>
       <div class="ev-f-group"><label>Entry</label><div class="ev-f-chips">${[["any","Any"],["free","Free"],["paid","Paid"]].map(o=>`<button class="attr-pill ${F.price===o[0]||(o[0]==="any"&&!F.price)?"on":""}" onclick="PLAYR_EV.setPrice('${o[0]}')">${o[1]}</button>`).join("")}</div></div>
       <div class="ev-f-group"><label>Venue</label><div class="ev-f-chips">${[["any","Any"],["indoor","Indoor"],["outdoor","Outdoor"]].map(o=>`<button class="attr-pill ${F.inout===o[0]||(o[0]==="any"&&!F.inout)?"on":""}" onclick="PLAYR_EV.setInOut('${o[0]}')">${o[1]}</button>`).join("")}</div></div>
+      <div class="ev-f-group"><label>SPCL / Para sport</label><div class="ev-f-chips"><button class="attr-pill ${!F.para?"on":""}" onclick="PLAYR_EV.setPara(false)">All events</button><button class="attr-pill ${F.para?"on":""}" onclick="PLAYR_EV.setPara(true)">SPCL — Para sports only</button></div></div>
       <div class="ev-f-group"><label>Status</label><div class="ev-f-chips"><button class="attr-pill ${!F.status?"on":""}" onclick="PLAYR_EV.setStatus(null)">All</button>${["UPCOMING","LIVE","COMPLETED"].map(s=>`<button class="attr-pill ${F.status===s?"on":""}" onclick="PLAYR_EV.setStatus('${s}')">${s}</button>`).join("")}</div></div>
       <div class="ev-f-group"><label>Age group</label><div class="ev-f-chips"><button class="attr-pill ${!F.age?"on":""}" onclick="PLAYR_EV.setAge(null)">All</button><button class="attr-pill ${F.age==="kids"?"on":""}" onclick="PLAYR_EV.setAge('kids')">Kids & Juniors</button></div></div>
     </div>
@@ -380,6 +382,7 @@ function setPrice(v){ F.price=v==="any"?null:v; renderEventsPage(); }
 function setInOut(v){ F.inout=v==="any"?null:v; renderEventsPage(); }
 function setStatus(v){ F.status=v; renderEventsPage(); }
 function setAge(v){ F.age=v; renderEventsPage(); }
+function setPara(v){ F.para=v; renderEventsPage(); }
 function setSort(v){ F.sort=v; renderResults(); }
 function quickSearch(q){ F.q=q; renderEventsPage(); const el=document.getElementById("browseSec"); if(el&&el.scrollIntoView) el.scrollIntoView({behavior:"smooth"}); }
 function clearQ(){ F.q=""; renderEventsPage(); }
@@ -400,7 +403,7 @@ function share(id){
 function refreshIfVisible(){ const el=document.getElementById("eventsRoot"); if(el&&document.getElementById("view-events")?.classList.contains("active")) renderEventsPage(); }
 
 return { EVENTS, byId, card, miniCard, follows, regs, isFollowing, isRegistered, syncState, toggleFollow, renderEventsPage,
-  setLoc,setDate,setSport,setLevel,setType,setPrice,setInOut,setStatus,setAge,setSort,quickSearch,clearQ,scrollToList,useMyLocation,share,
+  setLoc,setDate,setSport,setLevel,setType,setPrice,setPara,setInOut,setStatus,setAge,setSort,quickSearch,clearQ,scrollToList,useMyLocation,share,
   fmtDate,fmtTime,dayChip,priceLabel,distLabel,levelBadge,verifyBadge,statusPill,mapsUrl,sameDay,isWeekendPeriod,
   USER, reResolve, searchEvents, parseQuery, applyFilters };
 })();
