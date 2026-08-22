@@ -427,6 +427,10 @@ S({id:"speedcubing",name:"Speedcubing",cat:"mind",sub:"Puzzle",icon:"🧩",pop:3
  desc:"Solving the Rubik's Cube against the clock — the world record is under 3 seconds.",
  alias:["rubik","cubing","wca"],tags:["mind","individual","indoor","tech"]});
 
+S({id:"carrom",name:"Carrom",cat:"mind",sub:"Board",icon:"🔘",pop:50,
+ desc:"The finger-flick board game of every Indian home — from family boards to national championships and world cups.",
+ alias:["carrom board"],tags:["mind","individual","indoor","traditional"]});
+
 S({id:"shogi",name:"Shogi",cat:"mind",sub:"Board",icon:"🎴",pop:18,niche:1,
  desc:"Japanese chess — captured pieces return to the board under your banner.",
  alias:["japanese chess"],tags:["mind","individual","indoor","traditional"]});
