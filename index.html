@@ -373,6 +373,10 @@ h3,h4{font-stretch:112%;}
 .pstat b{font-family:var(--mono); font-size:20px; display:block;}
 .pstat span{font-size:12px; color:var(--muted); font-family:var(--mono); text-transform:uppercase;}
 .profile-tabs{display:flex; gap:0; border-bottom:1px solid var(--line); margin:0 30px 30px;}
+.gal-tile{display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#1C1F24,#0C0D10);border:1px solid var(--line);border-radius:12px;position:relative;overflow:hidden;}
+.gal-tile::before{content:'';position:absolute;inset:0;background:radial-gradient(80% 60% at 30% 20%, rgba(224,248,8,.08), transparent 60%);}
+.gal-tile::after{content:attr(data-emoji);font-size:46px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));transition:transform .25s ease;}
+.gal-tile:hover::after{transform:scale(1.15);}
 .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
 .gallery div{aspect-ratio:1; border-radius:14px; background-size:cover; background-position:center;}
 
@@ -688,7 +692,8 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 .hc-phone{position:absolute; right:24px; top:12px; width:280px; z-index:3; filter:drop-shadow(0 40px 80px rgba(0,0,0,.6));}
 .hc-card{position:absolute; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:rgba(20,21,25,.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 24px 60px -18px rgba(0,0,0,.75); z-index:4;}
 .hc-athlete{left:0; top:38px; width:216px; animation:floatA 7s ease-in-out infinite;}
-.hc-athlete .hca-img{height:120px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&h=300&fit=crop'), linear-gradient(135deg,#FF6A4D44,#141519);}
+.hc-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.5));}
+.hc-athlete .hca-img{position:relative;overflow:hidden;height:120px; background-size:cover; background-position:center; background-image:linear-gradient(135deg,#FF6A4D44,#141519);}
 .hc-athlete .hca-body{padding:12px 14px; display:flex; gap:10px; align-items:center;}
 .hc-athlete .hca-av{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--lime),var(--cyan)); flex:none; margin-top:-28px; border:3px solid #141519;}
 .hc-athlete b{font-size:12.5px; display:block;}
@@ -696,7 +701,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 .hc-athlete .hca-btn{margin-left:auto; font-size:10px; font-weight:800; color:var(--lime); border:1px solid var(--lime); border-radius:100px; padding:5px 10px; flex:none;}
 .hc-live{left:26px; bottom:118px; width:238px; animation:floatB 8s ease-in-out infinite .6s;}
 .hc-live .hcl-tag{display:flex; align-items:center; gap:7px; padding:9px 13px; font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; color:var(--coral); border-bottom:1px solid rgba(255,255,255,.08);}
-.hc-live .hcl-img{height:88px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400&h=300&fit=crop'), linear-gradient(135deg,#B98CFF44,#141519);}
+.hc-live .hcl-img{position:relative;overflow:hidden;height:88px; background-size:cover; background-position:center; background-image:linear-gradient(135deg,#B98CFF44,#141519);}
 .hc-live .hcl-body{padding:11px 13px;}
 .hc-live b{font-size:12.5px; display:block; margin-bottom:4px;}
 .hc-live i{font-style:normal; font-size:10px; color:var(--muted); font-family:var(--mono);}
@@ -2484,7 +2489,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     </div>
 
     <div id="profile-athlete">
-      <div class="profile-cover" style="background-image:url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&h=500&fit=crop');"></div>
+      <div class="profile-cover" style="background:radial-gradient(120% 90% at 20% 10%, rgba(224,248,8,.14), transparent 55%), linear-gradient(135deg,#1C1F24,#0A0B0D);"></div>
       <div class="profile-head">
         <div class="profile-avatar" id="profAvA"></div>
         <div>
@@ -2504,18 +2509,18 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       </div>
       <div class="wrap" style="padding:0 0 0 0;">
         <div class="gallery" style="margin:0 30px 10px; margin-inline:0;">
-          <div style="background-image:url('https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?w=400&h=400&fit=crop');"></div>
-          <div style="background-image:url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&h=400&fit=crop');"></div>
-          <div style="background-image:url('https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=400&h=400&fit=crop');"></div>
-          <div style="background-image:url('https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?w=400&h=400&fit=crop');"></div>
-          <div style="background-image:url('https://images.unsplash.com/photo-1607734834519-d8576ae60ea6?w=400&h=400&fit=crop');"></div>
-          <div style="background-image:url('https://images.unsplash.com/photo-1531379410502-63bfe8cdaf6f?w=400&h=400&fit=crop');"></div>
+          <div class="gal-tile" data-emoji="🏏"></div>
+          <div class="gal-tile" data-emoji="🏃"></div>
+          <div class="gal-tile" data-emoji="⚽"></div>
+          <div class="gal-tile" data-emoji="🏸"></div>
+          <div class="gal-tile" data-emoji="🚴"></div>
+          <div class="gal-tile" data-emoji="🏃"></div>
         </div>
       </div>
     </div>
 
     <div id="profile-creator" style="display:none;">
-      <div class="profile-cover" style="background-image:url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&h=500&fit=crop');"></div>
+      <div class="profile-cover" style="background:radial-gradient(120% 90% at 20% 10%, rgba(224,248,8,.14), transparent 55%), linear-gradient(135deg,#1C1F24,#0A0B0D);"></div>
       <div class="profile-head">
         <div class="profile-avatar" id="profAvB"></div>
         <div>
@@ -2534,12 +2539,12 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         <div class="su-tab active">Videos</div><div class="su-tab">Posts</div><div class="su-tab">Achievements</div>
       </div>
       <div class="gallery" style="margin:0 30px 10px; margin-inline:0;">
-        <div style="background-image:url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&h=400&fit=crop');"></div>
-        <div style="background-image:url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&h=400&fit=crop');"></div>
-        <div style="background-image:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=400&fit=crop');"></div>
-        <div style="background-image:url('https://images.unsplash.com/photo-1519861531473-9200262188bf?w=400&h=400&fit=crop');"></div>
-        <div style="background-image:url('https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=400&fit=crop');"></div>
-        <div style="background-image:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop');"></div>
+        <div class="gal-tile" data-emoji="🏊"></div>
+        <div class="gal-tile" data-emoji="🏃"></div>
+        <div class="gal-tile" data-emoji="⚽"></div>
+        <div class="gal-tile" data-emoji="🎮"></div>
+        <div class="gal-tile" data-emoji="🏃"></div>
+        <div class="gal-tile" data-emoji="🏋️"></div>
       </div>
     </div>
   </div>
@@ -2573,25 +2578,25 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 
 <div class="toast" id="toast"></div>
 
-<script src="js/images.js?v=33a1"></script>
-<script src="js/config.js?v=33a1"></script>
-<script src="js/avatars.js?v=33a1"></script>
-<script src="js/sports-data.js?v=33a1"></script>
-<script src="js/sports-data-2.js?v=33a1"></script>
-<script src="js/spcl-data.js?v=33a1"></script>
-<script src="js/sports-app.js?v=33a1"></script>
-<script src="js/sports-universe.js?v=33a1"></script>
-<script src="js/spcl.js?v=33a1"></script>
-<script src="js/about.js?v=33a1"></script>
-<script src="js/events-data.js?v=33a1"></script>
-<script src="js/events-app.js?v=33a1"></script>
-<script src="js/events-app-2.js?v=33a1"></script>
-<script src="js/challenges.js?v=33a1"></script>
-<script src="js/shop.js?v=33a1"></script>
-<script src="js/communities.js?v=33a1"></script>
-<script src="js/auth.js?v=33a1"></script>
-<script src="js/auth-ui.js?v=33a1"></script>
-<script src="js/ai.js?v=33a1"></script>
+<script src="js/images.js?v=vis2"></script>
+<script src="js/config.js?v=vis2"></script>
+<script src="js/avatars.js?v=vis2"></script>
+<script src="js/sports-data.js?v=vis2"></script>
+<script src="js/sports-data-2.js?v=vis2"></script>
+<script src="js/spcl-data.js?v=vis2"></script>
+<script src="js/sports-app.js?v=vis2"></script>
+<script src="js/sports-universe.js?v=vis2"></script>
+<script src="js/spcl.js?v=vis2"></script>
+<script src="js/about.js?v=vis2"></script>
+<script src="js/events-data.js?v=vis2"></script>
+<script src="js/events-app.js?v=vis2"></script>
+<script src="js/events-app-2.js?v=vis2"></script>
+<script src="js/challenges.js?v=vis2"></script>
+<script src="js/shop.js?v=vis2"></script>
+<script src="js/communities.js?v=vis2"></script>
+<script src="js/auth.js?v=vis2"></script>
+<script src="js/auth-ui.js?v=vis2"></script>
+<script src="js/ai.js?v=vis2"></script>
 <script>
 /* ============================================================
    PLAYR — PROTOTYPE DATA + INTERACTIVITY
@@ -2769,7 +2774,7 @@ function buildHomeV2(){
     stage.innerHTML = `
       <div class="phone hc-phone"><div class="phone-notch"></div><div class="phone-feed" id="phoneFeed"></div></div>
       <div class="hc-card hc-athlete">
-        <div class="hca-img"></div>
+        <div class='hca-img' style='${PLAYR_IMG.cover("cricket")}'><span class='hc-emoji'>🏏</span></div>
         <div class="hca-body"><div class="hca-av" style="background-image:${AV.bg('Dev Solanki')}; background-size:cover;"></div><div><b>Dev Solanki</b><i>CRICKET · ALL-ROUNDER</i></div><span class="hca-btn">+ FOLLOW</span></div>
       </div>
       <div class="hc-card hc-trend">
@@ -2780,7 +2785,7 @@ function buildHomeV2(){
       </div>
       <div class="hc-card hc-live" onclick="switchView('events')">
         <div class="hcl-tag"><span class="dot-live"></span>LIVE · MOUNTAINEERING</div>
-        <div class="hcl-img"></div>
+        <div class='hcl-img' style='${PLAYR_IMG.cover("mountaineering")}'><span class='hc-emoji'>🏔️</span></div>
         <div class="hcl-body"><b>Summit push underway</b><i>Annapurna · team of 6 · started 04:15</i></div>
       </div>
       <div class="hc-card hc-chall" onclick="switchView('challenges')">

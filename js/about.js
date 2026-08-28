@@ -6,7 +6,7 @@
 (function(){
 "use strict";
 let rendered=false;
-const IMG=k=>(typeof H2_IMGS!=="undefined"&&H2_IMGS[k])||"https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&h=700&fit=crop";
+const IMG=k=>(typeof H2_IMGS!=="undefined"&&H2_IMGS[k])||PLAYR_IMG.sport("running");
 
 const FOUNDERS=[
   {n:"VIVAAN MORADIA",role:"CO-FOUNDER — PRODUCT & COMMUNITY",ini:"VM",accent:"var(--lime)",

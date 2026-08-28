@@ -1,23 +1,24 @@
-# PLAYR — Image System
+# PLAYR — Visual System (v2: zero photography)
 
-All imagery resolves through **js/images.js** (`window.PLAYR_IMG`) — the single
-source of truth. Rules:
+All visuals resolve through **js/images.js**. PLAYR uses **no photographic
+assets** — every sport, product, community, event and cover visual is a
+generated SVG (data URI) or CSS gradient:
 
-1. **Deterministic only.** Variants are picked by explicit index or hashed from
-   a content id (`PLAYR_IMG.sport(key, "event-id")`). `Math.random()` is never
-   used for imagery.
-2. **Sport-keyed families.** Each sport owns its photo family — a sport never
-   renders another sport's photo (no Formula 1 → boxing class errors). Every
-   key in `PLAYR_IMG.legacy` resolves to a unique URL (asserted in tests).
-3. **Variant rotation.** Sections that show the same sport in different places
-   (hero collage v0, strips v1, mosaic v2, world examples v3) pass an explicit
-   variant index so grids never repeat a photo.
-4. **Products use product photography** (`PLAYR_IMG.product(type)`) — shoes
-   look like shoes, rackets like rackets — layered over gradients with
-   `onerror` hiding so the designed tile always shows.
+- **Sport tiles** — `PLAYR_IMG.sport(key, variant)` / `.bg()`: per-sport
+  gradient (hue derived from the sport's category accent) + grid + glow +
+  the sport's own catalogue glyph as the hero element. Formula 1 → 🏎️,
+  boxing → 🥊 — mapping comes from the catalogue, so cross-sport mix-ups
+  are impossible.
+- **Variants are deterministic** — explicit index or hash of a content id;
+  angle/hue/glow drift per variant so grids never repeat. No Math.random,
+  no network requests, nothing to 404.
+- **Product art** — `PLAYR_IMG.product(type)`: lime line-art silhouettes
+  (shoe, tee, jersey, cap, bottle, bag, rackets, dumbbell, bat).
+- **Brand monograms** — `PLAYR_IMG.brandLogo(brand)`: typographic
+  wordmark + "× PLAYR — CONCEPT". Official logo assets are NOT used;
+  real licensed artwork replaces these at commercial launch.
+- **Covers** — `PLAYR_IMG.cover(key)`: pure CSS gradients.
+- **Avatars** — js/avatars.js (generated, gender from profile only).
 
-## Prototype licensing note
-Demo imagery is hotlinked from Unsplash for prototype use only. Before any
-commercial launch, replace `RAW` / `PRODUCTS` id tables with licensed or
-original assets — every consumer keeps working because they only reference
-this module.
+Accessibility rule: every glyph is paired with a text label by its
+consumer; tiles carry SVG <title>. See test/visual_test.js.
