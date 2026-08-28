@@ -28,7 +28,7 @@ await t("Olympics fully removed", async()=>{
 });
 await t("nav = 10 items with SPCL", async()=>{
   const nav=$$(".topnav .nav-links button").map(b=>b.textContent);
-  const want=["Home","Discover Sport","SPCL","Challenges","Communities","Events","PLAYR+","Shop","About"];
+  const want=["Home","Discover Sport","SPCL PLAYERS","Challenges","Communities","Events","PLAYR+","Shop","About"];
   if(nav.join("|")!==want.join("|")) throw new Error(nav.join("|"));
   return "SPCL in position 4 ✓";
 });
@@ -54,7 +54,7 @@ await t("search: 'SPCL' via para attr", async()=>{
 await t("SPCL view renders", async()=>{
   w.switchView("spcl");
   const h=$("#spclRoot").innerHTML;
-  for(const k of ["SPORT WITHOUT","LIMITS","Sports for Every Capability","SPCL ATHLETES","EXPLORE PARA SPORTS","YOUR SPCL FEED","SPCL HAPPENING NOW","HISTORY OF PARA SPORT","HOW CLASSIFICATION WORKS","SPCL COMMUNITIES","PARA SPORT INDIA","SPCL CHALLENGES","SPCL DROP"]) if(!h.includes(k)) throw new Error("missing "+k);
+  for(const k of ["SPORT WITHOUT","LIMITS","Sports for Every Capability","SPCL PLAYERS ATHLETES","EXPLORE PARA SPORTS","YOUR SPCL PLAYERS FEED","SPCL PLAYERS HAPPENING NOW","HISTORY OF PARA SPORT","HOW CLASSIFICATION WORKS","SPCL PLAYERS COMMUNITIES","PARA SPORT INDIA","SPCL PLAYERS CHALLENGES","SPCL PLAYERS DROP"]) if(!h.includes(k)) throw new Error("missing "+k);
   return "hero + 11 sections + subnav(8) ✓";
 });
 await t("sub-nav 8 items", ()=>$$("#spclSubnav button").length+" items");
@@ -112,13 +112,13 @@ await t("home SPCL section", async()=>{
 await t("shop SPCL drop", async()=>{
   w.switchView("shop");
   const s=$("#spclShopSec");
-  for(const k of ["SPCL Tee","SPCL Cap","SPCL Hoodie","SPCL Wristband","SPCL Poster"]) if(!s.textContent.includes(k)) throw new Error(k);
+  for(const k of ["SPCL PLAYERS Tee","SPCL PLAYERS Cap","SPCL PLAYERS Hoodie","SPCL PLAYERS Wristband","SPCL PLAYERS Poster"]) if(!s.textContent.includes(k)) throw new Error(k);
   return "5 merch items ✓";
 });
 await t("discover shows SPCL collection + category", async()=>{
   w.switchView("discover");
   const h=$("#discoverRoot").innerHTML;
-  if(!h.includes("SPCL — PARA SPORTS")) throw new Error("no category section");
+  if(!h.includes("SPCL PLAYERS — PARA SPORTS")) throw new Error("no category section");
   if(!h.includes("Para Sport")) throw new Error("no attr chip");
   return "15th category + Para filter ✓";
 });

@@ -75,7 +75,7 @@ function badgeHTML(s){
   else if(s.isOlympic) h+=`<span class="badge b-oly" title="On the programme for ${editionLabel(s.olympicEdition)}">${RINGS}OLYMPIC SPORT</span>`;
   if(s.trend) h+=`<span class="badge b-trend">TRENDING</span>`;
   if(s.fresh) h+=`<span class="badge b-new">NEW</span>`;
-  if(s.category==="spcl") h+=`<span class="badge b-spcl" title="PLAYR Para-sport ecosystem">SPCL</span>`;
+  if(s.category==="spcl") h+=`<span class="badge b-spcl" title="PLAYR Para-sport ecosystem — SPCL PLAYERS">SPCL PLAYERS</span>`;
 if(s.risk==="high") h+=`<span class="badge b-risk">COMMUNITY &amp; INFO</span>`;
   return h;
 }
@@ -215,7 +215,7 @@ window.PS_card = cardHTML;
 /* ---------- 8. DISCOVER VIEW ---------- */
 const COLLECTIONS=[
   {id:"all",label:"ALL SPORTS"},
-  {id:"spcl",label:"SPCL"},
+  {id:"spcl",label:"SPCL PLAYERS"},
   {id:"foryou",label:"FOR YOU"},
   {id:"featured",label:"FEATURED"},
   {id:"trending",label:"TRENDING"},

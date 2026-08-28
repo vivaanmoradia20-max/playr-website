@@ -27,14 +27,14 @@ function fieldErr(id,msg){ const el=document.getElementById(id); if(!msg){ if(el
   e.id=id; e.className="a-err"; e.textContent=msg;
   (input?input.parentElement:document.getElementById("aForm")).appendChild(e);
 }
-function busy(btn,on,txt){ if(!btn) return; btn.disabled=on; btn.textContent=on?"PLEASE WAIT…":(txt||btn.dataset.label||"CONTINUE"); }
+function busy(btn,on,txt){ if(!btn) return; btn.disabled=on; btn.textContent=on?(btn.dataset.loading||"PLEASE WAIT…"):(txt||btn.dataset.label||"CONTINUE"); }
 function setTab(v){ view=v; const root=document.getElementById("authRoot"); if(root) renderAuth(); }
 
 /* ================= AUTH MODAL ================= */
-window.openAuth=function(tab){ openAuthModal(tab||"signin"); };
+window.openAuth=function(tab){ openAuthModal(tab||"landing"); };
 function openAuthModal(tab){
   if(A.user){ switchView("profile"); return; }   // already signed in → own PLAYR
-  view=tab; obStep=0;
+  view=tab||"landing"; obStep=0;
   closeModal("authModal");
   const ov=document.createElement("div"); ov.id="authModal"; ov.className="a-overlay";
   ov.innerHTML=`<div class="a-modal">
@@ -61,60 +61,81 @@ function closeModal(id){ const m=document.getElementById(id); if(m) m.remove(); 
 
 function renderAuth(){
   const root=document.getElementById("authRoot"); if(!root) return;
-  if(view==="signin") root.innerHTML=signinHTML();
+  if(view==="landing") root.innerHTML=landingHTML();
+  else if(view==="signin") root.innerHTML=signinHTML();
   else if(view==="signup") root.innerHTML=signupHTML();
   else if(view==="forgot") root.innerHTML=forgotHTML();
 }
-function headHTML(sub){
-  return `<img src="assets/brand/playr-wordmark.png" alt="PLAYR" class="a-logo-sm">
-    <h2 class="a-title">WELCOME TO PLAYR.</h2>
+function logoHead(){ return `<img src="assets/brand/playr-wordmark.png" alt="PLAYR" class="a-logo-sm">`; }
+
+/* ---------- LANDING (JOIN PLAYR) ---------- */
+function landingHTML(){
+  return `${logoHead()}
+    <h2 class="a-title xl">WELCOME TO PLAYR.</h2>
     <p class="a-tag">ONE PASSION. ONE COMMUNITY.</p>
-    ${sub?`<p class="a-sub">${sub}</p>`:""}`;
+    <p class="a-sub">The social platform where the entire world of sport lives. Sign in or create your free account.</p>
+    <div class="a-landing-btns">
+      <button class="btn btn-primary a-submit" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button>
+      <button class="btn btn-ghost a-submit" style="margin-top:0;" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button>
+    </div>
+    <div class="a-alt" style="margin-top:18px;">Already have an account? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signin')">Sign In</button></div>
+    <div class="a-alt">New to PLAYR? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signup')">Create Account</button></div>`;
 }
 
 /* ---------- SIGN IN ---------- */
 function signinHTML(){
-  return `<div class="a-tabs">
-      <button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button>
-      <button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button>
-    </div>
-    ${headHTML("Good to have you back.")}
+  return `<div class="a-backrow"><button class="a-link" onclick="PLAYR_AUTH_UI.tab('landing')">← Welcome</button><span class="a-tabs mini"><button class="a-tab on">SIGN IN</button><button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button></span></div>
+    ${logoHead()}
+    <h2 class="a-title">WELCOME BACK.</h2>
+    <p class="a-tag">ONE PASSION. ONE COMMUNITY.</p>
     <div class="a-form" id="aForm">
-      <label class="a-field"><span>EMAIL OR USERNAME</span><input id="si-id" autocomplete="username" placeholder="you@playr.com"></label>
+      <label class="a-field"><span>EMAIL</span><input id="si-id" autocomplete="username" placeholder="you@playr.com"></label>
       <label class="a-field"><span>PASSWORD</span><input id="si-pw" type="password" autocomplete="current-password" placeholder="••••••••"></label>
       <button class="a-link" onclick="PLAYR_AUTH_UI.tab('forgot')">Forgot password?</button>
-      <button class="btn btn-primary a-submit" data-label="SIGN IN" onclick="PLAYR_AUTH_UI.signIn(this)">SIGN IN</button>
-      <div class="a-alt">New to PLAYR? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button></div>
+      <button class="btn btn-primary a-submit" data-label="SIGN IN" data-loading="SIGNING YOU IN…" onclick="PLAYR_AUTH_UI.signIn(this)">SIGN IN</button>
+      <div class="a-alt">Don't have an account? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signup')">Create Account</button></div>
+      <button class="btn btn-ghost a-submit ghost-alt" style="margin-top:0;" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button>
     </div>`;
 }
 
 /* ---------- SIGN UP ---------- */
 function signupHTML(){
-  return `<div class="a-tabs">
-      <button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button>
-      <button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signup')">CREATE ACCOUNT</button>
-    </div>
-    ${headHTML("Create your sports identity.")}
+  const sports=window.PLAYR_SPORTS?window.PLAYR_SPORTS.slice().sort((a,b)=>b.popularity-a.popularity).slice(0,24):[];
+  return `<div class="a-backrow"><button class="a-link" onclick="PLAYR_AUTH_UI.tab('landing')">← Welcome</button><span class="a-tabs mini"><button class="a-tab" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button><button class="a-tab on">CREATE ACCOUNT</button></span></div>
+    ${logoHead()}
+    <h2 class="a-title">CREATE YOUR PLAYR ACCOUNT.</h2>
+    <p class="a-tag">ONE PASSION. ONE COMMUNITY.</p>
     <div class="a-form" id="aForm">
       <label class="a-field"><span>FULL NAME</span><input id="su-name" placeholder="Rhea Kapoor"></label>
       <label class="a-field"><span>USERNAME</span><input id="su-user" placeholder="rheak" autocomplete="off"><i class="a-hint">3–20 chars · a-z 0-9 _ .</i></label>
       <label class="a-field"><span>EMAIL</span><input id="su-email" type="email" placeholder="you@playr.com"></label>
-      <label class="a-field"><span>PASSWORD</span><input id="su-pw" type="password" placeholder="8+ chars, letters & numbers"></label>
-      <label class="a-field"><span>CONFIRM PASSWORD</span><input id="su-pw2" type="password" placeholder="Repeat password"></label>
+      <div class="a-2col">
+        <label class="a-field"><span>PASSWORD</span><input id="su-pw" type="password" placeholder="8+ chars, letters & numbers"></label>
+        <label class="a-field"><span>CONFIRM PASSWORD</span><input id="su-pw2" type="password" placeholder="Repeat password"></label>
+      </div>
+      <div class="a-2col">
+        <label class="a-field"><span>GENDER <em>(for your avatar)</em></span>
+          <select id="su-gender"><option value="">Prefer not to say</option><option value="female">Female</option><option value="male">Male</option><option value="non-binary">Non-binary</option></select></label>
+        <label class="a-field"><span>PRIMARY SPORT / INTERESTS</span>
+          <select id="su-sport"><option value="">Just browsing</option>${sports.map(x=>`<option value="${x.id}">${x.name}</option>`).join("")}</select></label>
+      </div>
       <label class="a-photo"><input type="file" id="su-photo" accept="image/*"><span>📷 Add profile photo <em>(optional)</em></span></label>
-      <button class="btn btn-primary a-submit" data-label="CREATE ACCOUNT" onclick="PLAYR_AUTH_UI.signUp(this)">CREATE ACCOUNT</button>
-      <div class="a-alt">Already on PLAYR? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button></div>
+      <button class="btn btn-primary a-submit" data-label="CREATE ACCOUNT" data-loading="CREATING YOUR PLAYR ACCOUNT…" onclick="PLAYR_AUTH_UI.signUp(this)">CREATE ACCOUNT</button>
+      <div class="a-alt">Already have an account? <button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signin')">Sign In</button></div>
+      <button class="btn btn-ghost a-submit ghost-alt" style="margin-top:0;" onclick="PLAYR_AUTH_UI.tab('signin')">SIGN IN</button>
     </div>`;
 }
 
 /* ---------- FORGOT ---------- */
 function forgotHTML(){
-  return `${headHTML("")}
+  return `<div class="a-backrow"><button class="a-link" onclick="PLAYR_AUTH_UI.tab('signin')">← Sign In</button></div>
+    ${logoHead()}
+    <h2 class="a-title">RESET PASSWORD.</h2>
+    <p class="a-tag">ONE PASSION. ONE COMMUNITY.</p>
     <div class="a-form" id="aForm">
       <p class="a-sub">Enter your account email and we'll send you a reset link.</p>
       <label class="a-field"><span>EMAIL</span><input id="fp-email" type="email" placeholder="you@playr.com"></label>
       <button class="btn btn-primary a-submit" data-label="RESET PASSWORD" onclick="PLAYR_AUTH_UI.forgot(this)">RESET PASSWORD</button>
-      <div class="a-alt"><button class="a-link strong" onclick="PLAYR_AUTH_UI.tab('signin')">← Back to sign in</button></div>
     </div>`;
 }
 
@@ -126,8 +147,8 @@ UI.signIn=async function(btn){
   ["err-si-id","err-si-pw"].forEach(e=>fieldErr(e));
   const id=(document.getElementById("si-id")||{}).value||"", pw=(document.getElementById("si-pw")||{}).value||"";
   let bad=false;
-  if(!id.trim()){ fieldErr("err-si-id","Enter your email or username."); bad=true; }
-  if(!pw){ fieldErr("err-si-pw","Enter your password."); bad=true; }
+  if(!id.trim()){ fieldErr("err-si-id","Please complete this field."); bad=true; }
+  if(!pw){ fieldErr("err-si-pw","Please complete this field."); bad=true; }
   if(bad) return;
   busy(btn,true);
   try{
@@ -140,20 +161,25 @@ UI.signIn=async function(btn){
 };
 
 UI.signUp=async function(btn){
-  ["err-su-name","err-su-user","err-su-email","err-su-pw","err-su-pw2"].forEach(e=>fieldErr(e));
+  ["err-su-name","err-su-user","err-su-email","err-su-pw","err-su-pw2","err-su-gender","err-su-sport"].forEach(e=>fieldErr(e));
   const name=(document.getElementById("su-name")||{}).value||"", user=(document.getElementById("su-user")||{}).value||"",
         email=(document.getElementById("su-email")||{}).value||"", pw=(document.getElementById("su-pw")||{}).value||"", pw2=(document.getElementById("su-pw2")||{}).value||"";
   let bad=false;
-  if(!name.trim()){ fieldErr("err-su-name","Your name is required."); bad=true; }
-  if(!unameOk(user)){ fieldErr("err-su-user","3–20 characters: letters, numbers, _ or ."); bad=true; }
-  if(!emailOk(email)){ fieldErr("err-su-email","Enter a valid email address."); bad=true; }
-  if(!pwOk(pw)){ fieldErr("err-su-pw","At least 8 characters, with letters and numbers."); bad=true; }
-  if(pw2!==pw){ fieldErr("err-su-pw2","Passwords don't match."); bad=true; }
+  if(!name.trim()){ fieldErr("err-su-name","Please complete this field."); bad=true; }
+  if(!user.trim()){ fieldErr("err-su-user","Please complete this field."); bad=true; }
+  else if(!unameOk(user)){ fieldErr("err-su-user","3–20 characters: letters, numbers, _ or ."); bad=true; }
+  if(!email.trim()){ fieldErr("err-su-email","Please complete this field."); bad=true; }
+  else if(!emailOk(email)){ fieldErr("err-su-email","Please enter a valid email address."); bad=true; }
+  if(!pw.trim()){ fieldErr("err-su-pw","Please complete this field."); bad=true; }
+  else if(!pwOk(pw)){ fieldErr("err-su-pw","At least 8 characters, with letters and numbers."); bad=true; }
+  if(pw2!==pw){ fieldErr("err-su-pw2","Passwords do not match."); bad=true; }
   if(bad) return;
   busy(btn,true);
   try{
     const photo=await readPhoto("su-photo");
-    const res=await A.signUp({name:name.trim(),username:user.trim(),email,password:pw});
+    const gender=(((document.getElementById("su-gender")||{}).value)||"").trim();
+    const sport=(((document.getElementById("su-sport")||{}).value)||"").trim();
+    const res=await A.signUp({name:name.trim(),username:user.trim(),email,password:pw,gender,sport});
     if(photo && A.user) await A.updateProfile({avatar:photo});
     busy(btn,false,"CREATE ACCOUNT");
     if(res.confirmed===false){        // Supabase email confirmation pending
@@ -163,7 +189,7 @@ UI.signUp=async function(btn){
       return;
     }
     closeModal("authModal");
-    showToast("Account created ✓");
+    showToast("Welcome to PLAYR.");
     startOnboarding();
   }catch(e){ busy(btn,false,"CREATE ACCOUNT");
     const m=A.friendly(e);
@@ -179,7 +205,7 @@ UI.forgot=async function(btn){
   catch(e){ busy(btn,false,"RESET PASSWORD"); fieldErr("err-fp-email",A.friendly(e)); return; }
   busy(btn,false,"RESET PASSWORD");
   const root=document.getElementById("authRoot");
-  if(root) root.innerHTML=`${headHTML("")}
+  if(root) root.innerHTML=`${logoHead()}<h2 class="a-title">RESET PASSWORD.</h2><p class="a-tag">ONE PASSION. ONE COMMUNITY.</p>
     <div class="a-form"><div class="a-success"><b>Check your email.</b><p>We've sent a password reset link to <b>${esc(email)}</b>. It expires in a little while — didn't get it? Check spam or try again.</p></div>
     <button class="btn btn-ghost a-submit" onclick="PLAYR_AUTH_UI.tab('signin')">← Back to sign in</button></div>`;
 };
@@ -204,7 +230,7 @@ function readPhoto(id){
 
 /* ================= ONBOARDING (5 steps) ================= */
 function startOnboarding(){
-  obStep=1; obData={sports:[],follows:[]};
+  obStep=1; obData={sports:(A.user&&A.user.sports||[]).slice(),follows:[]};
   closeModal("authModal");
   const ov=document.createElement("div"); ov.id="onboardModal"; ov.className="a-overlay";
   ov.innerHTML=`<div class="a-modal ob-modal2">
@@ -382,7 +408,7 @@ function applyState(user){
   }
 }
 function authedMenu(u){
-  const av=u.avatar?`<div class="dd-avatar" style="background-image:url('${u.avatar}'); background-size:cover;"></div>`:`<div class="dd-avatar" style="background:linear-gradient(135deg,var(--lime),var(--cyan)); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--void);">${esc((u.name||"P")[0].toUpperCase())}</div>`;
+  const av=u.avatar?`<div class="dd-avatar" style="background-image:url('${u.avatar}'); background-size:cover;"></div>`:`<div class="dd-avatar" style="background-image:${AV.bg(u.name,u.gender)}; background-size:cover;"></div>`;
   const item=(label,fn)=>`<div class="dropdown-item" style="cursor:pointer;" onclick="${fn}"><div><div class="dd-title">${label}</div></div></div>`;
   return `${av.replace("dd-avatar","dd-avatar dd-me")} 
     <div class="dropdown-item" style="cursor:pointer;" onclick="switchView('profile')"><div><div class="dd-title">${esc(u.name)}</div><div class="dd-sub">@${esc(u.username)} · View profile</div></div></div>

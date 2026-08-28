@@ -20,7 +20,7 @@ async function t(name,f){ try{ const r=await f(); console.log("PASS",name,r===un
 console.log("Load errors:", errors.length?errors:"none");
 await t("nav has ABOUT (10 items, correct order)", async()=>{
   const nav=$$(".topnav .nav-links button").map(b=>b.textContent);
-  const want=["Home","Discover Sport","SPCL","Challenges","Communities","Events","PLAYR+","Shop","About"];
+  const want=["Home","Discover Sport","SPCL PLAYERS","Challenges","Communities","Events","PLAYR+","Shop","About"];
   if(nav.join("|")!==want.join("|")) throw new Error(nav.join("|"));
   return "desktop ✓";
 });

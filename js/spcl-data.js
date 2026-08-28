@@ -14,7 +14,7 @@
 
 /* SPCL joins the PLAYR category system as its own world. */
 window.SPORT_CATEGORIES.push(
-  {id:"spcl", name:"SPCL — Para Sports", short:"SPCL", icon:"🔷", accent:"#4DA6FF",
+  {id:"spcl", name:"SPCL PLAYERS — Para Sports", short:"SPCL PLAYERS", icon:"🔷", accent:"#4DA6FF",
    blurb:"PLAYR's Para-sport ecosystem — 29 sanctioned Para sports, summer and winter. Sports for Every Capability. Limitless Potential."}
 );
 
@@ -213,9 +213,9 @@ window.SPCL_INDIA = {
 
 /* SPCL merch (PLAYR-original — not affiliated with IPC merchandise). */
 window.SPCL_MERCH = [
-  {n:"SPCL Tee — Limitless",p:"₹899",icon:"👕"},
-  {n:"SPCL Cap",p:"₹699",icon:"🧢"},
-  {n:"SPCL Hoodie — No Limits",p:"₹2,199",icon:"🧥"},
-  {n:"SPCL Wristband",p:"₹199",icon:"🎗"},
-  {n:"SPCL Poster — Sport Without Limits",p:"₹399",icon:"🖼"}
+  {n:"SPCL PLAYERS Tee — Limitless",p:"₹899",icon:"👕"},
+  {n:"SPCL PLAYERS Cap",p:"₹699",icon:"🧢"},
+  {n:"SPCL PLAYERS Hoodie — No Limits",p:"₹2,199",icon:"🧥"},
+  {n:"SPCL PLAYERS Wristband",p:"₹199",icon:"🎗"},
+  {n:"SPCL PLAYERS Poster — Sport Without Limits",p:"₹399",icon:"🖼"}
 ];

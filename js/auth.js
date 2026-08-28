@@ -58,9 +58,9 @@ const uuid=()=> (crypto.randomUUID?crypto.randomUUID():"u-"+Date.now()+"-"+Math.
 /* ---------- error translation (never leak raw technical errors) ---------- */
 function friendly(err){
   const raw=String(err&&err.message||err||"");
-  if(/^(Incorrect|That email|That username|Please |Too many|Network problem|In Supabase mode)/.test(raw)) return raw; // already friendly
+  if(/^(Incorrect|Email or password|That email|That username|Please |Too many|Network problem|In Supabase mode)/.test(raw)) return raw; // already friendly
   const msg=raw.toLowerCase();
-  if(/invalid login credentials|invalid username or password/.test(msg)) return "Incorrect email/username or password.";
+  if(/invalid login credentials|invalid username or password/.test(msg)) return "Email or password is incorrect.";
   if(/user already registered|already been registered/.test(msg)) return "That email is already registered — try signing in instead.";
   if(/password should be at least/.test(msg)) return "Password must be at least 8 characters.";
   if(/unable to validate email|invalid format/.test(msg)) return "Please enter a valid email address.";
@@ -79,7 +79,7 @@ function findLocal(identifier){
 
 /* ---------- map to PLAYR user shape ---------- */
 const mapUser=(u,extra)=>Object.assign({
-  id:u.id, email:u.email, name:u.name||u.full_name||"", username:u.username||"",
+  id:u.id, email:u.email, name:u.name||u.full_name||"", username:u.username||"", gender:u.gender||"",
   avatar:u.avatar||u.profile_image||"", bio:u.bio||"", location:u.location||"",
   sports:u.sports||[]
 }, extra||{});
@@ -109,16 +109,16 @@ async function init(){
   return currentUser;
 }
 
-async function signUp({name, username, email, password}){
+async function signUp({name, username, email, password, gender, sport}){
   email=email.trim().toLowerCase(); username=username.trim().toLowerCase();
   if(mode()==="supabase"){
     const client=await supa();
     if(!client) throw new Error("Network problem — check your connection and try again.");
     const { data, error } = await client.auth.signUp({ email, password,
-      options:{ data:{ full_name:name, username } } });
+      options:{ data:{ full_name:name, username, gender, sports: sport?[sport]:[] } } });
     if(error) throw new Error(friendly(error));
     if(data && data.user && data.session){
-      currentUser=mapUser({ id:data.user.id, email, name, username });
+      currentUser=mapUser({ id:data.user.id, email, name, username, gender, sports: sport?[sport]:[] });
       writeSession(); emit(); return { user:currentUser, confirmed:true };
     }
     return { confirmed:false }; // email confirmation required
@@ -127,7 +127,7 @@ async function signUp({name, username, email, password}){
     const byEmail=!!findLocal(email);
     throw new Error(byEmail ? "That email is already registered — try signing in instead." : "That username is already taken — try another.");
   }
-  const u={ id:uuid(), email, name:name.trim(), username, pw:await hash(password), avatar:"", bio:"", location:"", sports:[], created:new Date().toISOString() };
+  const u={ id:uuid(), email, name:name.trim(), username, gender:gender||"", pw:await hash(password), avatar:"", bio:"", location:"", sports: sport?[sport]:[], created:new Date().toISOString() };
   const all=users(); all.push(u); write(LS_USERS, all);
   currentUser=mapUser(u); writeSession(); emit();
   return { user:currentUser, confirmed:true };
@@ -146,7 +146,7 @@ async function signIn({identifier, password}){
     writeSession(); emit(); return currentUser;
   }
   const u=findLocal(identifier);
-  if(!u || u.pw!==await hash(password)) throw new Error("Incorrect email/username or password.");
+  if(!u || u.pw!==await hash(password)) throw new Error("Email or password is incorrect.");
   currentUser=mapUser(u); writeSession(); emit(); return currentUser;
 }
 

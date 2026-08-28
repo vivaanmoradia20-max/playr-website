@@ -51,7 +51,7 @@ window.renderAbout=function(){
   <!-- ================= HERO ================= -->
   <div class="ab-hero">
     <div class="ab-hero-collage">${collage.map((c,i)=>`<div style="background-image:url('${IMG(c)}'); animation-delay:${i*.5}s"></div>`).join("")}
-      <div class="ab-collage-spcl"><span>🔷</span><b>SPCL</b><i>SPORT WITHOUT LIMITS</i></div></div>
+      <div class="ab-collage-spcl"><span>🔷</span><b>SPCL PLAYERS</b><i>SPORT WITHOUT LIMITS</i></div></div>
     <div class="ab-hero-veil"></div>
     <div class="wrap ab-hero-in">
       <div class="eyebrow">About PLAYR</div>
@@ -256,11 +256,11 @@ window.renderAbout=function(){
       </div>
       <div class="ab-spcl-cta card rv">
         <div>
-          <div class="pill" style="background:rgba(77,166,255,.14);color:#8CC4FF;border:1px solid rgba(77,166,255,.35);margin-bottom:12px;">SPCL</div>
+          <div class="pill" style="background:rgba(77,166,255,.14);color:#8CC4FF;border:1px solid rgba(77,166,255,.35);margin-bottom:12px;">SPCL PLAYERS</div>
           <h3>SPORTS FOR EVERY CAPABILITY. LIMITLESS POTENTIAL.</h3>
-          <p>PLAYR believes Para sport and Para athletes belong at the core of the sports ecosystem — not as an afterthought. SPCL is our dedicated Para-sport community. (SPCL is a PLAYR initiative — not an official Paralympic or IPC organisation.)</p>
+          <p>PLAYR believes Para sport and Para athletes belong at the core of the sports ecosystem — not as an afterthought. SPCL PLAYERS is our dedicated Para-sport space. (SPCL is a PLAYR initiative — not an official Paralympic or IPC organisation.)</p>
         </div>
-        <button class="btn btn-primary" onclick="switchView('spcl')">Explore SPCL →</button>
+        <button class="btn btn-primary" onclick="switchView('spcl')">Explore SPCL PLAYERS →</button>
       </div>
     </div>
   </div>

@@ -1007,6 +1007,19 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 }
 
 
+
+/* auth landing + back rows */
+.a-landing-btns{display:flex; flex-direction:column; gap:12px; margin-top:22px;}
+.a-backrow{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; gap:10px;}
+.a-tabs.mini{margin-bottom:0; padding:3px;}
+.a-tabs.mini .a-tab{font-size:10px; padding:7px 13px;}
+.a-2col{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.a-field select{background:var(--surface-2); border:1.5px solid var(--line); border-radius:12px; padding:13px 15px; color:var(--text); font-size:14px; outline:none; width:100%; appearance:auto;}
+.a-field select:focus{border-color:var(--lime);}
+.a-field > span em{font-style:normal; color:var(--muted-2); text-transform:none; letter-spacing:0;}
+.a-submit.ghost-alt{border-color:var(--line);}
+@media(max-width:560px){ .a-2col{grid-template-columns:1fr;} }
+
 /* ============================================================
    DISCOVER SPORT — merged hub
    ============================================================ */
@@ -1425,7 +1438,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 @media (prefers-reduced-motion: reduce){ .ab-hero-collage,.ab-dash,.ab-eco-node{animation:none !important;} .rv{transition:none; opacity:1; transform:none;} }
 
 /* ============================================================
-   SPCL — PLAYR's Para-sport ecosystem (accent #4DA6FF + lime)
+   SPCL PLAYERS — PLAYR's Para-sport space (accent #4DA6FF + lime)
    ============================================================ */
 .b-spcl{background:rgba(77,166,255,.15); color:#8CC4FF; border:1px solid rgba(77,166,255,.45);}
 #view-spcl{scroll-behavior:smooth;}
@@ -1889,7 +1902,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   <div class="nav-links" id="navLinks">
     <button data-view="home" class="active" onclick="switchView('home')">Home</button>
     <button data-view="discover" onclick="switchView('discover')">Discover Sport</button>
-    <button data-view="spcl" onclick="switchView('spcl')" style="color:#4DA6FF;">SPCL</button>
+    <button data-view="spcl" onclick="switchView('spcl')" style="color:#4DA6FF;">SPCL PLAYERS</button>
     <button data-view="challenges" onclick="switchView('challenges')">Challenges</button>
     <button data-view="communities" onclick="switchView('communities')">Communities</button>
     <button data-view="events" onclick="switchView('events')">Events</button>
@@ -1920,7 +1933,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       </button>
       <div class="dropdown glass" id="dd-profile"><div id="ddProfileBody"></div></div>
     </div>
-    <button class="btn btn-primary btn-sm join-btn-desktop" onclick="openAuth('signup')">Join PLAYR</button>
+    <button class="btn btn-primary btn-sm join-btn-desktop" onclick="openAuth('landing')">Join PLAYR</button>
     <button class="hamburger" onclick="toggleMobileMenu(true)" aria-label="Open menu">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -1930,7 +1943,8 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <div class="mobile-menu" id="mobileMenu">
   <div class="mm-brand"><img src="assets/brand/playr-wordmark.png" alt="PLAYR" style="height:20px;"><button class="mobile-menu-close" onclick="toggleMobileMenu(false)" aria-label="Close menu"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
   <button data-view="home" onclick="switchView('home')">Home</button>
-  <button data-view="discover" onclick="switchView('discover')">Discover</button>  <button data-view="spcl" onclick="switchView('spcl')">SPCL</button>
+  <button data-view="discover" onclick="switchView('discover')">Discover Sport</button>
+  <button data-view="spcl" onclick="switchView('spcl')" style="color:#4DA6FF;">SPCL PLAYERS</button>
   <button data-view="challenges" onclick="switchView('challenges')">Challenges</button>
   <button data-view="communities" onclick="switchView('communities')">Communities</button>
   <button data-view="events" onclick="switchView('events')">Events</button>
@@ -1952,7 +1966,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         <h1 class="hero2-title">THE WORLD OF SPORT.<br><span>ONE SOCIAL PLATFORM.</span></h1>
         <p class="hero2-sub">Follow the sports you love. Discover new ones. Connect with fans, athletes and friends. Challenge your community.</p>
         <div class="hero-btns">
-          <button class="btn btn-primary join-cta" onclick="openAuth('signup')">Join PLAYR</button>
+          <button class="btn btn-primary join-cta" onclick="openAuth('landing')">Join PLAYR</button>
           <button class="btn btn-ghost" onclick="switchView('discover')">Explore Sports</button>
         </div>
         <div class="hero2-stats mono-num">
@@ -2085,7 +2099,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     </div>
   </div>
 
-  <!-- ============ SPCL — Para sport ecosystem ============ -->
+  <!-- ============ SPCL PLAYERS — Para sport ecosystem ============ -->
   <div class="section" id="spclHomeSec"></div>
 
   <!-- HAPPENING NEAR YOU (Events engine) -->
@@ -2122,7 +2136,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       <h2>ONE PASSION.<br>ONE COMMUNITY.</h2>
       <p>Join the world where every sport has a place.</p>
       <div class="final-btns">
-        <button class="btn btn-primary join-cta" onclick="openAuth('signup')">Join PLAYR</button>
+        <button class="btn btn-primary join-cta" onclick="openAuth('landing')">Join PLAYR</button>
         <button class="btn btn-ghost" onclick="switchView('discover')">Explore Sports</button>
       </div>
     </div>
@@ -2144,7 +2158,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
         </div>
         <div class="footer-links">
           <div class="footer-col"><h5>Platform</h5>
-            <a onclick="switchView('discover')">Discover Sport</a><a onclick="switchView('spcl')">SPCL — Para Sports</a><a onclick="switchView('communities')">Communities</a><a onclick="switchView('challenges')">Challenges</a><a onclick="switchView('events')">Events</a>
+            <a onclick="switchView('discover')">Discover Sport</a><a onclick="switchView('spcl')">SPCL PLAYERS — Para Sports</a><a onclick="switchView('communities')">Communities</a><a onclick="switchView('challenges')">Challenges</a><a onclick="switchView('events')">Events</a>
           </div>
           <div class="footer-col"><h5>Company</h5>
             <a onclick="switchView('about')">About</a><a onclick="switchView('plus')">PLAYR+</a><a onclick="switchView('shop')">Shop</a><a href="#">Partnerships</a><a href="#">Contact</a>
@@ -2175,7 +2189,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   <div class="wrap section" id="universeRoot" style="padding-top:14px;"></div>
 </section>
 
-<!-- ============ SPCL — PLAYR's Para-sport ecosystem ============ -->
+<!-- ============ SPCL PLAYERS — Para-sport space ============ -->
 <section class="view" id="view-spcl">
   <div id="spclRoot"></div>
   <div class="wrap section" id="spclUniverseRoot" style="display:none;"></div>
