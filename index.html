@@ -1046,6 +1046,12 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 @media(max-width:860px){ .ds-nodes{display:none;} }
 @media(max-width:560px){ .ds-trend{width:216px;} }
 
+
+/* section error boundary */
+.sec-error{padding:48px 32px; text-align:center; border:1px dashed rgba(255,106,77,.4); background:rgba(255,106,77,.04);}
+.sec-error b{display:block; font-size:17px; margin-bottom:8px; font-family:var(--body); font-weight:800;}
+.sec-error p{color:var(--muted); font-size:13.5px; margin-bottom:16px;}
+
 /* ============================================================
    COMMUNITIES v2 + PLAYR AI
    ============================================================ */
@@ -2567,24 +2573,25 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 
 <div class="toast" id="toast"></div>
 
-<script src="js/images.js"></script>
-<script src="js/config.js"></script>
-<script src="js/avatars.js"></script>
-<script src="js/sports-data.js"></script>
-<script src="js/sports-data-2.js"></script>
-<script src="js/spcl-data.js"></script>
-<script src="js/sports-app.js"></script>
-<script src="js/sports-universe.js"></script>
-<script src="js/spcl.js"></script>
-<script src="js/about.js"></script>
-<script src="js/events-data.js"></script>
-<script src="js/events-app.js"></script>
-<script src="js/events-app-2.js"></script>
-<script src="js/challenges.js"></script>
-<script src="js/shop.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/auth-ui.js"></script>
-<script src="js/ai.js"></script>
+<script src="js/images.js?v=33a1"></script>
+<script src="js/config.js?v=33a1"></script>
+<script src="js/avatars.js?v=33a1"></script>
+<script src="js/sports-data.js?v=33a1"></script>
+<script src="js/sports-data-2.js?v=33a1"></script>
+<script src="js/spcl-data.js?v=33a1"></script>
+<script src="js/sports-app.js?v=33a1"></script>
+<script src="js/sports-universe.js?v=33a1"></script>
+<script src="js/spcl.js?v=33a1"></script>
+<script src="js/about.js?v=33a1"></script>
+<script src="js/events-data.js?v=33a1"></script>
+<script src="js/events-app.js?v=33a1"></script>
+<script src="js/events-app-2.js?v=33a1"></script>
+<script src="js/challenges.js?v=33a1"></script>
+<script src="js/shop.js?v=33a1"></script>
+<script src="js/communities.js?v=33a1"></script>
+<script src="js/auth.js?v=33a1"></script>
+<script src="js/auth-ui.js?v=33a1"></script>
+<script src="js/ai.js?v=33a1"></script>
 <script>
 /* ============================================================
    PLAYR — PROTOTYPE DATA + INTERACTIVITY
@@ -2994,33 +3001,49 @@ function buildHomeV2(){
   window.applyPlayrRoute = applyRoute;
 })();
 
-/* ---------- init ---------- */
-buildHomeV2();
-buildTicker();
-buildPhoneFeed();
-renderHomeFeed();
-initSportsSystem();          /* Discover v2, onboarding, personalization */
-setSportUniverse('cricket'); /* default Sport Universe */
-initEventsSystem();  /* Events discovery engine */
-initChallenges();     /* Challenges v2 */
-renderCommunitiesView(); /* Communities v2 */
-initSpcl();               /* SPCL home + shop sections */
-PLAYR_AUTH_UI.init();   /* restore session → authed nav state */
-applyPlayrRoute();       /* deep-link: #/discover-sport/<sport> */
-initShopSystem();    /* Shop v2 — concept marketplace */
-
-/* Lazy-render the Olympic Hub the first time it's opened */
+/* ---------- section error boundary: a failing section can never black-screen the app ---------- */
+window.safeSection=function(view,fn,rootId){
+  const root=document.getElementById(rootId); if(!root) return;
+  try{
+    const f=typeof fn==='function'?fn:window[fn];
+    if(typeof f==='function'){ root.innerHTML=''; f(); }
+    if(!root.innerHTML.trim()) throw new Error('section rendered empty');
+  }catch(e){
+    (window.console&&console.error)('PLAYR section error ('+view+'):', e && e.message);
+    window.__secRetry=function(){ root.innerHTML=''; safeSection(view,fn,rootId); };
+    root.innerHTML='<div class="wrap section"><div class="sec-error card"><b>Something went wrong loading this section.</b><p>The rest of PLAYR is unaffected. Your data stays saved.</p><button class="btn btn-primary btn-sm" onclick="window.__secRetry&&window.__secRetry()">TRY AGAIN</button></div></div>';
+  }
+};
 (function(){
-  const _sv = switchView;
+  const _sv2 = switchView;
   window.switchView = function(v){
-    _sv(v);
-    if(v==='about' && typeof renderAbout==='function') renderAbout();
-    if(v==='spcl' && typeof renderSpcl==='function'){ renderSpcl(); document.getElementById('spclUniverseRoot').style.display='none'; document.getElementById('spclRoot').style.display=''; }
-    if(v==='communities' && window.PLAYR_COM){ PLAYR_COM.back(); }
-    if(v==='challenges' && window.PLAYR_CH){ PLAYR_CH.render(); }
-    if(v==='events' && window.PLAYR_EV){ const r=document.getElementById('eventsRoot'); if(r && !r.innerHTML.trim()) window.PLAYR_EV.renderEventsPage(); }
+    _sv2(v);
+    if(v==='about') safeSection('about','renderAbout','aboutRoot');
+    if(v==='spcl'){ safeSection('spcl','renderSpcl','spclRoot'); const u=document.getElementById('spclUniverseRoot'); if(u) u.style.display='none'; const r=document.getElementById('spclRoot'); if(r) r.style.display=''; }
+    if(v==='communities') safeSection('communities', function(){ window.PLAYR_COM && PLAYR_COM.back(); }, 'communitiesRoot');
+    if(v==='challenges') safeSection('challenges', function(){ window.PLAYR_CH && PLAYR_CH.render(); }, 'challengesRoot');
+    if(v==='events' && window.PLAYR_EV){ try{ const r=document.getElementById('eventsRoot'); if(r && !r.innerHTML.trim()) PLAYR_EV.renderEventsPage(); }catch(e){} }
   };
 })();
+
+/* ---------- init (isolated: one failing module can never black-screen the rest) ---------- */
+const INIT_STEPS=[
+  ["home v2", ()=>buildHomeV2()],
+  ["ticker", ()=>buildTicker()],
+  ["phone feed", ()=>buildPhoneFeed()],
+  ["home feed", ()=>renderHomeFeed()],
+  ["sports system", ()=>initSportsSystem()],
+  ["default universe", ()=>setSportUniverse('cricket')],
+  ["events", ()=>initEventsSystem()],
+  ["challenges", ()=>initChallenges()],
+  ["communities", ()=>renderCommunitiesView()],
+  ["shop", ()=>initShopSystem()],
+  ["spcl", ()=>initSpcl()],
+  ["auth", ()=>PLAYR_AUTH_UI.init()],
+  ["routing", ()=>applyPlayrRoute()]
+];
+INIT_STEPS.forEach(([name,fn])=>{ try{ fn(); }catch(e){ console.error('PLAYR init "'+name+'" failed:', e && e.message); } });
+
 </script>
 </body>
 </html>
