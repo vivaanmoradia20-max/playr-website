@@ -349,4 +349,5 @@ window.PLAYR_CH={
 
 window.initChallenges=render;
 window.PLAYR_CH.render=render;
+window.PLAYR_CH.lookup=id=>CATALOG.concat(created()).find(x=>x.id===id);
 })();
