@@ -16,6 +16,7 @@ const CRICKET_MARKS=[["100 international centuries","Sachin Tendulkar — the on
 /* ---------- open from anywhere ---------- */
 window.openSport=function(id){ if(!BY[id]) return; switchView("sports"); setSportUniverse(id); };
 window.setSportUniverse=function(id){
+  try{ history.replaceState(null,"","#/discover-sport/"+id); }catch(e){}
   if(!BY[id]) return; current=id;
   const s=BY[id], cat=catOf(s), following=window.PS_isFollowing(id);
   const tabs=(s.tabsOverride||DEFAULT_TABS).slice();

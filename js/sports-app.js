@@ -198,6 +198,7 @@ function cardHTML(s){
     <div class="sc2-body">
       <h4 class="sc2-name">${s.name}</h4>
       <div class="sc2-sub">${s.subcategory||cat.name}</div>
+      <p class="sc2-desc">${s.description}</p>
       <div class="sc2-meta">
         <span class="mono-num">${fmtFol(s.followers)} followers</span>
         <span class="pop-meter" title="Popularity on PLAYR"><i style="width:${s.popularity}%"></i></span>
@@ -228,7 +229,21 @@ const ATTRS=[
   {id:"team",label:"Team"},{id:"individual",label:"Individual"},{id:"indoor",label:"Indoor"},{id:"outdoor",label:"Outdoor"},
   {id:"water",label:"Water"},{id:"adventure",label:"Adventure"},{id:"combat",label:"Combat"},{id:"mind",label:"Mind Sport"}
 ];
-const D_STATE={collection:"all", category:"all", attrs:new Set(), query:""};
+const DS_CATS=[
+  {id:"all",label:"ALL",test:s=>true},
+  {id:"team",label:"TEAM SPORTS",test:s=>s.attrs.team},
+  {id:"individual",label:"INDIVIDUAL",test:s=>s.attrs.individual},
+  {id:"olympic",label:"OLYMPIC",test:s=>s.attrs.olympic},
+  {id:"adventure",label:"ADVENTURE",test:s=>s.attrs.adventure},
+  {id:"fitness",label:"FITNESS",test:s=>s.category==="endurance"||s.tags.includes("strength")},
+  {id:"motor",label:"MOTORSPORT",test:s=>s.category==="motor"},
+  {id:"combat",label:"COMBAT",test:s=>s.attrs.combat},
+  {id:"water",label:"WATER SPORTS",test:s=>s.attrs.water},
+  {id:"winter",label:"WINTER",test:s=>s.category==="olympic-winter"||s.subcategory==="Winter Para Sport"},
+  {id:"emerging",label:"EMERGING",test:s=>!!s.fresh||!!s.niche},
+  {id:"para",label:"PARA-SPORTS",test:s=>s.attrs.para}
+];
+const D_STATE={collection:"all", category:"all", dcat:"all", attrs:new Set(), query:""};
 
 function inCollection(s,cid){
   switch(cid){
@@ -260,9 +275,10 @@ function renderDiscover(){
 
   let html=`
   <div class="disc-hero">
-    <div class="eyebrow">PLAYR Sports Database</div>
-    <h1 class="section-title">DISCOVER YOUR SPORT.</h1>
-    <p class="disc-sub">Every sport has a home on PLAYR — Olympic programme, adventure, combat, motorsport, mind sports and the heritage games nobody else covers.</p>
+    <div class="ds-nodes" aria-hidden="true"><span>🏏</span><span>⚽</span><span>🏃</span><span>🏔</span><span>🏀</span><span>🏎</span><span>🏊</span><span>♟</span><span>🏂</span><span>🥋</span></div>
+    <div class="eyebrow">PLAYR Sports Gateway</div>
+    <h1 class="section-title">DISCOVER SPORT.</h1>
+    <p class="disc-sub">Explore the world of sport — from the biggest games to the sports you&rsquo;ve never heard of. One gateway: discover, explore, follow, engage.</p>
     <div class="disc-counters" id="discCounters">
       <div class="dcount"><b data-n="${N}">0</b><span>Sports</span></div>
       <div class="dcount"><b data-n="${CATS.length}">0</b><span>Categories</span></div>
@@ -271,20 +287,32 @@ function renderDiscover(){
     </div>
     <div class="searchbar disc-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="discSearch" placeholder="Search any sport…" value="${D_STATE.query.replace(/"/g,"&quot;")}" autocomplete="off">
+      <input id="discSearch" placeholder="Search sports, athletes, creators, events or communities…" value="${D_STATE.query.replace(/"/g,"&quot;")}" autocomplete="off">
       ${D_STATE.query?`<button class="sb-clear" onclick="PS_clearSearch()">Clear</button>`:""}
     </div>
-    <p class="disc-hint">Try “cric”, “mount”, “bike” — or search athletes, communities and events too.</p>
+    <p class="disc-hint">Sports · athletes · creators · events · communities — one search finds them all.</p>
     ${hasFollows?`<div class="foryou-rail"><div class="fy-head"><span class="eyebrow" style="margin:0">Because you follow ${FOLLOWS.length} sport${FOLLOWS.length>1?"s":""}</span><button class="btn btn-ghost btn-sm" onclick="PS_openOnboarding(false)">Edit</button></div><div class="fy-list">${(()=>{const picks=new Set(); FOLLOWS.forEach(f=>relatedSports(f,5).forEach(r=>picks.add(r.id))); [...picks].filter(id=>!FOLLOWS.includes(id)).slice(0,10).map(id=>miniCardHTML(BY_SLUG[id])).join("")||"<span class='fy-empty'>Follow more sports to sharpen recommendations.</span>"})()}</div></div>`:
     `<div class="foryou-rail fy-cta"><span>🎯 Make PLAYR yours — pick the sports you love and we'll tune your feed, challenges and events.</span><button class="btn btn-primary btn-sm" onclick="PS_openOnboarding(false)">Choose your sports</button></div>`}
+  </div>
+
+  <div class="ds-rail-wrap">
+    <div class="ds-rail-head"><div class="eyebrow" style="margin:0;">🔥 Trending sports</div><span class="mono-num ds-rail-note">PLATFORM ACTIVITY</span></div>
+    <div class="strip-scroll ds-rail">${window.PLAYR_SPORTS.filter(x=>x.trend).slice(0,8).map(x=>`<button class="ds-trend" style="--accent:${catOf(x).accent}" onclick="openSport('${x.id}')"><span class="dst-ic">${x.icon}</span><span class="dst-t"><b>${x.name}</b><i>▲ HOT THIS WEEK · ${fmtFol(x.followers)} FOLLOWERS</i></span><span class="dst-go">→</span></button>`).join("")}</div>
+  </div>
+  <div class="ds-rail-wrap">
+    <div class="ds-rail-head"><div class="eyebrow" style="margin:0;">★ Featured sports</div><span class="mono-num ds-rail-note">EDITORS' PICKS</span></div>
+    <div class="strip-scroll ds-rail">${window.PLAYR_SPORTS.filter(x=>x.feat).slice(0,8).map(x=>`<button class="ds-trend feat" style="--accent:${catOf(x).accent}" onclick="openSport('${x.id}')"><span class="dst-ic">${x.icon}</span><span class="dst-t"><b>${x.name}</b><i>${fmtFol(x.followers)} FOLLOWERS · ${catOf(x).short.toUpperCase()}</i></span><span class="dst-go">→</span></button>`).join("")}</div>
+  </div>
+  <div class="ds-rail-wrap">
+    <div class="ds-rail-head"><div class="eyebrow" style="margin:0;">✦ Discover something different</div><span class="mono-num ds-rail-note">EMERGING &amp; NICHE</span></div>
+    <div class="strip-scroll ds-rail">${window.PLAYR_SPORTS.filter(x=>x.niche||x.popularity<=22).sort((a,b)=>a.popularity-b.popularity).slice(0,10).map(x=>`<button class="ds-trend niche" style="--accent:${catOf(x).accent}" onclick="openSport('${x.id}')"><span class="dst-ic">${x.icon}</span><span class="dst-t"><b>${x.name}</b><i>${x.subcategory?x.subcategory.toUpperCase():catOf(x).short.toUpperCase()}</i></span><span class="dst-go">→</span></button>`).join("")}</div>
   </div>
 
   <div class="chip-row disc-collections" id="discCollections">
     ${COLLECTIONS.filter(c=>c.id!=="foryou"||hasFollows).map(c=>`<button class="chip ${D_STATE.collection===c.id?"active":""}" data-coll="${c.id}" onclick="PS_setCollection('${c.id}')">${c.label}</button>`).join("")}
   </div>
   <div class="chip-row disc-cats" id="discCats">
-    <button class="chip ${D_STATE.category==="all"?"active":""}" onclick="PS_setCategory('all')">All Categories</button>
-    ${CATS.map(c=>`<button class="chip ${D_STATE.category===c.id?"active":""}" style="--accent:${c.accent}" onclick="PS_setCategory('${c.id}')">${c.icon} ${c.short} <em>${window.PLAYR_SPORTS.filter(s=>s.category===c.id).length}</em></button>`).join("")}
+    ${DS_CATS.map(c=>`<button class="chip ${D_STATE.dcat===c.id?"active":""}" onclick="PS_setCategory('${c.id}')">${c.label} <em>${window.PLAYR_SPORTS.filter(c.test).length}</em></button>`).join("")}
   </div>
   <div class="attr-row" id="discAttrs">
     <span class="attr-label">Filter:</span>
@@ -309,11 +337,11 @@ function renderDiscover(){
     html+=section("Events", evt.map(x=>`<button class="res-row" onclick="openSport('${x.s.id}')"><span class="rr-ic">${x.s.icon}</span><b>${x.e.n}</b><span class="rr-sub">${x.e.d}</span></button>`).join(""), evt.length);
     if(!sports.length && !ath.length && !com.length && !evt.length) html+=`<div class="empty-state card"><h4>No results for “${q.replace(/</g,"&lt;")}”</h4><p>Try a shorter search — “cric”, “mount”, “bike” — or browse by category.</p></div>`;
   }
-  else if(D_STATE.collection!=="all" || D_STATE.category!=="all" || D_STATE.attrs.size){
-    let list=window.PLAYR_SPORTS.filter(s=>inCollection(s,D_STATE.collection)&&passAttrs(s));
-    if(D_STATE.category!=="all") list=list.filter(s=>s.category===D_STATE.category);
+  else if(D_STATE.collection!=="all" || D_STATE.dcat!=="all" || D_STATE.attrs.size){
+    const dtest=(DS_CATS.find(c=>c.id===D_STATE.dcat)||DS_CATS[0]).test;
+    let list=window.PLAYR_SPORTS.filter(s=>inCollection(s,D_STATE.collection)&&passAttrs(s)&&dtest(s));
     list.sort((a,b)=>b.popularity-a.popularity);
-    const label = D_STATE.collection==="all"?"": COLLECTIONS.find(c=>c.id===D_STATE.collection).label.toLowerCase()+" · ";
+    const label = D_STATE.collection==="all"&&D_STATE.dcat==="all" ? (D_STATE.attrs.size?"":"") : (D_STATE.collection==="all"?"":COLLECTIONS.find(c=>c.id===D_STATE.collection).label.toLowerCase()+" · ")+(D_STATE.dcat==="all"?"":(DS_CATS.find(c=>c.id===D_STATE.dcat)||{}).label.toLowerCase()+" · ");
     html+=`<div class="srp-head"><h3>${list.length} ${label}sport${list.length!==1?"s":""}</h3></div>`;
     html+=list.length?`<div class="grid grid-4">${list.map(cardHTML).join("")}</div>`:`<div class="empty-state card"><h4>Nothing matches those filters</h4><p>Try removing a filter — or explore a category above.</p></div>`;
   }
@@ -341,7 +369,7 @@ function section(title,inner,count){
   return `<div class="srp-group"><h4 class="srp-title">${title} <em>${count}</em></h4>${inner}</div>`;
 }
 window.PS_setCollection=id=>{ D_STATE.collection=id; renderDiscover(); };
-window.PS_setCategory=id=>{ D_STATE.category=id; renderDiscover(); };
+window.PS_setCategory=id=>{ D_STATE.dcat=id; D_STATE.category="all"; renderDiscover(); };
 window.PS_toggleAttr=id=>{ D_STATE.attrs.has(id)?D_STATE.attrs.delete(id):D_STATE.attrs.add(id); renderDiscover(); };
 window.PS_clearAttrs=()=>{ D_STATE.attrs.clear(); renderDiscover(); };
 window.PS_clearSearch=()=>{ D_STATE.query=""; renderDiscover(); };

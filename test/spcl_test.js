@@ -28,7 +28,7 @@ await t("Olympics fully removed", async()=>{
 });
 await t("nav = 10 items with SPCL", async()=>{
   const nav=$$(".topnav .nav-links button").map(b=>b.textContent);
-  const want=["Home","Discover","Sports","SPCL","Challenges","Communities","Events","PLAYR+","Shop","About"];
+  const want=["Home","Discover Sport","SPCL","Challenges","Communities","Events","PLAYR+","Shop","About"];
   if(nav.join("|")!==want.join("|")) throw new Error(nav.join("|"));
   return "SPCL in position 4 ✓";
 });
