@@ -11,8 +11,8 @@ let view="signin";           // signin | signup | forgot
 let obStep=0;                // 0 = not onboarding
 let obData={ sports:[], follows:[] };
 const COLLAGE=["cricket","football","running","mountaineering","basketball","formula-1","tennis","swimming"];
-const IMGS={cricket:"photo-1531415074968-036ba1b575da",football:"photo-1517466787929-bc90951d0974",running:"photo-1461896836934-ffe607ba8211",mountaineering:"photo-1522163182402-834f871fd851",basketball:"photo-1546519638-68e109498ffc","formula-1":"photo-1584464491033-06628f3a6b7b",tennis:"photo-1595435742656-5272d0b3fa82",swimming:"photo-1530549387789-4c1017266635"};
-const img=(id,w,h)=>`https://images.unsplash.com/${IMGS[id]}?w=${w||600}&h=${h||800}&fit=crop`;
+const IMGS=null; // superseded by PLAYR_IMG (central library)
+const img=(id,w,h,v)=>PLAYR_IMG.sport(id,v||0).replace(/w=800&h=900/,`w=${w||600}&h=${h||800}`);
 const quickSports=["cricket","football","basketball","running","tennis","badminton","aquatics","cycling","mountaineering","formula-1","athletics","boxing","golf","hockey","volleyball","chess","esports"];
 const sportLabel=id=>{ const s=window.getSport&&getSport(id); return s?s.name:(id==="aquatics"?"Swimming":id==="formula-1"?"Motorsport":id); };
 
@@ -44,7 +44,7 @@ function openAuthModal(tab){
         <img src="assets/brand/playr-wordmark.png" alt="PLAYR" class="a-logo">
         <div class="a-side-quotes">
           <div class="a-q">“Every sport. Every story.<br>One community.”</div>
-          <div class="a-collage">${COLLAGE.map((s,i)=>`<div style="background-image:url('${img(s)}'); animation-delay:${i*.6}s"></div>`).join("")}</div>
+          <div class="a-collage">${COLLAGE.map((s,i)=>`<div style="background-image:url('${img(s,600,800,i)}'); animation-delay:${i*.6}s"></div>`).join("")}</div>
         </div>
       </div>
     </div>
@@ -344,8 +344,8 @@ function obRecs(){
   const out=[]; const sports=obData.sports.length?obData.sports:["cricket","running"];
   sports.slice(0,4).forEach(id=>{
     const s=getSport(id); if(!s||!window.PS_gen) return;
-    PS_gen.athletes(s,1).forEach(a=>out.push({name:a.n,sub:a.role+" · "+sportLabel(id),img:img(id in IMGS?id:"running",200,200),kind:"athlete"}));
-    PS_gen.communities(s,1).forEach(c=>out.push({name:c.n,sub:c.members+" members · community",img:img(id in IMGS?id:"cricket",200,200),kind:"community"}));
+    PS_gen.athletes(s,1).forEach(a=>out.push({name:a.n,sub:a.role+" · "+sportLabel(id),img:img(id,200,200),kind:"athlete"}));
+    PS_gen.communities(s,1).forEach(c=>out.push({name:c.n,sub:c.members+" members · community",img:img(id,200,200,1),kind:"community"}));
   });
   const uniq=[]; const seen=new Set();
   out.forEach(r=>{ if(!seen.has(r.name)&&uniq.length<8){seen.add(r.name);uniq.push(r);} });

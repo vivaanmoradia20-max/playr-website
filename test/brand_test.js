@@ -1,7 +1,7 @@
 const { JSDOM, VirtualConsole } = require("/home/user/node_modules/jsdom");
 const fs = require("fs");
 let html = fs.readFileSync("index.html","utf8");
-const inlined = ["js/config.js","js/avatars.js","js/auth.js","js/auth-ui.js","js/sports-data.js","js/sports-data-2.js","js/spcl-data.js","js/sports-app.js","js/sports-universe.js","js/events-data.js","js/spcl.js","js/events-app.js","js/events-app-2.js","js/challenges.js"]
+const inlined = ["js/images.js","js/config.js","js/avatars.js","js/shop.js","js/auth.js","js/auth-ui.js","js/sports-data.js","js/sports-data-2.js","js/spcl-data.js","js/sports-app.js","js/sports-universe.js","js/events-data.js","js/spcl.js","js/events-app.js","js/events-app-2.js","js/challenges.js"]
   .map(f=>"<script>\n"+fs.readFileSync(f,"utf8")+"\n</script>").join("\n");
 html = html.replace(/<script src="js\/[^"]+"><\/script>\n?/g,"");
 html = html.replace("<script>\n/* ============================================================\n   PLAYR — PROTOTYPE DATA + INTERACTIVITY", inlined+"<script>\n/* ============================================================\n   PLAYR — PROTOTYPE DATA + INTERACTIVITY");

@@ -1047,6 +1047,83 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 @media(max-width:560px){ .ds-trend{width:216px;} }
 
 /* ============================================================
+   SHOP v2 — premium concept marketplace
+   ============================================================ */
+#view-shop{background:var(--void);}
+.shop-hero{position:relative; padding:120px 0 34px; background:radial-gradient(900px 440px at 85% -10%, rgba(224,248,8,.1), transparent 60%), radial-gradient(700px 400px at 0% 40%, rgba(70,224,255,.06), transparent 60%);}
+.shop-hero-bg{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:52px 52px; mask-image:radial-gradient(ellipse at 65% 30%, #000 20%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse at 65% 30%, #000 20%, transparent 75%);}
+.shop-hero .wrap{position:relative;}
+.shop-sub{color:var(--muted); font-size:15.5px; line-height:1.7; max-width:620px; margin:16px 0 26px;}
+.shop-sub em{font-style:normal; color:var(--lime);}
+.shop-search{max-width:620px; padding:15px 18px;}
+.shop-legal{margin-top:26px; font-size:8.5px; letter-spacing:.14em; color:var(--muted-2); background:var(--surface); border:1px dashed var(--line); border-radius:100px; padding:10px 18px; display:inline-block;}
+/* collaborations */
+.shop-collabs{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:34px;}
+.shop-collab{position:relative; overflow:hidden; text-align:left; background:radial-gradient(140% 140% at 20% 0%, rgba(224,248,8,.08), #141519 62%); border:1px solid var(--line); border-radius:18px; padding:22px 20px 18px; cursor:pointer; color:var(--text); transition:all .2s ease; min-height:150px; display:flex; flex-direction:column;}
+.shop-collab::after{content:''; position:absolute; inset:0; background:radial-gradient(200px 90px at 80% 100%, rgba(70,224,255,.1), transparent 70%); pointer-events:none;}
+.shop-collab:hover{transform:translateY(-4px); border-color:rgba(224,248,8,.5); box-shadow:0 18px 40px -18px rgba(224,248,8,.4);}
+.shop-collab b{font-family:var(--display); font-style:italic; font-stretch:120%; font-size:21px; line-height:1;}
+.shop-collab b em{font-style:italic; color:var(--lime); font-size:.78em; display:block; margin-top:3px;}
+.shop-collab span{font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; color:#7FE8FF; border:1px solid rgba(70,224,255,.35); background:rgba(70,224,255,.08); width:fit-content; border-radius:100px; padding:5px 10px; margin-top:12px;}
+.shop-collab i{font-style:normal; font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--muted); margin-top:auto; padding-top:14px;}
+/* filter bar reuse (.ev-f-*) */
+.shop-filterbar{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:16px 20px; margin:8px 0 20px;}
+/* product cards */
+.shop-card{overflow:hidden; cursor:pointer; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;}
+.shop-card:hover{transform:translateY(-4px); border-color:var(--acc); box-shadow:0 18px 40px -18px var(--acc);}
+.shc-media{position:relative; aspect-ratio:1; background:linear-gradient(160deg,#1C1F24,#0C0D10); display:flex; align-items:center; justify-content:center; overflow:hidden;}
+.shc-media img{width:100%; height:100%; object-fit:cover; transition:transform .3s ease;}
+.shop-card:hover .shc-media img{transform:scale(1.06);}
+.shc-badge{position:absolute; top:10px; left:10px; font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.1em; color:var(--void); background:var(--lime); border-radius:100px; padding:5px 10px;}
+.shc-badge.exclusive{background:#46E0FF;}
+.shc-wish{position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; background:rgba(10,11,13,.72); border:1px solid rgba(255,255,255,.14); color:var(--muted); font-size:15px; cursor:pointer; backdrop-filter:blur(6px); transition:all .16s ease;}
+.shc-wish:hover{color:#FF6A4D; border-color:#FF6A4D;}
+.shc-wish.on{color:#FF6A4D; border-color:#FF6A4D; background:rgba(255,106,77,.12);}
+.shc-body{padding:14px 16px 16px;}
+.shc-brand{font-size:8.5px; letter-spacing:.16em; color:#7FE8FF; margin-bottom:5px;}
+.shc-brand em{font-style:normal; color:var(--lime);}
+.shc-name{display:block; font-size:13.5px; line-height:1.35; margin-bottom:4px;}
+.shc-meta{font-size:8px; letter-spacing:.1em; color:var(--muted-2); margin-bottom:12px;}
+.shc-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.shc-price{font-weight:800; font-size:15px;}
+/* detail modal */
+.shop-modal{width:min(920px,100%); max-height:92vh; overflow-y:auto; position:relative; margin:auto; animation:aUp .3s ease;}
+.shm-grid{display:grid; grid-template-columns:1.05fr 1fr;}
+.shm-media{padding:26px; border-right:1px solid var(--line); background:radial-gradient(120% 100% at 30% 0%, rgba(224,248,8,.05), transparent 55%);}
+.shm-main{aspect-ratio:1; border-radius:18px; background-size:cover; background-position:center; background-color:#141519; border:1px solid var(--line);}
+.shm-thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:10px;}
+.shm-thumbs button{aspect-ratio:1; border-radius:10px; overflow:hidden; border:1.5px solid var(--line); cursor:pointer; padding:0; background:#141519; transition:border .15s ease;}
+.shm-thumbs button:hover{border-color:var(--lime);}
+.shm-thumbs img{width:100%; height:100%; object-fit:cover;}
+.shm-concept{margin-top:12px; font-family:var(--mono); font-size:8px; letter-spacing:.12em; color:var(--lime); border:1px dashed rgba(224,248,8,.4); border-radius:100px; padding:8px 12px; text-align:center;}
+.shm-body{padding:26px 28px;}
+.shm-brand{font-size:9.5px; letter-spacing:.18em; color:#7FE8FF; margin-bottom:8px;}
+.shm-brand em{font-style:normal; color:var(--lime);}
+.shm-brand em.lime{color:var(--lime);}
+.shm-name{font-family:var(--display); font-style:italic; font-stretch:118%; font-size:26px; line-height:1.05; margin-bottom:10px;}
+.shm-meta{font-size:8.5px; letter-spacing:.1em; color:var(--muted); margin-bottom:14px;}
+.shm-desc{font-size:13.5px; color:var(--muted); line-height:1.7; margin-bottom:18px;}
+.shm-block{margin-bottom:16px;}
+.shm-block label{display:block; font-size:8.5px; letter-spacing:.16em; color:var(--muted-2); margin-bottom:8px;}
+.shm-sizes{display:flex; gap:7px; flex-wrap:wrap;}
+.shm-sizes button{font-family:var(--mono); font-size:11px; border:1.5px solid var(--line); background:none; color:var(--muted); border-radius:9px; padding:9px 14px; cursor:pointer; transition:all .15s ease;}
+.shm-sizes button:hover{border-color:var(--muted); color:var(--text);}
+.shm-sizes button.on{border-color:var(--lime); background:rgba(224,248,8,.1); color:var(--lime);}
+.shm-qty{display:inline-flex; align-items:center; gap:16px; border:1.5px solid var(--line); border-radius:100px; padding:7px 14px;}
+.shm-qty button{width:26px; height:26px; border-radius:50%; background:var(--surface-3); color:var(--text); font-size:15px; cursor:pointer; border:none;}
+.shm-qty span{font-family:var(--mono); min-width:20px; text-align:center;}
+.shm-playr{font-size:8.5px; letter-spacing:.12em; color:var(--muted-2); border-top:1px dashed var(--line); padding-top:12px; margin-bottom:16px;}
+.shm-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+.shm-price{font-family:var(--display); font-style:italic; font-size:30px; margin-right:auto;}
+.shm-wish.on{border-color:#FF6A4D; color:#FF6A4D;}
+@media(max-width:900px){
+  .shop-collabs{grid-template-columns:repeat(2,1fr);}
+  .shm-grid{grid-template-columns:1fr;}
+  .shm-media{border-right:none; border-bottom:1px solid var(--line);}
+}
+@media(max-width:560px){ .shop-collabs{grid-template-columns:1fr;} .shm-price{font-size:24px;} }
+
+/* ============================================================
    CHALLENGES v2 — Compete. Complete. Conquer.
    ============================================================ */
 #view-challenges{background:var(--void);}
@@ -2261,32 +2338,10 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   </div>
 </section>
 
-<!-- ============ SHOP ============ -->
+<!-- ============ SHOP v2 — concept marketplace ============ -->
 <section class="view" id="view-shop">
-  <div class="wrap section">
-    <div class="eyebrow">PLAYR Shop</div>
-    <h2 class="section-title">FROM DISCOVERY<br>TO GAME DAY.</h2>
-    <div class="chip-row" id="shopFilters"></div>
-    <div class="grid grid-4" id="shopGrid"></div>
-
-    <div class="drop-banner">
-      <div>
-        <div class="pill pill-coral" style="margin-bottom:12px;">Limited Drop</div>
-        <h3 style="font-family:var(--display); font-size:34px; text-transform:uppercase;">PLAYR × Running</h3>
-        <p style="color:var(--muted); margin-top:6px;">A capsule for the ones who chase splits, not likes.</p>
-      </div>
-      <div style="text-align:right;">
-        <div class="drop-count"><span id="dropClaimed">05</span> / 5000</div>
-        <button class="btn btn-primary btn-sm" style="margin-top:14px;" onclick="claimDrop()">Claim Drop</button>
-      </div>
-    </div>
-
-    <div class="section-head"><div><div class="eyebrow">PLAYR Merch</div><h3 class="section-title" style="font-size:36px;">WEAR THE PASSION.</h3></div></div>
-    <div class="grid grid-4" id="merchGrid"></div>
-
-    <!-- SPCL merch -->
-    <div class="section section-alt" id="spclShopSec" style="margin-top:60px;"></div>
-  </div>
+  <div id="shopRoot"></div>
+  <div class="wrap" id="spclShopSec" style="padding-bottom:70px;"></div>
 </section>
 
 <!-- ============ PROFILE ============ -->
@@ -2387,6 +2442,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 
 <div class="toast" id="toast"></div>
 
+<script src="js/images.js"></script>
 <script src="js/config.js"></script>
 <script src="js/avatars.js"></script>
 <script src="js/sports-data.js"></script>
@@ -2400,6 +2456,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <script src="js/events-app.js"></script>
 <script src="js/events-app-2.js"></script>
 <script src="js/challenges.js"></script>
+<script src="js/shop.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/auth-ui.js"></script>
 <script>
@@ -2407,29 +2464,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
    PLAYR — PROTOTYPE DATA + INTERACTIVITY
    ============================================================ */
 
-const IMG = {
-  cricket:'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800&h=900&fit=crop',
-  football:'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=800&h=900&fit=crop',
-  running:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=900&fit=crop',
-  basketball:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=900&fit=crop',
-  mountaineering:'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800&h=900&fit=crop',
-  tennis:'https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?w=800&h=900&fit=crop',
-  swimming:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&h=900&fit=crop',
-  cycling:'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&h=900&fit=crop',
-  motorsport:'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=900&fit=crop',
-  athletics:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=900&fit=crop',
-  boxing:'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&h=900&fit=crop',
-  golf:'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&h=900&fit=crop',
-  badminton:'https://images.unsplash.com/photo-1613918431703-aa50609a1b78?w=800&h=900&fit=crop',
-  chess:'https://images.unsplash.com/photo-1528819622765-d6bcf132ac11?w=800&h=900&fit=crop',
-  esports:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=900&fit=crop',
-  volleyball:'https://images.unsplash.com/photo-1592656094267-764a45160876?w=800&h=900&fit=crop',
-  hockey:'https://images.unsplash.com/photo-1580891721764-2d3fb2ce7233?w=800&h=900&fit=crop',
-  tabletennis:'https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&h=900&fit=crop',
-  gymnastics:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&h=900&fit=crop',
-  surfing:'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=800&h=900&fit=crop',
-  skiing:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=900&fit=crop',
-};
+const IMG = window.PLAYR_IMG.legacy;  /* centralized image library */
 
 /* Sports catalog, discovery, search, filters, follow + onboarding now live in js/sports-*.js (loaded before this script). */
 
@@ -2572,59 +2607,7 @@ function renderActivity(){
 
 /* Events are now powered by js/events-*.js (India · Mumbai-first discovery engine) */
 
-/* ---------- Shop ---------- */
-const SHOP_CATS = ['All','Running','Cricket','Football','Basketball','Fitness','Outdoor','Motorsport'];
-let shopFilter='All';
-const PRODUCTS = [
-  {n:'AeroStride Running Shoes', cat:'Running', price:'₹4,299', rating:4.7, img:IMG.running},
-  {n:'Pro Willow Cricket Bat', cat:'Cricket', price:'₹6,499', rating:4.8, img:IMG.cricket},
-  {n:'Match-Ready Football Jersey', cat:'Football', price:'₹1,899', rating:4.5, img:IMG.football},
-  {n:'Court Grip Basketball', cat:'Basketball', price:'₹1,299', rating:4.6, img:IMG.basketball},
-  {n:'Trail Hydration Pack', cat:'Outdoor', price:'₹2,199', rating:4.4, img:IMG.mountaineering},
-  {n:'Insulated Water Bottle', cat:'Fitness', price:'₹799', rating:4.7, img:IMG.running},
-  {n:'Aero Cycling Helmet', cat:'Outdoor', price:'₹3,499', rating:4.6, img:IMG.cycling},
-  {n:'Racing Gloves', cat:'Motorsport', price:'₹2,899', rating:4.5, img:IMG.motorsport},
-];
-function renderShopFilters(){
-  document.getElementById('shopFilters').innerHTML = SHOP_CATS.map(c=>`<button class="chip ${c===shopFilter?'active':''}" onclick="setShopFilter('${c}')">${c}</button>`).join('');
-}
-function setShopFilter(c){ shopFilter=c; renderShopFilters(); renderShop(); }
-function renderShop(){
-  const list = PRODUCTS.filter(p=>shopFilter==='All'||p.cat===shopFilter);
-  document.getElementById('shopGrid').innerHTML = list.map(p=>`
-    <div class="card product-card">
-      <div class="product-media" style="background-image:url('${p.img}')"></div>
-      <div class="product-body">
-        <div class="product-cat">${p.cat}</div>
-        <div class="product-name">${p.n}</div>
-        <div class="rating" style="margin-bottom:10px;">${'★'.repeat(Math.round(p.rating))}<span style="color:var(--muted-2); margin-left:4px;">${p.rating}</span></div>
-        <div class="product-row"><span class="product-price">${p.price}</span><button class="btn btn-primary btn-sm" onclick="showToast('Added to cart')">Shop Now</button></div>
-      </div>
-    </div>`).join('');
-}
-const MERCH = [
-  {n:'PLAYR Logo Tee', price:'₹899', img:IMG.esports},
-  {n:'PLAYR Hoodie', price:'₹2,199', img:IMG.chess},
-  {n:'PLAYR Cap', price:'₹699', img:IMG.golf},
-  {n:'PLAYR Sports Bag', price:'₹1,599', img:IMG.badminton},
-];
-function renderMerch(){
-  document.getElementById('merchGrid').innerHTML = MERCH.map(p=>`
-    <div class="card product-card">
-      <div class="product-media" style="background-image:url('${p.img}')"></div>
-      <div class="product-body">
-        <div class="product-cat">PLAYR Merch</div>
-        <div class="product-name">${p.n}</div>
-        <div class="product-row"><span class="product-price">${p.price}</span><button class="btn btn-ghost btn-sm" onclick="showToast('Added to cart')">Shop</button></div>
-      </div>
-    </div>`).join('');
-}
-let dropClaimed = 5;
-function claimDrop(){
-  dropClaimed++;
-  document.getElementById('dropClaimed').textContent = String(dropClaimed).padStart(2,'0');
-  showToast('Drop claimed — check your cart 🏃');
-}
+/* Shop v2 lives in js/shop.js (PLAYR_SHOP). */
 
 /* ---------- Profile tabs ---------- */
 function setProfileTab(tab){
@@ -2671,28 +2654,12 @@ function showToast(msg){
 /* ============================================================
    HOME v2 — cinematic home build
    ============================================================ */
-const H2_IMGS = {
-  cricket:'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=900&h=700&fit=crop',
-  football:'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=900&h=700&fit=crop',
-  running:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&h=700&fit=crop',
-  mountaineering:'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=900&h=700&fit=crop',
-  basketball:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=900&h=700&fit=crop',
-  motorsport:'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=900&h=700&fit=crop',
-  tennis:'https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?w=900&h=700&fit=crop',
-  swimming:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&h=700&fit=crop',
-  cycling:'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&h=700&fit=crop',
-  chess:'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=900&h=700&fit=crop',
-  surfing:'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=900&h=700&fit=crop',
-  athletics:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&h=700&fit=crop',
-  boxing:'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=900&h=700&fit=crop',
-  gymnastics:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&h=700&fit=crop',
-  badminton:'https://images.unsplash.com/photo-1613918431703-aa50609a1b78?w=900&h=700&fit=crop',
-  skiing:'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&h=700&fit=crop',
-  volleyball:'https://images.unsplash.com/photo-1592656094267-764a451c8b76?w=900&h=700&fit=crop',
-  'formula-1':'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=900&h=700&fit=crop',
-  aquatics:'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&h=700&fit=crop'
-};
-function h2bg(id){ const s=window.getSport&&getSport(id); return "background-image:url('"+(H2_IMGS[id]||IMG.running)+"'), linear-gradient(135deg,#1C1F24,#0A0B0D)"; }
+const H2_IMGS = (()=>{ const m={};
+  ["cricket","football","running","mountaineering","basketball","tennis","swimming","cycling","badminton","chess","athletics","volleyball","gymnastics","skiing"].forEach(k=>m[k]=PLAYR_IMG.sport(k,0));
+  m["formula-1"]=PLAYR_IMG.sport("motorsport",0); m.aquatics=PLAYR_IMG.sport("swimming",1); m.boxing=PLAYR_IMG.sport("boxing",0);
+  return m; })();
+function h2bg(id,v){ const key=({"formula-1":"motorsport",aquatics:"swimming"})[id]||id; return "background-image:"+PLAYR_IMG.bg(key,v); }
+
 
 function buildHomeV2(){
   /* ---- 1. Hero stage collage ---- */
@@ -2747,7 +2714,7 @@ function buildHomeV2(){
       const f=window.PS_fmtFol?PS_fmtFol(sp.followers):sp.followers;
       const badge=tag==='live'?'<div class="ss-live"><span class="dot-w"></span>LIVE</div>':tag==='trending'?'<div class="ss-trend">▲ TRENDING</div>':tag==='new'?'<div class="ss-new">NEW</div>':'<div class="ss-chal">CHALLENGE</div>';
       return `<div class="ss-card" data-tag="${tag}" style="--accent:${window.PS_catOf?PS_catOf(sp).accent:'#C6FF3D'}" onclick="openSport('${id}')">
-        <div class="ss-img" style="${h2bg(id in H2_IMGS?id:'athletics')}"></div><div class="ss-veil"></div>
+        <div class="ss-img" style="${h2bg(id in H2_IMGS?id:'athletics', 1)}"></div><div class="ss-veil"></div>
         <div class="ss-ico">${sp.icon}</div>
         ${badge}
         <span class="ss-enter">ENTER SPORT →</span>
@@ -2817,7 +2784,7 @@ function buildHomeV2(){
       {id:'running', tag:'PLANET 03', tab:'TRAINING · RACES · STATS', p:'Training plans, city races and your splits — the runner\'s entire life in one place.', chips:['Training','Races','Challenges','Stats']}
     ];
     we.innerHTML=ex.map(x=>`<div class="we-card" onclick="openSport('${x.id}')">
-      <div class="we-img" style="${h2bg(x.id)}"></div><div class="we-veil"></div>
+      <div class="we-img" style="${h2bg(x.id,3)}"></div><div class="we-veil"></div>
       <div class="we-tag">${x.tag}</div><div class="we-tab">${x.tab}</div>
       <div class="we-body"><h4>${getSport(x.id).name.toUpperCase()}</h4><p>${x.p}</p>
       <div class="we-chips">${x.chips.map(c=>`<span>${c}</span>`).join('')}</div></div></div>`).join('');
@@ -2830,7 +2797,7 @@ function buildHomeV2(){
     mo.innerHTML=items.map(([id,cls])=>{
       const s=getSport(id); if(!s) return '';
       return `<div class="mo-card ${cls}" style="--accent:${PS_catOf(s).accent}" onclick="openSport('${id}')">
-        <div class="mo-img" style="${h2bg(id)}"></div><div class="mo-veil"></div>
+        <div class="mo-img" style="${h2bg(id,2)}"></div><div class="mo-veil"></div>
         <div class="mo-ico">${s.icon}</div>
         <div class="mo-body"><h4>${s.name.toUpperCase()}</h4><span>${PS_fmtFol(s.followers)} FOLLOWERS · ${PS_catOf(s).short.toUpperCase()}</span>
         ${s.isOlympic&&s.olyBadge!=='past'?PS_badgeHTML(s):''}</div></div>`;}).join('');
@@ -2865,7 +2832,7 @@ function buildHomeV2(){
 
   /* ---- 10. CTA collage ---- */
   const cc=document.getElementById('ctaCollage');
-  if(cc){ cc.innerHTML=['cricket','football','running','mountaineering','basketball','motorsport','tennis','swimming'].map(id=>`<div style="background-image:url('${H2_IMGS[id]}')"></div>`).join(''); }
+  if(cc){ cc.innerHTML=['cricket','football','running','mountaineering','basketball','motorsport','tennis','swimming'].map((id,i)=>`<div style="background-image:url('${PLAYR_IMG.sport(id,i)}')"></div>`).join(''); }
 
   /* ---- COMMUNITIES ---- */
   const hc=document.getElementById('homeCommunitiesSec');
@@ -2947,9 +2914,7 @@ initChallenges();     /* Challenges v2 */
 initSpcl();               /* SPCL home + shop sections */
 PLAYR_AUTH_UI.init();   /* restore session → authed nav state */
 applyPlayrRoute();       /* deep-link: #/discover-sport/<sport> */
-renderShopFilters();
-renderShop();
-renderMerch();
+initShopSystem();    /* Shop v2 — concept marketplace */
 
 /* Lazy-render the Olympic Hub the first time it's opened */
 (function(){
