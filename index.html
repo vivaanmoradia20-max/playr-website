@@ -1273,6 +1273,84 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 }
 @media(max-width:560px){ .shop-collabs{grid-template-columns:1fr;} .shm-price{font-size:24px;} }
 
+
+/* ============================================================
+   LIVE SCORES
+   ============================================================ */
+#view-live{background:var(--void);}
+.ls-hero{position:relative; padding:120px 0 30px; background:radial-gradient(900px 420px at 85% -10%, rgba(255,106,77,.12), transparent 60%), radial-gradient(700px 380px at 0% 40%, rgba(70,224,255,.05), transparent 60%);}
+.ls-hero-bg{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:52px 52px; mask-image:radial-gradient(ellipse at 65% 30%,#000 20%,transparent 75%); -webkit-mask-image:radial-gradient(ellipse at 65% 30%,#000 20%,transparent 75%);}
+.ls-hero-in{position:relative;}
+.ls-hero-in h1{font-family:var(--display); font-style:italic; font-stretch:125%; font-weight:900; font-size:clamp(46px,7vw,90px); line-height:.95;}
+.ls-tag{font-family:var(--mono); font-size:11px; letter-spacing:.18em; color:var(--lime); margin:12px 0 8px;}
+.ls-updated{font-size:9.5px; letter-spacing:.12em; color:var(--muted-2);}
+.ls-sec{padding-top:30px;}
+.ls-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+.ls-tab{font-family:var(--display); font-stretch:112%; font-size:11.5px; font-weight:900; letter-spacing:.05em; padding:11px 20px; border-radius:100px; border:1.5px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; transition:all .18s ease;}
+.ls-tab em{font-style:normal; opacity:.7;}
+.ls-tab:hover{color:var(--text); border-color:var(--muted);}
+.ls-tab.on{background:var(--lime); border-color:var(--lime); color:var(--void);}
+.ls-search{max-width:560px; padding:14px 16px; margin:0 0 14px;}
+.ls-sports .chip{margin-bottom:6px;}
+.ls-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:16px; margin-top:20px;}
+.ls-card{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px 18px; cursor:pointer; transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; outline:none;}
+.ls-card:hover,.ls-card:focus-visible{transform:translateY(-4px); border-color:rgba(255,106,77,.55); box-shadow:0 18px 38px -18px rgba(255,106,77,.35);}
+.ls-card.live{border-left:3px solid var(--coral);}
+.ls-card.pre{border-left:3px solid #FFE066;}
+.ls-card.post{border-left:3px solid var(--muted-2);}
+.ls-card.skel{min-height:150px; background:linear-gradient(100deg,var(--surface) 40%,var(--surface-3) 50%,var(--surface) 60%); background-size:200% 100%; animation:skShine 1.2s linear infinite; pointer-events:none;}
+.ls-top{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.ls-sport{font-size:9px; letter-spacing:.14em; color:#FF9E7A;}
+.ls-comp{font-size:8.5px; letter-spacing:.1em; color:var(--muted-2); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.ls-in{color:var(--lime);}
+.ls-fav{background:none; border:1px solid var(--line); color:var(--muted); border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:13px; flex:none; transition:all .15s ease;}
+.ls-fav:hover{border-color:#FFE066; color:#FFE066;}
+.ls-fav.on{color:#FFE066; border-color:#FFE066; background:rgba(255,224,102,.1);}
+.ls-badge{font-family:var(--mono); font-size:8.5px; font-weight:700; letter-spacing:.12em; padding:4px 10px; border-radius:100px; display:inline-flex; align-items:center; gap:5px;}
+.ls-badge.live{background:rgba(255,106,77,.16); color:var(--coral); border:1px solid rgba(255,106,77,.4);}
+.ls-badge.live .dot-w{width:5px; height:5px; border-radius:50%; background:var(--coral); animation:pulse2 1.2s infinite;}
+.ls-badge.pre{background:rgba(255,224,102,.12); color:#FFE066; border:1px solid rgba(255,224,102,.35);}
+.ls-badge.post{background:var(--surface-3); color:var(--muted); border:1px solid var(--line);}
+.ls-side{display:grid; grid-template-columns:44px 1fr 56px; align-items:center; gap:10px; padding:7px 0;}
+.ls-ab{font-family:var(--display); font-stretch:114%; font-size:16px; color:var(--muted);}
+.ls-nm{font-size:13.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.ls-sc{font-family:var(--display); font-style:italic; font-stretch:120%; font-size:24px; text-align:right;}
+.ls-side.won .ls-sc{color:var(--lime);}
+.ls-side.won .ls-nm{color:var(--text);}
+.ls-mid{display:flex; justify-content:center;}
+.ls-vs{font-family:var(--mono); font-size:9px; color:var(--muted-2); letter-spacing:.14em;}
+.ls-clock{text-align:center; font-size:9.5px; letter-spacing:.1em; color:var(--muted); margin-top:8px;}
+.ls-card.live .ls-clock{color:var(--coral);}
+.ls-race{display:flex; flex-direction:column; gap:6px; align-items:center; padding:8px 0 4px;}
+.ls-race-icon{font-size:30px;}
+.ls-race b{font-size:16px; text-align:center;}
+.ls-note{font-size:7.5px; color:var(--muted-2); letter-spacing:.08em; text-align:center;}
+.ls-foot{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;}
+.ls-venue{font-size:8.5px; color:var(--muted-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;}
+.ls-details{background:none; border:none; color:var(--lime); font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; cursor:pointer; flex:none;}
+.ls-stale{font-size:9.5px;letter-spacing:.1em;color:#FFC97D;background:rgba(255,177,61,.08);border:1px dashed rgba(255,177,61,.4);border-radius:12px;padding:10px 16px;margin-bottom:16px;}
+.ls-src{margin-top:22px; font-size:8px; letter-spacing:.12em; color:var(--muted-2); line-height:1.8;}
+.ls-empty{grid-column:1/-1;}
+.ls-modal .lsd-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+.lsd-title{font-family:var(--display); font-style:italic; font-stretch:118%; font-size:24px; margin-bottom:14px;}
+.lsd-rows{margin-top:14px;}
+.lsd-row{display:flex; justify-content:space-between; gap:16px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:13px;}
+.lsd-row span{font-family:var(--mono); font-size:9px; letter-spacing:.14em; color:var(--muted-2); padding-top:3px;}
+.lsd-row b{text-align:right;}
+/* home strip */
+.ls-home-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+.ls-home-card{position:relative; display:flex; flex-direction:column; gap:7px; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px 18px; cursor:pointer; color:var(--text); transition:all .18s ease;}
+.ls-home-card:hover{transform:translateY(-3px); border-color:rgba(255,106,77,.5); box-shadow:0 14px 30px -16px rgba(255,106,77,.35);}
+.ls-home-card .ls-badge{width:fit-content;}
+.ls-hc-sport{font-size:8.5px; letter-spacing:.12em; color:#FF9E7A;}
+.ls-hc-score{font-family:var(--display); font-style:italic; font-stretch:116%; font-size:18px; line-height:1.15;}
+.ls-hc-sub{font-size:8.5px; color:var(--muted);}
+.ls-home{display:flex; align-items:center; gap:18px; padding:20px 24px; flex-wrap:wrap;}
+.ls-home b{font-size:12px; letter-spacing:.1em;}
+.ls-home p{color:var(--muted); font-size:13px; flex:1;}
+@media(max-width:900px){ .ls-grid{grid-template-columns:1fr;} .ls-home-grid{grid-template-columns:1fr 1fr;} }
+@media(max-width:560px){ .ls-home-grid{grid-template-columns:1fr;} .ls-sc{font-size:21px;} }
+
 /* ============================================================
    CHALLENGES v2 — Compete. Complete. Conquer.
    ============================================================ */
@@ -2133,6 +2211,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <button data-view="challenges" onclick="switchView('challenges')">Challenges</button>
     <button data-view="communities" onclick="switchView('communities')">Communities</button>
     <button data-view="events" onclick="switchView('events')">Events</button>
+  <button data-view="live" onclick="switchView('live')" style="color:#FF6A4D;">Live Scores</button>
     <button data-view="plus" onclick="switchView('plus')">PLAYR+</button>
     <button data-view="shop" onclick="switchView('shop')">Shop</button>
     <button data-view="about" onclick="switchView('about')">About</button>
@@ -2265,6 +2344,9 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     </div>
     <div class="strip-scroll" id="liveStrip"></div>
   </div>
+
+    <!-- LIVE SCORES home strip -->
+  <div class="section section-alt" id="homeLiveStrip" style="padding:50px 0;"></div>
 
   <!-- ============ DISCOVER SOMETHING NEW — mosaic ============ -->
   <div class="section mosaic-sec">
@@ -2438,6 +2520,11 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   <div class="wrap section" id="eventsRoot"></div>
 </section>
 
+<!-- ============ LIVE SCORES ============ -->
+<section class="view" id="view-live">
+  <div id="liveRoot"></div>
+</section>
+
 <!-- ============ PLAYR+ ============ -->
 <section class="view" id="view-plus">
   <div class="wrap section" style="text-align:center;">
@@ -2597,6 +2684,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <script src="js/auth.js?v=vis2"></script>
 <script src="js/auth-ui.js?v=vis2"></script>
 <script src="js/ai.js?v=ai3"></script>
+<script src="js/live-scores.js?v=ls1"></script>
 <script>
 /* ============================================================
    PLAYR — PROTOTYPE DATA + INTERACTIVITY
@@ -3027,6 +3115,7 @@ window.safeSection=function(view,fn,rootId){
     if(v==='spcl'){ safeSection('spcl','renderSpcl','spclRoot'); const u=document.getElementById('spclUniverseRoot'); if(u) u.style.display='none'; const r=document.getElementById('spclRoot'); if(r) r.style.display=''; }
     if(v==='communities') safeSection('communities', function(){ window.PLAYR_COM && PLAYR_COM.back(); }, 'communitiesRoot');
     if(v==='challenges') safeSection('challenges', function(){ window.PLAYR_CH && PLAYR_CH.render(); }, 'challengesRoot');
+    if(v==='live' && window.PLAYR_LS){ PLAYR_LS.renderAll(); }
     if(v==='events' && window.PLAYR_EV){ try{ const r=document.getElementById('eventsRoot'); if(r && !r.innerHTML.trim()) PLAYR_EV.renderEventsPage(); }catch(e){} }
   };
 })();
@@ -3045,6 +3134,7 @@ const INIT_STEPS=[
   ["shop", ()=>initShopSystem()],
   ["spcl", ()=>initSpcl()],
   ["auth", ()=>PLAYR_AUTH_UI.init()],
+  ["live scores", ()=>initLiveScores()],
   ["routing", ()=>applyPlayrRoute()]
 ];
 INIT_STEPS.forEach(([name,fn])=>{ try{ fn(); }catch(e){ console.error('PLAYR init "'+name+'" failed:', e && e.message); } });

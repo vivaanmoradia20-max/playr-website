@@ -20,7 +20,7 @@ async function t(name,f){ try{ const r=await f(); console.log("PASS",name,r===un
 console.log("Load errors:", errors.length?errors:"none");
 await t("nav merged: 9 items, Discover Sport, no standalone Sports", ()=>{
   const nav=$$(".topnav .nav-links button").map(b=>b.textContent);
-  const want=["Home","Discover Sport","SPCL PLAYERS","Challenges","Communities","Events","PLAYR+","Shop","About"];
+  const want=["Home","Discover Sport","SPCL PLAYERS","Challenges","Communities","Events","Live Scores","PLAYR+","Shop","About"];
   if(nav.join("|")!==want.join("|")) throw new Error(nav.join("|"));
   if($$('#mobileMenu button[data-view="sports"]').length) throw new Error("mobile Sports remains");
   return "9 items ✓";
