@@ -89,7 +89,7 @@ window.renderSuTabs=renderTabs;
 function athleteGrid(s){
   const A=gen.athletes(s,8), legends=gen.legends(s);
   let h=`<div class="grid grid-4">`+A.map(a=>`<div class="card athlete-card">
-      <div class="athlete-photo" style="background:${s.image}"><span>${a.n.split(" ").map(w=>w[0]).slice(0,2).join("")}</span></div>
+      <div class="athlete-photo" style="background-image:${AV.bg(a.n)}; background-size:cover;"></div>
       <div class="athlete-name">${a.n}</div><div class="athlete-sub">${a.role} · ${fmt(a.followers)} followers</div>
       <button class="follow-btn" style="background:transparent;" onclick="showToast('Following ${a.n}')">+ Follow</button></div>`).join("")+`</div>`;
   if(legends) h+=`<div class="fy-row-head" style="margin-top:26px;"><div class="eyebrow" style="margin:0">All-time greats of ${s.name}</div></div>
@@ -103,7 +103,7 @@ function panelFor(s,t){
       const posts=G.posts(s,4);
       return `<div class="feed-col" style="margin:0;">`+posts.map(p=>`
         <div class="card" style="padding:18px 20px;margin-bottom:14px;">
-          <div class="fp-head"><div class="fp-avatar" style="background:${s.image};display:flex;align-items:center;justify-content:center;font-size:18px;">${s.icon}</div>
+          <div class="fp-head"><div class="fp-avatar" style="background-image:${AV.bg(p.name)}; background-size:cover;"></div>
           <div><div class="fp-name">${p.name}</div><div class="fp-meta">${s.name.toUpperCase()} · ${p.role.toUpperCase()} · ${p.time}</div></div></div>
           <p style="margin:12px 0;color:var(--text);font-size:14.5px;line-height:1.55;">${p.text}</p>
           <div class="fp-actions" style="color:var(--muted);">♥ ${fmt(p.likes)} &nbsp; 💬 ${p.comments} &nbsp; <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted-2);">DEMO COMMUNITY POST</span></div>

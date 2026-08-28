@@ -377,7 +377,7 @@ function applyState(user){
     const avEl=document.querySelector("#profile-athlete .profile-avatar");
     if(nameEl) nameEl.textContent=user.name;
     if(subEl) subEl.textContent=(user.sports||[]).slice(0,4).map(sportLabel).join(" · ").toUpperCase()+(user.location?" · "+user.location.toUpperCase():"");
-    if(avEl&&user.avatar) avEl.style.backgroundImage=`url('${user.avatar}')`;
+    if(avEl){ avEl.style.backgroundImage=user.avatar?`url('${user.avatar}')`:AV.bg(user.name,user.gender); avEl.style.backgroundSize='cover'; }
     try{ localStorage.setItem("playr_onboarded_v1","1"); }catch(e){}
   }
 }

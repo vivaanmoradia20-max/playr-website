@@ -1007,6 +1007,189 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 }
 
 /* ============================================================
+   CHALLENGES v2 — Compete. Complete. Conquer.
+   ============================================================ */
+#view-challenges{background:var(--void);}
+.ch-hero{position:relative; overflow:hidden; padding:24px 0 34px; background:radial-gradient(900px 460px at 85% -10%, rgba(224,248,8,.1), transparent 60%), radial-gradient(700px 400px at 0% 40%, rgba(70,224,255,.06), transparent 60%);}
+.ch-hero-bg{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:52px 52px; mask-image:radial-gradient(ellipse at 65% 30%, #000 20%, transparent 75%); -webkit-mask-image:radial-gradient(ellipse at 65% 30%, #000 20%, transparent 75%);}
+.ch-hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center; position:relative;}
+.ch-hero-copy h1{font-family:var(--display); font-style:italic; font-stretch:125%; font-weight:900; font-size:clamp(44px,6vw,84px); line-height:.95;}
+.ch-hero-copy h1 span{color:var(--lime); text-shadow:0 0 44px rgba(224,248,8,.35);}
+.ch-hero-copy p{color:var(--muted); font-size:15.5px; line-height:1.7; max-width:440px; margin:18px 0 26px;}
+.ch-feat{position:relative; padding:26px 28px; border:1px solid rgba(224,248,8,.35); box-shadow:0 0 60px -24px rgba(224,248,8,.45); overflow:hidden;}
+.ch-feat::before{content:''; position:absolute; inset:0; background:radial-gradient(420px 180px at 90% 0%, rgba(224,248,8,.09), transparent 60%); pointer-events:none;}
+.chf-tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; color:var(--lime); margin-bottom:14px; display:flex; align-items:center; gap:10px;}
+.chf-head{display:flex; gap:14px; align-items:center; margin-bottom:10px;}
+.chf-glyph{width:58px; height:58px; border-radius:16px; background:var(--surface-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:28px; flex:none;}
+.chf-head h3{font-family:var(--display); font-style:italic; font-stretch:120%; font-size:24px; line-height:1;}
+.chf-sub{font-size:9.5px; color:var(--muted); letter-spacing:.12em; margin-top:6px;}
+.ch-feat > p{color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:14px;}
+.chf-stats{display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px;}
+.chf-stats span{font-size:9.5px; letter-spacing:.1em; color:var(--muted);}
+.chf-stats b{color:var(--text); font-size:19px; margin-right:6px;}
+.ch-sec{margin-top:46px;}
+/* categories */
+.ch-cats{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
+.ch-cat{font-family:var(--display); font-stretch:112%; font-size:11px; font-weight:900; letter-spacing:.06em; padding:11px 20px; border-radius:100px; border:1.5px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; transition:all .18s ease;}
+.ch-cat:hover{color:var(--text); border-color:var(--muted); transform:translateY(-1px);}
+.ch-cat.on{background:var(--lime); border-color:var(--lime); color:var(--void); box-shadow:0 10px 28px -12px rgba(224,248,8,.65);}
+/* cards */
+.ch-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; min-height:200px;}
+.ch2-card{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:20px; overflow:hidden; cursor:pointer; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease; outline:none;}
+.ch2-card:hover,.ch2-card:focus-visible{transform:translateY(-5px); border-color:var(--acc); box-shadow:0 22px 44px -20px var(--acc);}
+.ch2-media{height:108px; position:relative; display:flex; align-items:center; justify-content:center; background:linear-gradient(140deg, color-mix(in srgb, var(--acc) 20%, #141519), #0C0D10); border-bottom:1px solid var(--line);}
+.ch2-glyph{font-size:44px; filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); transition:transform .25s ease;}
+.ch2-card:hover .ch2-glyph{transform:scale(1.15) rotate(-5deg);}
+.ch2-b{position:absolute; top:10px; left:10px; display:inline-flex; align-items:center; gap:5px; font-family:var(--mono); font-size:8.5px; font-weight:700; letter-spacing:.1em; padding:5px 10px; border-radius:100px;}
+.ch2-b.live{left:auto; right:10px; background:rgba(255,106,77,.94); color:#fff;}
+.ch2-b.live .dot-w{width:5px; height:5px; border-radius:50%; background:#fff; animation:pulse2 1.2s infinite;}
+.ch2-b.trend{top:auto; bottom:10px; left:10px; background:rgba(224,248,8,.16); color:var(--lime); border:1px solid rgba(224,248,8,.35);}
+.ch2-b.new{left:auto; right:10px; top:10px; background:rgba(70,224,255,.16); color:#7FE8FF; border:1px solid rgba(70,224,255,.4);}
+.ch2-body{padding:16px 18px 18px;}
+.ch2-tags{display:flex; gap:8px; margin-bottom:10px; align-items:center;}
+.ch2-cat{font-family:var(--mono); font-size:8.5px; letter-spacing:.12em; color:var(--acc); background:color-mix(in srgb, var(--acc) 13%, transparent); border:1px solid color-mix(in srgb, var(--acc) 35%, transparent); border-radius:100px; padding:5px 10px;}
+.ch2-diff{font-family:var(--mono); font-size:8.5px; letter-spacing:.1em; border-radius:5px; padding:5px 9px;}
+.d-beg{background:rgba(70,224,255,.13); color:#7FE8FF; border:1px solid rgba(70,224,255,.35);}
+.d-int{background:rgba(224,248,8,.12); color:var(--lime); border:1px solid rgba(224,248,8,.32);}
+.d-adv{background:rgba(255,158,61,.13); color:#FFB569; border:1px solid rgba(255,158,61,.35);}
+.d-elite{background:rgba(255,106,77,.14); color:#FF8D75; border:1px solid rgba(255,106,77,.4);}
+.ch2-title{font-family:var(--body); font-size:16px; font-weight:800; line-height:1.25; margin-bottom:12px;}
+.ch2-progress{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.ch2-progress.big{margin:6px 0 16px;}
+.ch2-bar{flex:1; height:6px; border-radius:100px; background:var(--surface-3); overflow:hidden;}
+.ch2-bar.sm{height:5px; min-width:60px;}
+.ch2-bar i{display:block; height:100%; border-radius:100px; background:linear-gradient(90deg,#A6BF08,var(--lime)); box-shadow:0 0 12px -2px rgba(224,248,8,.6);}
+.ch2-progress > span{font-size:11px; color:var(--muted);}
+.ch2-meta{display:flex; gap:12px; flex-wrap:wrap; font-size:9.5px; letter-spacing:.06em; color:var(--muted); margin-bottom:14px;}
+.ch2-days{color:var(--lime); margin-left:auto;}
+.ch2-actions{display:flex; gap:8px; align-items:center;}
+.ch2-join{flex:1;}
+.ch2-card:hover .ch2-join:not(:disabled){box-shadow:0 0 22px -6px rgba(224,248,8,.55);}
+.ch2-details{background:none; border:none; color:var(--muted); font-family:var(--mono); font-size:10px; letter-spacing:.08em; cursor:pointer; padding:8px 4px;}
+.ch2-details:hover{color:var(--lime);}
+/* trending row */
+.ch-trend-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+.ch-trend{display:flex; align-items:center; gap:12px; text-align:left; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--acc); border-radius:14px; padding:14px 16px; cursor:pointer; color:var(--text); transition:all .18s ease;}
+.ch-trend:hover{transform:translateY(-3px); border-color:var(--acc); box-shadow:0 14px 30px -16px var(--acc);}
+.ctr-ic{width:42px; height:42px; border-radius:12px; background:color-mix(in srgb, var(--acc) 14%, transparent); display:flex; align-items:center; justify-content:center; font-size:20px; flex:none;}
+.ctr-txt{flex:1; min-width:0;}
+.ctr-txt b{display:block; font-size:12.5px; line-height:1.3;}
+.ctr-txt i{font-style:normal; font-family:var(--mono); font-size:9.5px; color:var(--lime);}
+.ch-trend .ch2-b{position:static;}
+/* leaderboard */
+.ch-board{overflow:hidden;}
+.ch-board.modal{max-width:760px; width:92vw; padding:26px 28px; position:relative; margin:auto; max-height:86vh; overflow-y:auto;}
+.ch-board-title{font-family:var(--display); font-style:italic; font-stretch:120%; font-size:24px; margin-bottom:18px;}
+.chb-row{display:grid; grid-template-columns:52px 1.5fr 1fr 1.2fr .9fr .8fr; gap:12px; align-items:center; padding:11px 20px; border-bottom:1px solid var(--line); font-size:13px;}
+.chb-row:last-child{border-bottom:none;}
+.chb-head{background:var(--surface-2); font-size:8.5px !important; letter-spacing:.14em; color:var(--muted-2);}
+.chb-rank{font-size:15px; color:var(--muted);}
+.chb-row.gold{background:rgba(255,224,102,.05);}
+.chb-row.gold .chb-rank{color:#FFE066;}
+.chb-player{display:flex; align-items:center; gap:12px; min-width:0;}
+.chb-player .playr-av{border-radius:50%; overflow:hidden; flex:none; box-shadow:0 0 16px -4px rgba(224,248,8,.5); transition:transform .18s ease;}
+.chb-row:hover .playr-av{transform:scale(1.08);}
+.chb-player b{font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.chb-sport{color:var(--muted); font-size:12px;}
+.chb-prog{display:flex; align-items:center; gap:10px;}
+.chb-prog em{font-style:normal; font-size:10.5px; color:var(--muted);}
+.chb-xp{color:var(--lime); font-size:12px;}
+.chb-streak{color:var(--muted); font-size:11.5px;}
+/* my challenges */
+.ch-mystats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px;}
+.ch-stat{padding:18px 20px;}
+.ch-stat b{display:block; font-family:var(--display); font-style:italic; font-size:26px; color:var(--lime);}
+.ch-stat span{font-family:var(--mono); font-size:8.5px; letter-spacing:.14em; color:var(--muted-2);}
+.ch-tabs{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+.ch-tab{font-family:var(--display); font-stretch:112%; font-size:11px; font-weight:900; padding:10px 18px; border-radius:100px; border:1.5px solid var(--line); background:none; color:var(--muted); cursor:pointer;}
+.ch-tab em{font-style:normal; opacity:.7; margin-left:5px;}
+.ch-tab.on{background:var(--lime); border-color:var(--lime); color:var(--void);}
+.ch-mylist{display:flex; flex-direction:column; gap:10px;}
+.ch-my{display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--acc); border-radius:14px; padding:14px 18px; cursor:pointer; transition:all .16s ease;}
+.ch-my:hover{transform:translateX(3px); border-color:var(--acc);}
+.chm-mid{flex:1; min-width:0;}
+.chm-mid b{font-size:13.5px; display:block; margin-bottom:7px;}
+.chm-goal{font-size:9.5px; color:var(--muted-2); display:block; margin-top:5px;}
+.chm-days{font-size:9.5px; color:var(--lime); letter-spacing:.08em; flex:none;}
+.ch-joinprompt{display:flex; justify-content:space-between; align-items:center; gap:20px; padding:24px 28px; flex-wrap:wrap;}
+.ch-joinprompt h3{font-family:var(--display); font-style:italic; font-stretch:120%; font-size:22px; margin:6px 0;}
+.ch-joinprompt p{color:var(--muted); font-size:13px;}
+.ch-jp-btns{display:flex; gap:10px; flex-wrap:wrap;}
+/* achievements */
+.ch-achs{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+.ch-ach{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px 16px; text-align:center; transition:all .18s ease;}
+.ch-ach:hover{transform:translateY(-4px); border-color:rgba(224,248,8,.4);}
+.ch-ach b{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.1em; margin:12px 0 6px; color:var(--text);}
+.ch-ach p{font-size:11px; color:var(--muted); line-height:1.5;}
+.cha-badge{width:64px; height:64px; margin:0 auto; border-radius:50%; background:radial-gradient(circle at 35% 30%, rgba(224,248,8,.16), transparent 65%), var(--surface-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:inset 0 2px 8px rgba(0,0,0,.5);}
+.ch-ach.got .cha-badge{border-color:rgba(224,248,8,.55); box-shadow:0 0 26px -8px rgba(224,248,8,.55), inset 0 2px 8px rgba(0,0,0,.5);}
+.ch-ach:not(.got){opacity:.55; filter:saturate(.6);}
+/* modal */
+.ch-modal{width:min(760px,100%); max-height:90vh; overflow-y:auto; position:relative; margin:auto; animation:aUp .3s ease;}
+.chm-hero{padding:30px 32px 24px; border-bottom:1px solid var(--line); background:linear-gradient(150deg, color-mix(in srgb, var(--acc) 14%, #141519), #0C0D10); position:relative;}
+.chm-glyph{position:absolute; right:24px; top:22px; font-size:64px; opacity:.16;}
+.chm-tags{display:flex; gap:8px; margin-bottom:14px; align-items:center;}
+.chm-hero h3{font-family:var(--display); font-style:italic; font-stretch:122%; font-size:clamp(24px,3.4vw,34px); line-height:1; margin-bottom:10px;}
+.chm-hero p{color:var(--muted); font-size:14px; line-height:1.65; max-width:520px;}
+.chm-grid{display:grid; grid-template-columns:1.15fr 1fr; gap:0;}
+.chm-rules{padding:24px 28px; border-right:1px solid var(--line);}
+.chm-rules label{display:block; font-family:var(--mono); font-size:9px; letter-spacing:.16em; color:var(--muted-2); margin:14px 0 8px;}
+.chm-rules label:first-child{margin-top:0;}
+.chm-rules ul{list-style:none;}
+.chm-rules li{font-size:13px; color:var(--muted); padding:7px 0 7px 22px; position:relative; line-height:1.5;}
+.chm-rules li::before{content:'▸'; position:absolute; left:0; color:var(--lime);}
+.chm-line{font-size:13.5px; color:var(--text); line-height:1.6;}
+.chm-side{padding:24px 28px;}
+.chm-stats{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px;}
+.chm-stats span{font-size:9px; letter-spacing:.1em; color:var(--muted);}
+.chm-stats b{display:block; font-size:17px; color:var(--text); margin-bottom:3px;}
+.chm-board{border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+.chm-board .chb-row{grid-template-columns:40px 1fr .8fr; padding:9px 14px; font-size:12px;}
+.chm-board .chb-sport,.chm-board .chb-prog,.chm-board .chb-xp,.chm-board .chb-streak{display:none;}
+.chm-board .chb-head{display:none;}
+/* create form */
+.ch-create{width:min(640px,100%); max-height:90vh; overflow-y:auto; padding:30px 32px; position:relative; margin:auto;}
+.ch-create-title{font-family:var(--display); font-style:italic; font-stretch:122%; font-size:26px; margin-bottom:20px;}
+.ch-form{display:grid; gap:13px;}
+.ch-form .a-field input,.ch-form .a-field select{background:var(--surface-2); border:1.5px solid var(--line); border-radius:12px; padding:12px 14px; color:var(--text); font-size:14px; outline:none; width:100%;}
+.ch-form .a-field input:focus,.ch-form .a-field select:focus{border-color:var(--lime);}
+.cc-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.cc-err{font-size:12px; color:var(--coral); background:rgba(255,106,77,.08); border:1px solid rgba(255,106,77,.3); border-radius:8px; padding:9px 12px;}
+.cc-fine{font-size:9px; letter-spacing:.08em; color:var(--muted-2); text-align:center;}
+/* skeleton + empty */
+.ch2-card.skel{pointer-events:none;}
+.skel .ch2-media,.skel .sk-line,.skel .sk-btn{background:linear-gradient(100deg, var(--surface-2) 40%, var(--surface-3) 50%, var(--surface-2) 60%); background-size:200% 100%; animation:skShine 1.2s linear infinite; border-radius:8px;}
+@keyframes skShine{to{background-position:-200% 0;}}
+.sk-line{height:13px; margin:10px 0;}
+.sk-line.w60{width:60%;} .sk-line.w40{width:40%;} .sk-line.w90{width:90%;}
+.sk-btn{height:38px; margin-top:14px; border-radius:100px;}
+.ch-empty{padding:44px 30px; text-align:center;}
+.ch-empty b{display:block; font-size:16px; margin-bottom:8px; font-family:var(--body); font-weight:800;}
+.ch-empty p{color:var(--muted); font-size:13.5px;}
+/* shared avatar span */
+.playr-av{display:inline-block; border-radius:50%; overflow:hidden; line-height:0; background:#141519;}
+.playr-av svg{width:100%; height:100%; display:block;}
+/* responsive */
+@media(max-width:960px){
+  .ch-hero-grid{grid-template-columns:1fr;}
+  .ch-trend-row{grid-template-columns:1fr 1fr;}
+  .ch-mystats{grid-template-columns:1fr 1fr;}
+  .ch-achs{grid-template-columns:repeat(3,1fr);}
+  .chm-grid{grid-template-columns:1fr;}
+  .chm-rules{border-right:none; border-bottom:1px solid var(--line);}
+  .chb-row{grid-template-columns:44px 1.4fr .9fr; }
+  .chb-sport,.chb-prog{display:none;}
+  .ch-board{overflow-x:auto;}
+}
+@media(max-width:560px){
+  .ch-trend-row{grid-template-columns:1fr;}
+  .ch-achs{grid-template-columns:1fr 1fr;}
+  .cc-row{grid-template-columns:1fr;}
+  .chb-row{padding:10px 14px;}
+}
+@media (prefers-reduced-motion: reduce){ .skel .ch2-media,.skel .sk-line,.skel .sk-btn{animation:none;} }
+
+/* ============================================================
    HOME v3 — consumer cleanup (live/trending strip, communities,
    PLAYR+ teaser)
    ============================================================ */
@@ -1845,7 +2028,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
       </div>
       <div class="chall2-stage rv">
         <div class="chall2-side">
-          <div class="chall2-avatar" style="background-image:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=300&fit=crop'), linear-gradient(135deg,#7FA8FF33,#141519);"></div>
+          <div class="chall2-avatar" id="vsAvA"></div>
           <div class="chall2-name">VIVAAN MORADIA</div>
           <div class="chall2-sport mono-num">RUNNING · 10 KM</div>
           <div class="chall2-time">60:00</div>
@@ -1866,7 +2049,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
           </div>
         </div>
         <div class="chall2-side win">
-          <div class="chall2-avatar" style="background-image:url('https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=300&fit=crop'), linear-gradient(135deg,#E0F80833,#141519);"></div>
+          <div class="chall2-avatar" id="vsAvB"></div>
           <div class="chall2-name">RHEA KAPOOR</div>
           <div class="chall2-sport mono-num">RUNNING · 10 KM</div>
           <div class="chall2-time" style="color:var(--lime);">57:42</div>
@@ -1879,10 +2062,10 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   </div>
 
   <!-- ============ SPCL — Para sport ecosystem ============ -->
-  <div class="section section-alt" id="spclHomeSec"></div>
+  <div class="section" id="spclHomeSec"></div>
 
   <!-- HAPPENING NEAR YOU (Events engine) -->
-  <div class="section" id="homeNearYou"></div>
+  <div class="wrap section" id="homeNearYou" style="padding-top:0;"></div>
 
   <!-- ============ THIS DAY IN SPORT ============ -->
   <div class="section section-alt thisday-sec">
@@ -1971,48 +2154,10 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
   <div class="wrap section" id="spclUniverseRoot" style="display:none;"></div>
 </section>
 
-<!-- ============ CHALLENGES ============ -->
+<!-- ============ CHALLENGES v2 ============ -->
 <section class="view" id="view-challenges">
-  <div class="wrap section">
-    <div class="eyebrow">Recreational Challenges</div>
-    <h2 class="section-title">DON'T JUST WATCH.<br>CHALLENGE.</h2>
-    <div class="challenge-hero" style="margin-top:40px;">
-      <div>
-        <div class="pill pill-coral" style="margin-bottom:14px;">Fun · Social · Unofficial</div>
-        <h3 style="font-family:var(--body); font-size:20px; font-weight:800; max-width:420px;">Create a friendly challenge and see who beats your time.</h3>
-        <p style="color:var(--muted); font-size:14px; margin-top:10px; max-width:420px;">Recreational challenges between friends — not official records, gambling or risky stunts.</p>
-      </div>
-      <button class="btn btn-primary" onclick="createChallenge()">+ Create Challenge</button>
-    </div>
-
-    <div class="card vs-card">
-      <div class="vs-side">
-        <div class="vs-avatar" style="background-image:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop');"></div>
-        <div class="vs-name">Vivaan Moradia</div>
-        <div class="vs-sport">Running · 10 KM</div>
-        <div class="vs-time" id="vsTimeA">60:00</div>
-      </div>
-      <div class="vs-mid">VS</div>
-      <div class="vs-side">
-        <div class="vs-avatar" style="background-image:url('https://images.unsplash.com/photo-1552058544-f2b08422138a?w=200&h=200&fit=crop');"></div>
-        <div class="vs-name">Rhea Kapoor</div>
-        <div class="vs-sport">Running · 10 KM</div>
-        <div class="vs-time" id="vsTimeB" style="color:var(--lime);">57:42</div>
-      </div>
-    </div>
-    <div style="text-align:center; margin:-8px 0 40px; font-family:var(--mono); font-size:13px; color:var(--muted);">"VIVAAN CHALLENGED YOU" — Can you beat 60:00? <button class="btn btn-ghost btn-sm" style="margin-left:12px;" onclick="beatChallenge()">Log My Attempt</button></div>
-
-    <div class="card" style="margin-bottom:60px;">
-      <div style="padding:20px 22px; border-bottom:1px solid var(--line); font-weight:800; display:flex; justify-content:space-between; align-items:center;">
-        <span>10K Run — Leaderboard</span><span class="pill pill-muted">This week</span>
-      </div>
-      <div id="leaderboardList"></div>
-    </div>
-
-    <div class="section-head"><div><div class="eyebrow">More challenges</div><h3 class="section-title" style="font-size:36px;">ACROSS EVERY SPORT.</h3></div></div>
-    <div id="fyChallenges" style="margin:0 0 40px;"></div>
-    <div class="grid grid-4" id="challengeGrid"></div>
-  </div>
+  <div class="wrap section" id="challengesRoot" style="padding-top:110px;"></div>
+  <div class="wrap" id="fyChallenges" style="padding:0 32px 70px;"></div>
 </section>
 
 <!-- ============ COMMUNITIES ============ -->
@@ -2114,7 +2259,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <div id="profile-athlete">
       <div class="profile-cover" style="background-image:url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&h=500&fit=crop');"></div>
       <div class="profile-head">
-        <div class="profile-avatar" style="background-image:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&h=300&fit=crop');"></div>
+        <div class="profile-avatar" id="profAvA"></div>
         <div>
           <div class="profile-name">Vivaan Moradia</div>
           <div class="profile-sub">CRICKET · MUMBAI, INDIA</div>
@@ -2145,7 +2290,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
     <div id="profile-creator" style="display:none;">
       <div class="profile-cover" style="background-image:url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&h=500&fit=crop');"></div>
       <div class="profile-head">
-        <div class="profile-avatar" style="background-image:url('https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=300&fit=crop');"></div>
+        <div class="profile-avatar" id="profAvB"></div>
         <div>
           <div class="profile-name">Ava Chen</div>
           <div class="profile-sub">CREATOR · SWIMMING, ATHLETICS, ESPORTS</div>
@@ -2202,6 +2347,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <div class="toast" id="toast"></div>
 
 <script src="js/config.js"></script>
+<script src="js/avatars.js"></script>
 <script src="js/sports-data.js"></script>
 <script src="js/sports-data-2.js"></script>
 <script src="js/spcl-data.js"></script>
@@ -2212,6 +2358,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 40px;}
 <script src="js/events-data.js"></script>
 <script src="js/events-app.js"></script>
 <script src="js/events-app-2.js"></script>
+<script src="js/challenges.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/auth-ui.js"></script>
 <script>
@@ -2272,7 +2419,7 @@ function buildPhoneFeed(){
   document.getElementById('phoneFeed').innerHTML = PHONE_POSTS.map(p=>`
     <div class="feed-post-mini">
       <div class="fp-head">
-        <div class="fp-avatar" style="background:url('${p.img}') center/cover;"></div>
+        <div class="fp-avatar" style="background-image:${AV.bg(p.name)}; background-size:cover;"></div>
         <div><div class="fp-name">${p.name}</div><div class="fp-meta">${p.sport.toUpperCase()} · 2H</div></div>
       </div>
       <div class="fp-media" style="background-image:url('${p.img}')"></div>
@@ -2308,7 +2455,7 @@ const FEED_SETS = {
 function postHTML(p, idx){
   return `<div class="post">
     <div class="post-head">
-      <div class="avatar" style="background-image:url('${p.avatar}')"></div>
+      <div class="avatar" style="background-image:${AV.bg(p.name)}"></div>
       <div><div class="post-user">${p.name} <span class="pill pill-muted">${p.sport}</span></div><div class="post-meta">${p.time} ago</div></div>
       <button class="follow-btn post-follow" style="padding:7px 14px; font-size:11px;" onclick="this.classList.toggle('following'); this.textContent=this.classList.contains('following')?'Following':'+ Follow';">+ Follow</button>
     </div>
@@ -2345,58 +2492,8 @@ function toggleSave(btn){
 
 /* Sport Universe is now auto-generated for all 200+ sports — see js/sports-universe.js */
 
-/* ---------- Challenges ---------- */
-let beaten = false;
-function beatChallenge(){
-  if(beaten) return;
-  beaten = true;
-  document.getElementById('vsTimeB').textContent = '55:03';
-  document.getElementById('vsTimeB').style.color = 'var(--lime)';
-  showToast('New time logged — 55:03 🎉');
-  renderLeaderboard();
-}
-function createChallenge(){ if(!requireAuth()) return; showToast('Challenge created — invite sent to friends'); }
-const LEADERBOARD = [
-  {n:'Rhea Kapoor', t:'57:42', img:IMG.running},
-  {n:'Vivaan Moradia', t:'60:00', img:IMG.cricket},
-  {n:'Farhan Ali', t:'61:18', img:IMG.cycling},
-  {n:'Simran Gill', t:'63:02', img:IMG.skiing},
-];
-function renderLeaderboard(){
-  let list = [...LEADERBOARD];
-  if(beaten) list.push({n:'You', t:'55:03', img:IMG.athletics});
-  list.sort((a,b)=> toSec(a.t)-toSec(b.t));
-  document.getElementById('leaderboardList').innerHTML = list.map((r,i)=>`
-    <div class="leaderboard-row">
-      <div class="lb-rank ${i===0?'gold':''}">${i+1}</div>
-      <div class="lb-avatar" style="background-image:url('${r.img}')"></div>
-      <div class="lb-name">${r.n}</div>
-      <div class="lb-time">${r.t}</div>
-    </div>`).join('');
-}
-function toSec(t){ const [m,s]=t.split(':').map(Number); return m*60+s; }
-
-const CHALLENGES = [
-  {sport:'Cycling', t:'25KM Ride Challenge', img:IMG.cycling},
-  {sport:'Basketball', t:'50 Free Throws', img:IMG.basketball},
-  {sport:'Football', t:'Keepy-Uppy Streak', img:IMG.football},
-  {sport:'Swimming', t:'500M Freestyle Time', img:IMG.swimming},
-  {sport:'Cricket', t:'Yorker Accuracy Drill', img:IMG.cricket},
-  {sport:'Chess', t:'5-Minute Blitz Streak', img:IMG.chess},
-  {sport:'Badminton', t:'Rally Length Challenge', img:IMG.badminton},
-  {sport:'Boxing', t:'3-Round Combo Speed', img:IMG.boxing},
-];
-function renderChallengeGrid(){
-  document.getElementById('challengeGrid').innerHTML = CHALLENGES.map(c=>`
-    <div class="card" style="overflow:hidden;">
-      <div style="height:130px; background-size:cover; background-position:center; background-image:url('${c.img}')"></div>
-      <div style="padding:16px 18px;">
-        <div class="pill pill-muted" style="margin-bottom:10px;">${c.sport}</div>
-        <div style="font-weight:800; font-size:14px; margin-bottom:14px;">${c.t}</div>
-        <button class="btn btn-ghost btn-sm" style="width:100%;" onclick="showToast('Challenge sent to your friends')">Challenge Friend</button>
-      </div>
-    </div>`).join('');
-}
+/* Challenges v2 lives in js/challenges.js (PLAYR_CH). Gate kept here. */
+function createChallenge(){ if(!requireAuth()) return; PLAYR_CH.create(); }
 
 /* ---------- Communities ---------- */
 const COMMUNITIES = [
@@ -2564,7 +2661,7 @@ function buildHomeV2(){
       <div class="phone hc-phone"><div class="phone-notch"></div><div class="phone-feed" id="phoneFeed"></div></div>
       <div class="hc-card hc-athlete">
         <div class="hca-img"></div>
-        <div class="hca-body"><div class="hca-av"></div><div><b>Dev Solanki</b><i>CRICKET · ALL-ROUNDER</i></div><span class="hca-btn">+ FOLLOW</span></div>
+        <div class="hca-body"><div class="hca-av" style="background-image:${AV.bg('Dev Solanki')}; background-size:cover;"></div><div><b>Dev Solanki</b><i>CRICKET · ALL-ROUNDER</i></div><span class="hca-btn">+ FOLLOW</span></div>
       </div>
       <div class="hc-card hc-trend">
         <div class="hct-head">TRENDING NOW</div>
@@ -2589,6 +2686,14 @@ function buildHomeV2(){
         </div>
       </div>`;
   }
+
+  /* ---- 1b. Home VS stage avatars ---- */
+  const va=document.getElementById('vsAvA'), vb=document.getElementById('vsAvB');
+  if(va) va.style.backgroundImage=AV.bg('Vivaan Moradia');
+  if(vb) vb.style.backgroundImage=AV.bg('Rhea Kapoor');
+  const pa=document.getElementById('profAvA'), pb=document.getElementById('profAvB');
+  if(pa) pa.style.backgroundImage=AV.bg('Vivaan Moradia','male');
+  if(pb) pb.style.backgroundImage=AV.bg('Ava Chen','female');
 
   /* ---- 2. LIVE / TRENDING sports strip ---- */
   const strip=document.getElementById('sportStrip');
@@ -2638,7 +2743,7 @@ function buildHomeV2(){
         <a onclick="openSport('formula-1')"><div class="rl-th" style="background-image:url('${H2_IMGS.motorsport}')"></div><div><b>Q3 — 4 minutes left</b><i>TRACK DAY · 3.4K watching</i></div></a>
       </div></div>
       <div class="rail-card"><div class="rail-head">✨ People to follow</div><div class="rail-ppl">
-        ${people.map((p,i)=>`<div class="rp-row"><div class="rp-av" style="background-image:url('${[H2_IMGS.cricket,H2_IMGS.running,H2_IMGS.mountaineering][i%3]}')"></div><div><b>${p.n}</b><i>${p.role.toUpperCase()}</i></div><button class="btn btn-ghost btn-sm" onclick="showToast('Following ${p.n}')">+ Follow</button></div>`).join('')}
+        ${people.map((p,i)=>`<div class="rp-row"><div class="rp-av" style="background-image:${AV.bg(p.n)}; background-size:cover;"></div><div><b>${p.n}</b><i>${p.role.toUpperCase()}</i></div><button class="btn btn-ghost btn-sm" onclick="showToast('Following ${p.n}')">+ Follow</button></div>`).join('')}
       </div></div>
       <div class="rail-card" style="background:linear-gradient(160deg, rgba(224,248,8,.1), var(--surface));border-color:rgba(224,248,8,.35);">
         <div class="rail-head" style="color:var(--lime);">⚡ PLAYR+</div>
@@ -2766,11 +2871,10 @@ buildPhoneFeed();
 renderHomeFeed();
 initSportsSystem();          /* Discover v2, onboarding, personalization */
 setSportUniverse('cricket'); /* default Sport Universe */
-renderLeaderboard();
-renderChallengeGrid();
 renderCommunities();
 renderActivity();
 initEventsSystem();  /* Events discovery engine */
+initChallenges();     /* Challenges v2 */
 initSpcl();               /* SPCL home + shop sections */
 PLAYR_AUTH_UI.init();   /* restore session → authed nav state */
 renderShopFilters();
@@ -2784,6 +2888,7 @@ renderMerch();
     _sv(v);
     if(v==='about' && typeof renderAbout==='function') renderAbout();
     if(v==='spcl' && typeof renderSpcl==='function'){ renderSpcl(); document.getElementById('spclUniverseRoot').style.display='none'; document.getElementById('spclRoot').style.display=''; }
+    if(v==='challenges' && window.PLAYR_CH){ PLAYR_CH.render(); }
     if(v==='events' && window.PLAYR_EV){ const r=document.getElementById('eventsRoot'); if(r && !r.innerHTML.trim()) window.PLAYR_EV.renderEventsPage(); }
   };
 })();
